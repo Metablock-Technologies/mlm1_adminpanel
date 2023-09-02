@@ -70,6 +70,7 @@ section {
 .row {
     display: -ms-flexbox;
     display: flex;
+        justify-content: center;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-right: -7.5px;

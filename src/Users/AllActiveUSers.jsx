@@ -3,7 +3,7 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { token, baseURL } from '../token';
 import axios from 'axios';
-
+import "../StyleFolder/dashboards.css"
 function AllActiveUSers() {
     const [fromDate, setFromDate] = useState('');
     const [toDate, setToDate] = useState('');

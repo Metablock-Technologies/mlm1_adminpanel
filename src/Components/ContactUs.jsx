@@ -69,13 +69,14 @@ function ContactUs() {
         <div className="col-12 mt-5">
           <div className="card">
             <div className="card-body">
-              <h4 className="header-title">Contact Us</h4>
+              <h4 style={{marginBottom:'1rem'}} className="header-title">Contact Us</h4>
               <div className="single-table">
+                      <button style={{ marginBottom: 10 }} className=" input-delete btn btn-danger delete_all" onClick={handleDeleteSelected} >Delete All Selected</button>
+                      <button style={{ marginBottom: 10, float: 'right' }} className=" send-input btn btn-info mail_all" >Send Mail</button>
+                      <br />
                 <div className="table-responsive">
                   <br />
-                                              <button style={{ marginBottom: 10 }} className="btn btn-danger delete_all" onClick={handleDeleteSelected} >Delete All Selected</button>
-                  <button style={{marginBottom: 10, float: 'right'}} className="btn btn-info mail_all" >Send Mail</button>
-                  <br />
+                     
                                               <table className="table text-center">
                                                   <thead className="text-capitalize">
                                                       <tr>

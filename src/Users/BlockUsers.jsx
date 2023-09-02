@@ -149,16 +149,19 @@ function BlockUsers() {
                                 <div className="card-body">
                                     <form role="form" type="submit">
                                         {/* <input type="hidden" name="_token" defaultValue="eLkpGsUBYr9izTDYhoNZCCY6pxm06c8hRkw1N41O" /> */}
-                                        <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
+                                        <div className="col-md-6 col-12 mb-3">
+                                           
                                             <div className="form-group">
                                                 <label>Pick a start date:</label>
                                                 <div className="input-group date" id="datepicker" data-target-input="nearest">
                                                     <input type="date" className="form-control t" placeholder="yyyy-mm-dd" name="start_date" onChange={(e) => setStartDate(e.target.value)} value={startDate} />
                                                 </div>
-                                            </div>
+                                                </div>
+                                            
                                         </div>
-                                        <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
-                                            <div className="form-group">
+                                        <div className="col-md-6 col-12 mb-3 ">
+                                        
+                                            <div className="form-group ">
                                                 <label>Pick a end date:</label>
                                                 <div className="input-group date" id="datepicker1" data-target-input="nearest">
                                                     <input type="date" className="form-control " placeholder="yyyy-mm-dd" name="end_date" onChange={(e) => setEndDate(e.target.value)} value={endDate} />
@@ -166,7 +169,7 @@ function BlockUsers() {
                                             </div>
                                         </div>
                                         <div style={{ clear: 'both' }} />
-                                        <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
+                                        <div className="col-md-6 col-12 mb-3">
                                             <label htmlFor="validationCustomUsername"> User Name</label>
                                             <div className="input-group">
                                                 <input
@@ -180,8 +183,9 @@ function BlockUsers() {
                                             </div>
                                         </div>
                                         <div style={{ clear: 'both' }} />
+                                        <div className='row' />
                                         <br />
-                                        <div className="col-md-12 mb-12">
+                                        <div className="col-12">
                                             <center>
                                                 <button className="btn btn-primary" onClick={(e) => handleSearch(e)} >Search Now</button>
                                                 <button className="btn btn-info" style={{ marginLeft: '20px' }} type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>

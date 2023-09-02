@@ -3,6 +3,8 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { token, baseURL } from '../token';
 import axios from 'axios';
+import "../StyleFolder/AllUsers.css"
+import Demo from './Demo';
 
 function AllUsers() {
     const [fromDate, setFromDate] = useState('');
@@ -156,24 +158,28 @@ function AllUsers() {
                                     <div className="card-body">
                                         <form role="form" type="submit">
                                             {/* <input type="hidden" name="_token" defaultValue="eLkpGsUBYr9izTDYhoNZCCY6pxm06c8hRkw1N41O" /> */}
-                                            <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
-                                                <div className="form-group">
+                                            <div className='col-md-6 col-12 mb-3'>
+
+                                                <div className="form-group ">
                                                     <label>Pick a start date:</label>
                                                     <div className="input-group date" id="datepicker" data-target-input="nearest">
                                                         <input type="date" className="form-control t" placeholder="yyyy-mm-dd" name="start_date" onChange={(e) => setStartDate(e.target.value)} value={startDate} />
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
-                                                <div className="form-group">
-                                                    <label>Pick a end date:</label>
-                                                    <div className="input-group date" id="datepicker1" data-target-input="nearest">
-                                                        <input type="date" className="form-control " placeholder="yyyy-mm-dd" name="end_date" onChange={(e) => setEndDate(e.target.value)} value={endDate} />
+
+                                                <div className="col-md-6 col-12 mb-3" >
+                                                    <div className="form-group ">
+                                                        <label>Pick a end date:</label>
+                                                        <div className="input-group date" id="datepicker1" data-target-input="nearest">
+                                                            <input type="date" className="form-control " placeholder="yyyy-mm-dd" name="end_date" onChange={(e) => setEndDate(e.target.value)} value={endDate} />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+
                                             <div style={{ clear: 'both' }} />
-                                            <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
+                                            <div className="col-md-6 col-12 mb-3" >
                                                 <label htmlFor="validationCustomUsername"> User Name</label>
                                                 <div className="input-group">
                                                     <input
@@ -186,7 +192,7 @@ function AllUsers() {
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
+                                            <div className="col-md-6 col-md-12" >
                                                 <label htmlFor="validationCustomUsername">Select id status</label>
                                                 <select className="custom-select selectbox" name="status" value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)}>
                                                     <option value> ----Select---- </option>
@@ -202,104 +208,18 @@ function AllUsers() {
                                                 </div>
                                             </div> */}
 
-                                            <div style={{ clear: 'both' }} />
+                                            <div className='row' />
                                             <br />
-                                            <div className="col-md-12 mb-12">
+                                            <div className="col-12">
                                                 <center>
                                                     <button className="btn btn-primary" onClick={(e) => handleSearch(e)} >Search Now</button>
-                                                    <button className="btn btn-info" style={{ marginLeft: '20px' }} type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
+                                                    <button className="button-reset btn btn-info" style={{ marginLeft: '20px' }} type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
 
                                                 </center>
                                             </div>
                                             <br />
                                         </form>
-                                        <div className="single-table">
-                                            <div className="table-responsive">
-                                                <table className="table text-center">
-                                                    <thead className="text-capitalize">
-                                                        <tr>
-                                                            <th>SR.No.</th>
-                                                            <th>Name</th>
-                                                            <th>User Name</th>
-                                                            <th>Refer Code</th>
-                                                            <th>Email</th>
-                                                            <th>Mobile Number</th>
-                                                            <th>Date</th>
-                                                            <th>Time</th>
-                                                            <th>Type</th>
-                                                            <th>Status</th>
-                                                            <th>Total members</th>
-                                                            <th>Sponser ID</th>
-                                                            <th>Active users</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {tableData.length === 0 ? (
-                                                            <tr>
-                                                                <td colSpan="12" style={{ color: 'black', textAlign: 'center' }}>
-                                                                    No results found
-                                                                </td>
-                                                            </tr>
-                                                        ) :
-                                                            tableData.map((row, index) => {
-                                                                const createdAt = new Date(row.data.createdAt);
-                                                                const formattedDate = createdAt.toLocaleDateString();
-                                                                const formattedTime = createdAt.toLocaleTimeString();
-                                                                return (
-                                                                    <tr key={index}>
-                                                                        <td>{index + 1}</td>
-                                                                        <td>{row.data.name}</td>
-                                                                        <td>{row.data.username}</td>
-                                                                        <td>{row.data.hashcode}</td>
-                                                                        <td>{row.data.email}</td>
-                                                                        <td>{row.data.phonenumber}</td>
-                                                                        <td>{formattedDate}</td>
-                                                                        <td>{formattedTime}</td>
-                                                                        <td>{row.data.type}</td>
-                                                                        <td>
-                                                                            {/* Convert Status field into a button */}
-                                                                            <button className={`btn ${row.status === 'Active' ? 'btn-success' : 'btn-danger'}`}>
-                                                                                {row.status}
-                                                                            </button>
-                                                                        </td>
-                                                                        <td>{row.metadata.totalUsers}</td>
-                                                                        <td>{row.metadata.sponsorId}</td>
-                                                                        <td>{row.metadata.activeUsers}</td>
-                                                                        {/* ... render other fields */}
-                                                                    </tr>
-                                                                )
-                                                            })
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                                <br /><br />
-                                                <center>
-                                                    <div>
-                                                        <nav>
-                                                            <ul className="pagination">
-                                                                <li className="page-item disabled" aria-disabled="true" aria-label="« Previous">
-                                                                    <span className="page-link" aria-hidden="true">‹</span>
-                                                                </li>
-                                                                <li className="page-item active" aria-current="page"><span className="page-link">1</span></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=2">2</a></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=3">3</a></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=4">4</a></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=5">5</a></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=6">6</a></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=7">7</a></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=8">8</a></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=9">9</a></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=10">10</a></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=11">11</a></li>
-                                                                <li className="page-item">
-                                                                    <a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=2" rel="next" aria-label="Next »">›</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                </center>
-                                            </div>
-                                        </div>
+                                        <Demo tableData={tableData} />
                                     </div>
                                 </div>
                             </div>

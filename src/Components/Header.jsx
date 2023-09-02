@@ -58,11 +58,11 @@ function Header(props) {
     const drawer = (
         <div>
             <Toolbar sx={{ background: 'black', placeContent: 'center' }}>
-                <img
+                {/* <img
                     src="htx-logo.png"
                     alt="Your Alt Text"
                     style={{ width: '100px', cursor: 'pointer', height: 'auto' }}
-                />
+                /> */}
             </Toolbar>
             <Divider />
             <List sx={{ color: 'white', background: '#161616', }}>

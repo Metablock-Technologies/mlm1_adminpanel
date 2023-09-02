@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { token, baseURL } from '../token';
+import "../StyleFolder/style.css"
 const ProfilePage = () => {
+    const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('personalData');
     const [userData, setUserData] = useState({
         username: '',
@@ -81,9 +83,19 @@ const ProfilePage = () => {
     };
 
 
+    useEffect(() => {
+        // Simulate a delay to showcase the loading animation
+        setTimeout(() => {
+            setLoading(false);
+        }, 5); // Change the delay as needed
+      
+    }, []);
 
     return (
-        <><div className="content-wrapper" style={{ minHeight: '675.2px' }}>
+
+        <>
+            <div className={`fade-in ${loading ? '' : 'active'}`}>
+        <div className="content-wrapper" style={{ minHeight: '675.2px' }}>
             {/* Content Header (Page header) */}
             <section className="dasgboard_main_section light_border">
                 <h2 className="welcome_heading">Profile </h2>
@@ -301,7 +313,7 @@ const ProfilePage = () => {
                 </div >
             </section >
         </div >
-
+</div>
         </>
     )
 }

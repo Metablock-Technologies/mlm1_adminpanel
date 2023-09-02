@@ -150,7 +150,7 @@ function MyTeamIncome() {
                                     <div className="card-body">
                                         <form role="form">
                                             <input type="hidden" name="_token" defaultValue="eLkpGsUBYr9izTDYhoNZCCY6pxm06c8hRkw1N41O" />
-                                            <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
+                                            <div className="col-md-6 col-12 mb-3" >
                                                 <div className="form-group">
                                                     <label>Pick a start date:</label>
                                                     <div className="input-group date" id="datepicker" data-target-input="nearest">
@@ -158,7 +158,7 @@ function MyTeamIncome() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
+                                            <div className="col-md-6 col-12 mb-3" >
                                                 <div className="form-group">
                                                     <label>Pick a end date:</label>
                                                     <div className="input-group date" id="datepicker1" data-target-input="nearest">
@@ -167,7 +167,7 @@ function MyTeamIncome() {
                                                 </div>
                                             </div>
                                             <div style={{ clear: 'both' }} />
-                                            <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
+                                            <div className="col-md-6 col-12 mb-3" >
                                                 <label htmlFor="validationCustomUsername">User Name</label>
                                                 <div className="input-group">
                                                     <input type="text" className="form-control" placeholder="Name,Username"
@@ -183,8 +183,9 @@ function MyTeamIncome() {
                                                 </div>
                                             </div> */}
                                             <div style={{ clear: 'both' }} />
+                                            <div className='row'/>
                                             <br />
-                                            <div className="col-md-12 mb-12">
+                                            <div className="col-12">
                                                 <center>
                                                     <button className="btn btn-primary" onClick={(e) => handleSearch(e)} >Search Now</button>
                                                     <button className="btn btn-info" style={{ marginLeft: '20px' }} type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>

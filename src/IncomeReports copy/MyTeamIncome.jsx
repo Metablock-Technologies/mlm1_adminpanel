@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { token, baseURL } from '../token';
 import axios from 'axios';
+import { TablePagination } from '@mui/material';
 
 function MyTeamIncome() {
 
@@ -11,8 +12,11 @@ function MyTeamIncome() {
     const [endDate, setEndDate] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const itemsPerPage = 10; // Number of items per page
 
+    const rowsPerPageOptions = [10, 25, 50];
 
     const handleSearch = (e) => {
         console.log("nakdsj");
@@ -121,6 +125,24 @@ function MyTeamIncome() {
         // setTableData(tableData);
         getallusers();
     };
+
+    // Calculate the index of the first and last data items to display
+    const startIndex = page * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+
+    // Slice the data to display only the current page
+    const displayedData = tableData.slice(startIndex, endIndex);
+
+    // Create a function to handle page change
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    // Create a function to handle rows per page change
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0); // Reset to the first page when changing rows per page
+    };
     return (
         <> <div className={`fade-in ${loading ? '' : 'active'}`}>
             <div className="content-wrapper" style={{ minHeight: '512px' }}>
@@ -170,7 +192,7 @@ function MyTeamIncome() {
                                             <div className="col-md-6 col-12 mb-3" >
                                                 <label htmlFor="validationCustomUsername">User Name</label>
                                                 <div className="input-group">
-                                                    <input type="text" className="form-control" placeholder="Name,Username"
+                                                    <input type="text" className="form-control" placeholder="Username"
                                                         name="username"
                                                         value={searchQuery}
                                                         onChange={(e) => setSearchQuery(e.target.value)} />
@@ -239,35 +261,26 @@ function MyTeamIncome() {
                                                     </tbody>
                                                 </table>
                                                 <br /><br />
-                                                <center>
-                                                    <div>
-                                                        <nav>
-                                                            <ul className="pagination">
-                                                                <li className="page-item disabled" aria-disabled="true" aria-label="« Previous">
-                                                                    <span className="page-link" aria-hidden="true">‹</span>
-                                                                </li>
-                                                                <li className="page-item active" aria-current="page"><span className="page-link">1</span></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/Transaction?page=2">2</a></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/Transaction?page=3">3</a></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/Transaction?page=4">4</a></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/Transaction?page=5">5</a></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/Transaction?page=6">6</a></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/Transaction?page=7">7</a></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/Transaction?page=8">8</a></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/Transaction?page=9">9</a></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/Transaction?page=10">10</a></li>
-                                                                <li className="page-item disabled" aria-disabled="true"><span className="page-link">...</span></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/Transaction?page=2567">2567</a></li>
-                                                                <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/Transaction?page=2568">2568</a></li>
-                                                                <li className="page-item">
-                                                                    <a className="page-link" href="https://hammertradex.com/admin-panel/Transaction?page=2" rel="next" aria-label="Next »">›</a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                </center>
+                                                
                                             </div>
                                         </div>
+                                        <center style={{ float: 'right' }}>
+                                            <div>
+                                                <nav>
+                                                    <ul className="pagination">
+                                                        <TablePagination sx={{ color: 'orange' }}
+                                                            rowsPerPageOptions={rowsPerPageOptions}
+                                                            component="div"
+                                                            count={tableData.length}
+                                                            rowsPerPage={rowsPerPage}
+                                                            page={page}
+                                                            onPageChange={handleChangePage}
+                                                            onRowsPerPageChange={handleChangeRowsPerPage}
+                                                        />
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                        </center>
                                     </div>
                                 </div>
                             </div>

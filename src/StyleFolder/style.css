@@ -299,6 +299,7 @@ background: #c3a177 !important;
     margin-bottom: 15px;
 }
 input[type="text"], input[type="password"] {
+    padding-left: 12px !important  ;
     height: 46px;
    background: #313131;
     border-radius: 5px !important;

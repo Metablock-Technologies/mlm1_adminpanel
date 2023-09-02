@@ -4,6 +4,7 @@ import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { token, baseURL } from '../token';
 import axios from 'axios';
 import "../StyleFolder/dashboards.css"
+import { TablePagination } from '@mui/material';
 function AllActiveUSers() {
     const [fromDate, setFromDate] = useState('');
     const [toDate, setToDate] = useState('');
@@ -14,9 +15,10 @@ function AllActiveUSers() {
     const [endDate, setEndDate] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
-
-
+    const rowsPerPageOptions = [10, 25, 50];
     const handleSearch = (e) => {
         e.preventDefault();
         const filteredData = tableData.filter((item) => {
@@ -128,6 +130,23 @@ function AllActiveUSers() {
         getallusers();
     }, [])
 
+    // Calculate the index of the first and last data items to display
+    const startIndex = page * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+
+    // Slice the data to display only the current page
+    const displayedData = tableData.slice(startIndex, endIndex);
+
+    // Create a function to handle page change
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    // Create a function to handle rows per page change
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0); // Reset to the first page when changing rows per page
+    };
     return (
         <>
             <div className={`fade-in ${loading ? '' : 'active'}`}>
@@ -183,7 +202,7 @@ function AllActiveUSers() {
                                                         <input
                                                             type="text"
                                                             className="form-control"
-                                                            placeholder="Name,Username"
+                                                            placeholder="Username"
                                                             name="userid"
                                                             value={searchQuery}
                                                             onChange={(e) => setSearchQuery(e.target.value)}
@@ -254,34 +273,28 @@ function AllActiveUSers() {
                                                         </tbody>
                                                     </table>
                                                     <br /><br />
-                                                    <center>
-                                                        <div>
-                                                            <nav>
-                                                                <ul className="pagination">
-                                                                    <li className="page-item disabled" aria-disabled="true" aria-label="« Previous">
-                                                                        <span className="page-link" aria-hidden="true">‹</span>
-                                                                    </li>
-                                                                    <li className="page-item active" aria-current="page"><span className="page-link">1</span></li>
-                                                                    <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=2">2</a></li>
-                                                                    <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=3">3</a></li>
-                                                                    <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=4">4</a></li>
-                                                                    <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=5">5</a></li>
-                                                                    <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=6">6</a></li>
-                                                                    <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=7">7</a></li>
-                                                                    <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=8">8</a></li>
-                                                                    <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=9">9</a></li>
-                                                                    <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=10">10</a></li>
-                                                                    <li className="page-item"><a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=11">11</a></li>
-                                                                    <li className="page-item">
-                                                                        <a className="page-link" href="https://hammertradex.com/admin-panel/All-Members?page=2" rel="next" aria-label="Next »">›</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
-                                                        </div>
-                                                    </center>
+                                                   
                                                 </div>
                                             </div>
+                                            <center style={{ float: 'right' }}>
+                                                <div>
+                                                    <nav>
+                                                        <ul className="pagination">
+                                                            <TablePagination sx={{ color: 'orange' }}
+                                                                rowsPerPageOptions={rowsPerPageOptions}
+                                                                component="div"
+                                                                count={tableData.length}
+                                                                rowsPerPage={rowsPerPage}
+                                                                page={page}
+                                                                onPageChange={handleChangePage}
+                                                                onRowsPerPageChange={handleChangeRowsPerPage}
+                                                            />
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                            </center>
                                         </div>
+                                       
                                     </div>
                                 </div>
                                 {/* Primary table end */}

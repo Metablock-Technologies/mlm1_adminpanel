@@ -3,6 +3,7 @@ import "../StyleFolder/stackManage.css";
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { token, baseURL } from '../token';
 import axios from 'axios';
+import { TablePagination } from '@mui/material';
 
 function StackManage() {
 
@@ -11,6 +12,10 @@ function StackManage() {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+
+    const rowsPerPageOptions = [10, 25, 50];
 
     const handleReset = () => {
         setStartDate("");
@@ -78,7 +83,23 @@ function StackManage() {
         fetchData();
     }, []);
 
+    // Calculate the index of the first and last data items to display
+    const startIndex = page * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
 
+    // Slice the data to display only the current page
+    const displayedData = tableData.slice(startIndex, endIndex);
+
+    // Create a function to handle page change
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    // Create a function to handle rows per page change
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0); // Reset to the first page when changing rows per page
+    };
     const handleSearch = (e) => {
         e.preventDefault();
         const filteredData = tableData.filter((item) => {
@@ -133,6 +154,8 @@ function StackManage() {
         console.log(tableData);
         console.log(filteredData);
     };
+
+   
 
     return (
         <>
@@ -247,30 +270,28 @@ function StackManage() {
                                                     </tbody>
                                                 </table>
                                                 <br /><br />
-                                                <center>
-                                                    <div>
-                                                        <nav>
-                                                            <ul className="pagination">
-                                                                {Array.from({ length: totalPages }, (_, index) => (
-                                                                    <li
-                                                                        key={index}
-                                                                        className={`page-item ${currentPage === index + 1 ? "active" : ""}`}
-                                                                    >
-                                                                        <button
-                                                                            className="page-link"
-                                                                            onClick={() => paginate(index + 1)}
-                                                                        >
-                                                                            {index + 1}
-                                                                        </button>
-                                                                    </li>
-                                                                ))}
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                </center>
+                                                
                                             </div>
                                         </div>
+                                        <center style={{ float: 'right' }}>
+                                            <div>
+                                                <nav>
+                                                    <ul className="pagination">
+                                                        <TablePagination sx={{ color: 'orange' }}
+                                                            rowsPerPageOptions={rowsPerPageOptions}
+                                                            component="div"
+                                                            count={tableData.length}
+                                                            rowsPerPage={rowsPerPage}
+                                                            page={page}
+                                                            onPageChange={handleChangePage}
+                                                            onRowsPerPageChange={handleChangeRowsPerPage}
+                                                        />
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                        </center>
                                     </div>
+
                                 </div>
                             </div>
                             {/* Primary table end */}

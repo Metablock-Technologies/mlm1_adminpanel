@@ -5,6 +5,7 @@ import { token, baseURL } from '../token';
 import axios from 'axios';
 import "../StyleFolder/AllUsers.css"
 import Demo from './Demo';
+import { TablePagination } from '@mui/material';
 
 function AllUsers() {
     const [fromDate, setFromDate] = useState('');
@@ -17,9 +18,11 @@ function AllUsers() {
     const [endDate, setEndDate] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
 
-
+    const rowsPerPageOptions = [10, 25, 50];
     const handleSearch = (e) => {
         e.preventDefault();
         const filteredData = tableData.filter((item) => {
@@ -130,6 +133,24 @@ function AllUsers() {
         getallusers();
     }, [])
 
+    // Calculate the index of the first and last data items to display
+    const startIndex = page * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+
+    // Slice the data to display only the current page
+    const displayedData = tableData.slice(startIndex, endIndex);
+
+    // Create a function to handle page change
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    // Create a function to handle rows per page change
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0); // Reset to the first page when changing rows per page
+    };
+
     return (
         <>
             <div className="content-wrapper" style={{ minHeight: '706.4px' }}>
@@ -185,7 +206,7 @@ function AllUsers() {
                                                     <input
                                                         type="text"
                                                         className="form-control"
-                                                        placeholder="Name,Username"
+                                                        placeholder="Username"
                                                         name="userid"
                                                         value={searchQuery}
                                                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -219,7 +240,88 @@ function AllUsers() {
                                             </div>
                                             <br />
                                         </form>
-                                        <Demo tableData={tableData} />
+                                        <div className="single-table">
+                                            <div className="table-responsive">
+                                                <table className="table text-center">
+                                                    <thead className="text-capitalize">
+                                                        <tr>
+                                                            <th>SR.No.</th>
+                                                            <th>Name</th>
+                                                            <th>User Name</th>
+                                                            <th>Refer Code</th>
+                                                            <th>Email</th>
+                                                            <th>Mobile Number</th>
+                                                            <th>Date</th>
+                                                            <th>Time</th>
+                                                            <th>Type</th>
+                                                            <th>Status</th>
+                                                            <th>Total members</th>
+                                                            <th>Sponser ID</th>
+                                                            <th>Active users</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {tableData?.length === 0 ? (
+                                                            <tr>
+                                                                <td colSpan="12" style={{ color: 'black', textAlign: 'center' }}>
+                                                                    No results found
+                                                                </td>
+                                                            </tr>
+                                                        ) :
+                                                            tableData?.map((row, index) => {
+                                                                const createdAt = new Date(row.data.createdAt);
+                                                                const formattedDate = createdAt.toLocaleDateString();
+                                                                const formattedTime = createdAt.toLocaleTimeString();
+                                                                return (
+                                                                    <tr key={index}>
+                                                                        <td>{index + 1}</td>
+                                                                        <td>{row.data.name}</td>
+                                                                        <td>{row.data.username}</td>
+                                                                        <td>{row.data.hashcode}</td>
+                                                                        <td>{row.data.email}</td>
+                                                                        <td>{row.data.phonenumber}</td>
+                                                                        <td>{formattedDate}</td>
+                                                                        <td>{formattedTime}</td>
+                                                                        <td>{row.data.type}</td>
+                                                                        <td>
+                                                                            {/* Convert Status field into a button */}
+                                                                            <button className={`btn ${row.status === 'Active' ? 'btn-success' : 'btn-danger'}`}>
+                                                                                {row.status}
+                                                                            </button>
+                                                                        </td>
+                                                                        <td>{row.metadata.totalUsers}</td>
+                                                                        <td>{row.metadata.sponsorId}</td>
+                                                                        <td>{row.metadata.activeUsers}</td>
+                                                                        {/* ... render other fields */}
+                                                                    </tr>
+                                                                )
+                                                            })
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                                <br /><br />
+                                               
+                                            </div>
+                                        </div>
+
+                                        <center style={{ float: 'right' }}>
+                                            <div>
+                                                <nav>
+                                                    <ul className="pagination">
+                                                        <TablePagination sx={{ color: 'orange' }}
+                                                            rowsPerPageOptions={rowsPerPageOptions}
+                                                            component="div"
+                                                            count={tableData.length}
+                                                            rowsPerPage={rowsPerPage}
+                                                            page={page}
+                                                            onPageChange={handleChangePage}
+                                                            onRowsPerPageChange={handleChangeRowsPerPage}
+                                                        />
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                        </center>
+                                        {/* <Demo tableData={tableData} /> */}
                                     </div>
                                 </div>
                             </div>

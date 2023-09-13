@@ -5,6 +5,10 @@ import { token, baseURL } from '../token';
 import axios from 'axios';
 import "../StyleFolder/dashboards.css"
 import { TablePagination } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { compareDesc } from 'date-fns';
+
+
 function AllActiveUSers() {
     const [fromDate, setFromDate] = useState('');
     const [toDate, setToDate] = useState('');
@@ -18,11 +22,12 @@ function AllActiveUSers() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
+    const navigate = useNavigate();
     const rowsPerPageOptions = [10, 25, 50];
     const handleSearch = (e) => {
         e.preventDefault();
         const filteredData = tableData.filter((item) => {
-            const itemDate = new Date(item.data.createdAt);
+            const itemDate = new Date(item?.data?.createdAt);
             console.log("date", itemDate);
             const startDateObj = startDate ? new Date(startDate) : null;
             const endDateObj = endDate ? new Date(endDate) : null;
@@ -64,11 +69,11 @@ function AllActiveUSers() {
             }
 
             // Check the user name
-            if (searchQuery && !item.data.username.toLowerCase().includes(searchQuery.toLowerCase())) {
+            if (searchQuery && !item?.data?.username?.toLowerCase().includes(searchQuery.toLowerCase())) {
                 return false;
             }
-            console.log(selectedStatus, item.data.status);
-            if (selectedStatus !== "" && item.data.status !== selectedStatus) {
+            console.log(selectedStatus, item?.data?.status);
+            if (selectedStatus !== "" && item?.data?.status !== selectedStatus) {
                 return false;
             }
             return true;
@@ -92,7 +97,8 @@ function AllActiveUSers() {
 
     const getallusers = async () => {
         try {
-            const accessToken = token;
+            // const accessToken = token;
+            const accessToken = localStorage.getItem('access_token'); // Retrieve access token from localStorage
             const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
             console.log(headers);
             const response = await axios.get(baseURL + '/user/myteam', {
@@ -109,7 +115,7 @@ function AllActiveUSers() {
                     const secondApiResponse = await axios.get(baseURL + `/user/profile/${userId}`, {
                         headers: headers
                     });
-                    if (secondApiResponse.data.data.status === 'active') {
+                    if (secondApiResponse.data.data.status === 'active' && secondApiResponse.data.data.type === "main") {
                         console.log(`User ID: ${userId}`, secondApiResponse.data.data);
                         userProfileData.push(secondApiResponse.data); // Accumulate user profile data
                     }
@@ -119,6 +125,7 @@ function AllActiveUSers() {
             }
 
             console.log("userprofiledata", userProfileData);
+            userProfileData.sort((a, b) => compareDesc(new Date(a.data.createdAt), new Date(b.data.createdAt)));
             setTableData(userProfileData);
             // setExtradata(extraProfile);
             console.log("tabledata", tableData);
@@ -147,6 +154,12 @@ function AllActiveUSers() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0); // Reset to the first page when changing rows per page
     };
+
+    const handlerenew = async (id) => {
+        // navigate(`${id}`)
+        navigate(`/AllActiveUsers/${id}`)
+    }
+
     return (
         <>
             <div className={`fade-in ${loading ? '' : 'active'}`}>
@@ -241,39 +254,38 @@ function AllActiveUSers() {
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            {tableData.length === 0 ? (
+                                                            {tableData?.length === 0 ? (
                                                                 <tr>
                                                                     <td colSpan="12" style={{ color: 'black', textAlign: 'center' }}>
                                                                         No results found
                                                                     </td>
                                                                 </tr>
                                                             ) :
-                                                                tableData.map((row, index) => (
+                                                                tableData?.map((row, index) => (
                                                                     <tr key={index}>
                                                                         <td>{index + 1}</td>
-                                                                        <td>{row.data.name}</td>
-                                                                        <td>{row.data.username}</td>
-                                                                        <td>{row.data.hashcode}</td>
-                                                                        <td>{row.data.email}</td>
-                                                                        <td>{row.data.phonenumber}</td>
-                                                                        <td>{row.data.createdAt}</td>
-                                                                        <td>{row.data.type}</td>
+                                                                        <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)} >{row?.data?.name}</td>
+                                                                        <td>{row?.data?.username}</td>
+                                                                        <td>{row?.data?.hashcode}</td>
+                                                                        <td>{row?.data?.email}</td>
+                                                                        <td>{row?.data?.phonenumber}</td>
+                                                                        <td>{row?.data?.createdAt}</td>
+                                                                        <td>{row?.data?.type}</td>
                                                                         <td>
                                                                             {/* Convert Status field into a button */}
-                                                                            <button className={`btn ${row.status === 'Active' ? 'btn-success' : 'btn-danger'}`}>
-                                                                                {row.status}
-                                                                            </button>
+                                                                            {/* <button className={`btn ${row?.data?.status === 'Active' ? 'btn-success' : 'btn-danger'}`}> */}
+                                                                            {row?.data?.status}
+                                                                            {/* </button> */}
                                                                         </td>
-                                                                        <td>{row.metadata.totalUsers}</td>
-                                                                        <td>{row.metadata.sponsorId}</td>
-                                                                        <td>{row.metadata.activeUsers}</td>
+                                                                        <td>{row?.metadata?.totalUsers}</td>
+                                                                        <td>{row?.metadata?.sponsorId}</td>
+                                                                        <td>{row?.metadata?.activeUsers}</td>
                                                                         {/* ... render other fields */}
                                                                     </tr>
                                                                 ))}
                                                         </tbody>
                                                     </table>
                                                     <br /><br />
-                                                   
                                                 </div>
                                             </div>
                                             <center style={{ float: 'right' }}>
@@ -283,7 +295,7 @@ function AllActiveUSers() {
                                                             <TablePagination sx={{ color: 'orange' }}
                                                                 rowsPerPageOptions={rowsPerPageOptions}
                                                                 component="div"
-                                                                count={tableData.length}
+                                                                count={tableData?.length}
                                                                 rowsPerPage={rowsPerPage}
                                                                 page={page}
                                                                 onPageChange={handleChangePage}
@@ -294,7 +306,6 @@ function AllActiveUSers() {
                                                 </div>
                                             </center>
                                         </div>
-                                       
                                     </div>
                                 </div>
                                 {/* Primary table end */}
@@ -303,7 +314,6 @@ function AllActiveUSers() {
                     </section>
                 </div>
             </div>
-
         </>
     )
 }

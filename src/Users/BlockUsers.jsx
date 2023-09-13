@@ -3,6 +3,16 @@ import { token, baseURL } from '../token';
 import axios from 'axios';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { TablePagination } from '@mui/material';
+import LockOpenIcon from '@mui/icons-material/LockOpen'; // Import the LockOpenIcon
+import { compareDesc } from 'date-fns';
+
+import {
+    IconButton,
+    Tooltip,
+} from '@material-tailwind/react';
+import { useNavigate } from 'react-router-dom';
+
+
 
 function BlockUsers() {
 
@@ -14,7 +24,7 @@ function BlockUsers() {
     const [iconRotation, setIconRotation] = useState(0);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-
+    const navigate = useNavigate();
     const rowsPerPageOptions = [10, 25, 50];
     const handleSearch = (e) => {
         e.preventDefault();
@@ -61,11 +71,11 @@ function BlockUsers() {
             }
 
             // Check the user name
-            if (searchQuery && !item.data.username.toLowerCase().includes(searchQuery.toLowerCase())) {
+            if (searchQuery && !item?.data?.username?.toLowerCase().includes(searchQuery.toLowerCase())) {
                 return false;
             }
-            console.log(selectedStatus, item.data.status);
-            if (selectedStatus !== "" && item.data.status !== selectedStatus) {
+            console.log(selectedStatus, item?.data?.status);
+            if (selectedStatus !== "" && item?.data?.status !== selectedStatus) {
                 return false;
             }
             return true;
@@ -88,7 +98,8 @@ function BlockUsers() {
 
     const getallusers = async () => {
         try {
-            const accessToken = token;
+            // const accessToken = token;
+            const accessToken = localStorage.getItem('access_token'); // Retrieve access token from localStorage
             const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
             console.log(headers);
             const response = await axios.get(baseURL + '/user/myteam', {
@@ -115,6 +126,7 @@ function BlockUsers() {
             }
 
             console.log("userprofiledata", userProfileData);
+            userProfileData.sort((a, b) => compareDesc(new Date(a.data.createdAt), new Date(b.data.createdAt)));
             setTableData(userProfileData);
             // setExtradata(extraProfile);
             // console.log("tabledata", tableData);
@@ -143,6 +155,33 @@ function BlockUsers() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0); // Reset to the first page when changing rows per page
     };
+
+    const handleblockuser = async (id) => {
+        try {
+            const reqbody = {
+                status: "false",
+                id: id
+            }
+
+            const accessToken = localStorage.getItem('access_token'); // Retrieve access token from localStorage
+            const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
+            console.log(headers);
+            const response = await axios.post(baseURL + '/user/block', reqbody, {
+                headers: headers
+            });
+            const userData = response.data.data;
+            console.log("userdata", userData);
+            // setAllusers(userData);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handlerenew = async (id) => {
+        // navigate(`${id}`)
+        navigate(`/BlockUsers/${id}`)
+    }
+
     return (
         <>
             <div className="content-header">
@@ -170,17 +209,17 @@ function BlockUsers() {
                                     <form role="form" type="submit">
                                         {/* <input type="hidden" name="_token" defaultValue="eLkpGsUBYr9izTDYhoNZCCY6pxm06c8hRkw1N41O" /> */}
                                         <div className="col-md-6 col-12 mb-3">
-                                           
+
                                             <div className="form-group">
                                                 <label>Pick a start date:</label>
                                                 <div className="input-group date" id="datepicker" data-target-input="nearest">
                                                     <input type="date" className="form-control t" placeholder="yyyy-mm-dd" name="start_date" onChange={(e) => setStartDate(e.target.value)} value={startDate} />
                                                 </div>
-                                                </div>
-                                            
+                                            </div>
+
                                         </div>
                                         <div className="col-md-6 col-12 mb-3 ">
-                                        
+
                                             <div className="form-group ">
                                                 <label>Pick a end date:</label>
                                                 <div className="input-group date" id="datepicker1" data-target-input="nearest">
@@ -230,55 +269,85 @@ function BlockUsers() {
                                                         <th>Total members</th>
                                                         <th>Sponser ID</th>
                                                         <th>Active users</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        tableData.length === 0 ? (
+                                                        tableData?.length === 0 ? (
                                                             <tr>
                                                                 <td colSpan="12" style={{ color: 'black', textAlign: 'center' }}>
                                                                     No results found
                                                                 </td>
                                                             </tr>
                                                         ) :
-                                                            tableData.map((row, index) => (
+                                                            tableData?.map((row, index) => (
                                                                 <tr key={index}>
                                                                     <td>{index + 1}</td>
-                                                                    <td>{row.data.name}</td>
-                                                                    <td>{row.data.username}</td>
-                                                                    <td>{row.data.hashcode}</td>
-                                                                    <td>{row.data.email}</td>
-                                                                    <td>{row.data.phonenumber}</td>
-                                                                    <td>{row.data.createdAt}</td>
-                                                                    <td>{row.data.type}</td>
+                                                                    <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)}>{row?.data?.name}</td>
+                                                                    <td>{row?.data?.username}</td>
+                                                                    <td>{row?.data?.hashcode}</td>
+                                                                    <td>{row?.data?.email}</td>
+                                                                    <td>{row?.data?.phonenumber}</td>
+                                                                    <td>{row?.data?.createdAt}</td>
+                                                                    <td>{row?.data?.type}</td>
                                                                     <td>
                                                                         {/* Convert Status field into a button */}
-                                                                        <button className={`btn ${row.status === 'Active' ? 'btn-success' : 'btn-danger'}`}>
-                                                                            {row.status}
-                                                                        </button>
+                                                                        {/* <button className={`btn ${row?.data?.status === 'Active' ? 'btn-success' : 'btn-danger'}`}> */}
+                                                                        {row?.data?.status}
+                                                                        {/* </button> */}
                                                                     </td>
-                                                                    <td>{row.metadata.totalUsers}</td>
-                                                                    <td>{row.metadata.sponsorId}</td>
-                                                                    <td>{row.metadata.activeUsers}</td>
+                                                                    <td>{row?.metadata?.totalUsers}</td>
+                                                                    <td>{row?.metadata?.sponsorId}</td>
+                                                                    <td>{row?.metadata?.activeUsers}</td>
                                                                     {/* ... render other fields */}
+                                                                    {/* <td>
+                                                                        <Tooltip content="Unblock User">
+                                                                            <IconButton
+                                                                                variant="text"
+                                                                                color="blue-gray"
+                                                                                onClick={() => handleblockuser(row?.data?.id)} // Define your unblock user handler
+                                                                            >
+                                                                                <LockOpenIcon className="h-5 w-5" />
+                                                                            </IconButton>
+                                                                        </Tooltip>
+
+                                                                    </td> */}
+                                                                    <td>
+                                                                        {
+
+                                                                            <span onClick={() => handleblockuser(row?.data?.id, "false")}>
+                                                                                <i className="fa fa-ban"
+                                                                                ></i>
+                                                                            </span>
+                                                                            // <Tooltip content="Block User">
+                                                                            //     <IconButton
+                                                                            //         variant="text"
+                                                                            //         color="blue-gray"
+                                                                            //         onClick={() => handleBlockUser(row?.data?.id, "true")}
+                                                                            //     >
+                                                                            //     </IconButton>
+                                                                            // </Tooltip>
+                                                                        }
+                                                                    </td>
                                                                 </tr>
                                                             ))
                                                     }
                                                 </tbody>
                                             </table>
                                             <br /><br />
-                                            
-                                               
+
+
                                         </div>
                                     </div>
-                                    <center style={{float:'right'}}>
+                                    <center style={{ float: 'right' }}>
                                         <div>
                                             <nav>
                                                 <ul className="pagination">
                                                     <TablePagination sx={{ color: 'orange' }}
                                                         rowsPerPageOptions={rowsPerPageOptions}
                                                         component="div"
-                                                        count={tableData.length}
+                                                        count={tableData?.length}
                                                         rowsPerPage={rowsPerPage}
                                                         page={page}
                                                         onPageChange={handleChangePage}

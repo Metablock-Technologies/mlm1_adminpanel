@@ -7,10 +7,8 @@ import axios from 'axios';
 import "../StyleFolder/AllUsers.css"
 import Demo from './Demo';
 import { TablePagination } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import LockOpenIcon from '@mui/icons-material/LockOpen'; // Import the LockOpenIcon
-import 'font-awesome/css/font-awesome.min.css';
-import { faBan } from '@fortawesome/free-solid-svg-icons';
 import { compareDesc } from 'date-fns';
 
 import {
@@ -19,7 +17,7 @@ import {
 } from '@material-tailwind/react';
 
 
-function AllUsers() {
+function RenewalUser() {
     const [fromDate, setFromDate] = useState('');
     const [toDate, setToDate] = useState('');
     const [searchUserInput, setSearchUserInput] = useState('');
@@ -34,6 +32,14 @@ function AllUsers() {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const navigate = useNavigate();
 
+    // const location = useLocation();
+
+    const { id } = useParams()
+    console.log(id);
+    // const queryParams = new URLSearchParams(location.search);
+    // // const accessToken = localStorage.getItem('access_token');
+
+    // const name = queryParams.get('id') || '';
 
     const rowsPerPageOptions = [10, 25, 50];
     const handleSearch = (e) => {
@@ -112,27 +118,25 @@ function AllUsers() {
             const accessToken = localStorage.getItem('access_token'); // Retrieve access token from localStorage
             const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
             console.log(headers);
-            const response = await axios.get(baseURL + '/user/myteam', {
+            const response = await axios.get(baseURL + `/user/myrenew/${id}`, {
                 headers: headers
             });
+            console.log("response", response);
             const userData = response.data.data;
-            console.log("userdata", userData);
+            console.log("renewuserdata", userData);
             setAllusers(userData);
 
             const userProfileData = [];
             // const extraProfile = [];
-            for (const userId of userData) {
-                console.log("heyy");
+            for (const renewuser of userData) {
+                console.log("renewuser", renewuser);
+                console.log("renewuser", renewuser.renewal_id);
                 try {
-                    const secondApiResponse = await axios.get(baseURL + `/user/profile/${userId}`, {
+                    const secondApiResponse = await axios.get(baseURL + `/user/profile/${renewuser.renewal_id}`, {
                         headers: headers
                     });
-                    console.log(`User ID: ${userId}`, secondApiResponse.data.data);
-                    // if (secondApiResponse.data.data) {
-                    //     userProfileData.push(secondApiResponse.data); // Accumulate user profile data
-                    // }
-                    if (secondApiResponse.data.data.type === 'main') {
-                        console.log(`User ID: ${userId}`, secondApiResponse.data.data);
+                    console.log(`renew User ID: ${renewuser.renewal_id}`, secondApiResponse.data.data);
+                    if (secondApiResponse.data.data) {
                         userProfileData.push(secondApiResponse.data); // Accumulate user profile data
                     }
                     // extraProfile.push(secondApiResponse.data.metadata);
@@ -141,7 +145,7 @@ function AllUsers() {
                 }
             }
 
-            console.log("userprofiledata", userProfileData);
+            console.log("renew profile ", userProfileData);
             userProfileData.sort((a, b) => compareDesc(new Date(a.data.createdAt), new Date(b.data.createdAt)));
             setTableData(userProfileData);
             // setExtradata(extraProfile);
@@ -193,10 +197,6 @@ function AllUsers() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0); // Reset to the first page when changing rows per page
     };
-    const handlerenew = async (id) => {
-        // navigate(`${id}`)
-        navigate(`/AllUsers/${id}`)
-    }
 
     return (
         <>
@@ -323,7 +323,7 @@ function AllUsers() {
                                                                 return (
                                                                     <tr key={index}>
                                                                         <td>{index + 1}</td>
-                                                                        <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)}>{row?.data?.name}</td>
+                                                                        <td>{row?.data?.name}</td>
                                                                         <td>{row?.data?.username}</td>
                                                                         <td>{row?.data?.hashcode}</td>
                                                                         <td>{row?.data?.email}</td>
@@ -332,10 +332,7 @@ function AllUsers() {
                                                                         <td>{formattedTime}</td>
                                                                         <td>{row?.data?.type}</td>
                                                                         <td>
-                                                                            {/* Convert Status field into a button */}
-                                                                            {/* <button className={`btn ${row?.data?.status === 'Active' ? 'btn-success' : 'btn-danger'}`}> */}
                                                                             {row?.data?.status}
-                                                                            {/* </button> */}
                                                                         </td>
                                                                         <td>{row?.metadata?.totalUsers}</td>
                                                                         <td>{row?.metadata?.sponsorId}</td>
@@ -343,7 +340,6 @@ function AllUsers() {
                                                                         <td>
                                                                             {row?.data?.status === "blocked" ?
                                                                                 <span onClick={() => handleBlockUser(row?.data?.id, "false")}>
-
                                                                                     <i className="fa-sharp fa-solid fa-unlock"></i>
                                                                                 </span>
                                                                                 // <Tooltip content="Unblock User">
@@ -371,7 +367,29 @@ function AllUsers() {
                                                                                 // </Tooltip>
                                                                             }
                                                                         </td>
-                                                                        {/* ... render other fields */}
+                                                                        {/* <td>
+                                                                            {row?.data?.status === "blocked" ?
+                                                                                <Tooltip content="Unblock User">
+                                                                                    <IconButton
+                                                                                        variant="text"
+                                                                                        color="blue-gray"
+                                                                                        onClick={() => handleBlockUser(row?.data?.id, "false")} // Define your unblock user handler
+                                                                                    >
+                                                                                        <LockOpenIcon className="h-5 w-5" />
+                                                                                    </IconButton>
+                                                                                </Tooltip>
+                                                                                :
+                                                                                <Tooltip content="Block User">
+                                                                                    <IconButton
+                                                                                        variant="text"
+                                                                                        color="blue-gray"
+                                                                                        onClick={() => handleBlockUser(row?.data?.id, "true")}
+                                                                                    >
+                                                                                        <BlockIcon className="h-5 w-5" />
+                                                                                    </IconButton>
+                                                                                </Tooltip>
+                                                                            }
+                                                                        </td> */}
                                                                     </tr>
                                                                 )
                                                             })
@@ -414,4 +432,4 @@ function AllUsers() {
     )
 }
 
-export default AllUsers
+export default RenewalUser;

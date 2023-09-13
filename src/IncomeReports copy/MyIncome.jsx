@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { token, baseURL } from '../token';
 import axios from 'axios';
+import { compareDesc } from 'date-fns';
 
 function MyIncome() {
 
@@ -9,16 +10,18 @@ function MyIncome() {
 
     const getincome = async () => {
         try {
-            // const accessToken = localStorage.getItem('access_token'); // Retrieve access token from localStorage
+            const accessToken = localStorage.getItem('access_token'); // Retrieve access token from localStorage
             // console.log(accessToken);
-            const accessToken = token;
+            // const accessToken = token;
             const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
             console.log(headers);
             const response = await axios.get(baseURL + '/admin/dashboard', {
                 headers: headers
             });
             console.log(response.data.data);
-            setIncomedetails(response.data.data.incomeReport);
+            const updateProfile = response.data.data.incomeReport;
+            updateProfile.sort((a, b) => compareDesc(new Date(a?.createdAt), new Date(b?.createdAt)));
+            setIncomedetails(updateProfile);
         } catch (error) {
             console.error("error:--", error);
         }
@@ -63,37 +66,37 @@ function MyIncome() {
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">Levelincome:- </p>
                                             </div>
-                                            <div className="col s3"><span>{incomeDetails.levelincome}</span></div>
+                                            <div className="col s3"><span>{incomeDetails?.levelincome}</span></div>
                                         </div>
                                         <div className="row">
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">Amount spent:- </p>
                                             </div>
-                                            <div className="col s3"><span>{incomeDetails.amount_spent}</span></div>
+                                            <div className="col s3"><span>{incomeDetails?.amount_spent}</span></div>
                                         </div>
                                         <div className="row">
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">Autopool1:- </p>
                                             </div>
-                                            <div className="col s3"><span>{incomeDetails.autopool1}</span></div>
+                                            <div className="col s3"><span>{incomeDetails?.autopool1}</span></div>
                                         </div>
                                         <div className="row">
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">Autopool2:- </p>
                                             </div>
-                                            <div className="col s3"><span>{incomeDetails.autopool2}</span></div>
+                                            <div className="col s3"><span>{incomeDetails?.autopool2}</span></div>
                                         </div>
                                         <div className="row">
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">Referral:- </p>
                                             </div>
-                                            <div className="col s3"><span>{incomeDetails.referral}</span></div>
+                                            <div className="col s3"><span>{incomeDetails?.referral}</span></div>
                                         </div>
                                         <div className="row">
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">TotalIncome:- </p>
                                             </div>
-                                            <div className="col s3"><span>{incomeDetails.totalincome}</span></div>
+                                            <div className="col s3"><span>{incomeDetails?.totalincome}</span></div>
                                         </div>
                                     </div>
                                     {/* // ))} */}

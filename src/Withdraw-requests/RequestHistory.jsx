@@ -5,6 +5,7 @@ import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { token, baseURL } from '../token';
 import axios from 'axios';
 import { TablePagination } from '@mui/material';
+import { compareDesc } from 'date-fns';
 
 function RejectRequest() {
     const [tableData, setTableData] = useState([]);
@@ -25,11 +26,12 @@ function RejectRequest() {
         fetchData()
     };
 
-   
+
 
     const getUserNameByUserId = async (userId) => {
         try {
-            const accessToken = token;
+            // const accessToken = token;
+            const accessToken = localStorage.getItem('access_token'); // Retrieve access token from localStorage
             const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
             const response = await axios.get(`${baseURL}/user/profile/${userId}`, {
                 headers: headers
@@ -43,7 +45,8 @@ function RejectRequest() {
 
     const fetchData = async () => {
         try {
-            const accessToken = token;
+            // const accessToken = token;
+            const accessToken = localStorage.getItem('access_token'); // Retrieve access token from localStorage
             const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
             const response = await axios.get(`${baseURL}/user/transactions`, {
                 headers: headers
@@ -61,6 +64,8 @@ function RejectRequest() {
 
             // Wait for all promises to resolve
             const updatedData = await Promise.all(promises);
+            updatedData.sort((a, b) => compareDesc(new Date(a?.createdAt), new Date(b?.createdAt)));
+
             setTableData(updatedData);
             console.log("tabledata", tableData);
         } catch (error) {
@@ -76,7 +81,7 @@ function RejectRequest() {
     const handleSearch = (e) => {
         e.preventDefault();
         const filteredData = tableData.filter((item) => {
-            const itemDate = new Date(item.createdAt);
+            const itemDate = new Date(item?.createdAt);
             const startDateObj = startDate ? new Date(startDate) : null;
             const endDateObj = endDate ? new Date(endDate) : null;
 
@@ -116,7 +121,7 @@ function RejectRequest() {
             }
 
             // Check the user name
-            if (searchQuery && !item.username.toLowerCase().includes(searchQuery.toLowerCase())) {
+            if (searchQuery && !item?.username?.toLowerCase().includes(searchQuery.toLowerCase())) {
                 return false;
             }
 
@@ -174,9 +179,6 @@ function RejectRequest() {
                                 <div className="card">
                                     <div className="card-body">
                                         <form role="form" type="submit">
-
-
-
                                             {/* <input type="hidden" name="_token" defaultValue="eLkpGsUBYr9izTDYhoNZCCY6pxm06c8hRkw1N41O" /> */}
                                             <div className="col-md-6 col-12 mb-3">
                                                 <div className="form-group">
@@ -242,18 +244,18 @@ function RejectRequest() {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {tableData.map((item) => {
-                                                            const createdAt = new Date(item.createdAt);
+                                                        {tableData?.map((item) => {
+                                                            const createdAt = new Date(item?.createdAt);
                                                             const formattedDate = createdAt.toLocaleDateString();
                                                             const formattedTime = createdAt.toLocaleTimeString();
                                                             // console.log(createdAt, formattedDate, formattedTime);
                                                             return (
-                                                                <tr key={item.transaction_id}>
+                                                                <tr key={item?.transaction_id}>
                                                                     {/* <td>{item.transaction_id}</td> */}
-                                                                    <td>{item.userId}</td>
-                                                                    <td>{item.userName}</td>
-                                                                    <td>{item.detail}</td>
-                                                                    <td>{item.amount}</td>
+                                                                    <td>{item?.userId}</td>
+                                                                    <td>{item?.userName}</td>
+                                                                    <td>{item?.detail}</td>
+                                                                    <td>{item?.amount}</td>
                                                                     <td>{formattedDate}</td>
                                                                     <td>{formattedTime}</td>
                                                                 </tr>
@@ -262,7 +264,7 @@ function RejectRequest() {
                                                     </tbody>
                                                 </table>
                                                 <br /><br />
-                                              
+
                                             </div>
                                         </div>
                                         <center style={{ float: 'right' }}>
@@ -272,7 +274,7 @@ function RejectRequest() {
                                                         <TablePagination sx={{ color: 'orange' }}
                                                             rowsPerPageOptions={rowsPerPageOptions}
                                                             component="div"
-                                                            count={tableData.length}
+                                                            count={tableData?.length}
                                                             rowsPerPage={rowsPerPage}
                                                             page={page}
                                                             onPageChange={handleChangePage}

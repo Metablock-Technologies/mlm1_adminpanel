@@ -38,7 +38,7 @@ export default function WithdrawReport() {
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItemButton onClick={() => navigate('/RequestHistory')} sx={{ pl: 4 }}>
+                    <ListItemButton onClick={() => navigate('RequestHistory')} sx={{ pl: 4 }}>
                         <ListItemIcon>
                             <PeopleIcon sx={{ marginLeft: '-11px', color: 'white' }} />
                         </ListItemIcon>

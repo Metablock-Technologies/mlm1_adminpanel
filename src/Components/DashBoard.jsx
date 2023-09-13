@@ -35,9 +35,9 @@ function DashBoard() {
 
     const getdashboard = async () => {
         try {
-            // const accessToken = localStorage.getItem('access_token'); // Retrieve access token from localStorage
+            const accessToken = localStorage.getItem('access_token'); // Retrieve access token from localStorage
             // console.log(accessToken);
-            const accessToken = token;
+            // const accessToken = token;
             const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
             console.log(headers);
             const response = await axios.get(baseURL + '/admin/dashboard', {
@@ -67,7 +67,7 @@ function DashBoard() {
                 <section className="dasgboard_main_section light_border">
                     <div className="row ">
                         <div className="col-lg-12 col-md-12 col-sm-12">
-                            <h2 className="welcome_heading">Welcome to <span className="color_span"> Hammer Tradex </span> </h2>
+                            <h2 className="welcome_heading">Welcome to <span className="color_span"> OkDream25 </span> </h2>
                         </div>
                     </div>
                 </section>
@@ -88,25 +88,25 @@ function DashBoard() {
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">Total Member: </p>
                                             </div>
-                                            <div className="col s3"><span>{memberwithdrawDetails.totalMembers}</span></div>
+                                            <div className="col s3"><span>{memberwithdrawDetails?.totalMembers}</span></div>
                                         </div>
                                         <div className="row">
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">Active Member: </p>
                                             </div>
-                                            <div className="col s3"><span>{memberwithdrawDetails.activeMembers}</span></div>
+                                            <div className="col s3"><span>{memberwithdrawDetails?.activeMembers}</span></div>
                                         </div>
                                         <div className="row">
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">In-Active Member: </p>
                                             </div>
-                                            <div className="col s3"><span>{memberwithdrawDetails.inactiveMembers}</span></div>
+                                            <div className="col s3"><span>{memberwithdrawDetails?.inactiveMembers}</span></div>
                                         </div>
                                         <div className="row">
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">Blocked Member: </p>
                                             </div>
-                                            <div className="col s3"><span>{memberwithdrawDetails.blockedMembers}</span></div>
+                                            <div className="col s3"><span>{memberwithdrawDetails?.blockedMembers}</span></div>
                                         </div>
                                     </div>
                                     {/* // ))} */}
@@ -123,13 +123,13 @@ function DashBoard() {
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">Withdraw Requests: </p>
                                             </div>
-                                            <div className="col s3"><span>{memberwithdrawDetails.withdrawRequests}</span></div>
+                                            <div className="col s3"><span>{memberwithdrawDetails?.withdrawRequests}</span></div>
                                         </div>
                                         <div className="row">
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">Withdraw Amounts: </p>
                                             </div>
-                                            <div className="col s3"><span>{memberwithdrawDetails.withdrawAmount}</span></div>
+                                            <div className="col s3"><span>{memberwithdrawDetails?.withdrawAmount}</span></div>
                                         </div>
                                     </div>
                                     {/* ))} */}
@@ -147,37 +147,37 @@ function DashBoard() {
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">Levelincome:- </p>
                                             </div>
-                                            <div className="col s3"><span>{incomeDetails.levelincome}</span></div>
+                                            <div className="col s3"><span>{incomeDetails?.levelincome}</span></div>
                                         </div>
                                         <div className="row">
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">Amount spent:- </p>
                                             </div>
-                                            <div className="col s3"><span>{incomeDetails.amount_spent}</span></div>
+                                            <div className="col s3"><span>{incomeDetails?.amount_spent}</span></div>
                                         </div>
                                         <div className="row">
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">Autopool1:- </p>
                                             </div>
-                                            <div className="col s3"><span>{incomeDetails.autopool1}</span></div>
+                                            <div className="col s3"><span>{incomeDetails?.autopool1}</span></div>
                                         </div>
                                         <div className="row">
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">Autopool2:- </p>
                                             </div>
-                                            <div className="col s3"><span>{incomeDetails.autopool2}</span></div>
+                                            <div className="col s3"><span>{incomeDetails?.autopool2}</span></div>
                                         </div>
                                         <div className="row">
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">Referral:- </p>
                                             </div>
-                                            <div className="col s3"><span>{incomeDetails.referral}</span></div>
+                                            <div className="col s3"><span>{incomeDetails?.referral}</span></div>
                                         </div>
                                         <div className="row">
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">TotalIncome:- </p>
                                             </div>
-                                            <div className="col s3"><span>{incomeDetails.totalincome}</span></div>
+                                            <div className="col s3"><span>{incomeDetails?.totalincome}</span></div>
                                         </div>
                                     </div>
                                     {/* // ))} */}

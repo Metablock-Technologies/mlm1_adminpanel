@@ -35,7 +35,7 @@ export default function UsersSection() {
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItemButton onClick={() => navigate('/AllUsers')} sx={{ pl: 4 }}>
+                    <ListItemButton onClick={() => navigate('AllUsers')} sx={{ pl: 4 }}>
                         <ListItemIcon>
                             <PeopleIcon sx={{ marginLeft: '-11px', color: 'white' }} />
                         </ListItemIcon>
@@ -45,7 +45,7 @@ export default function UsersSection() {
             </Collapse>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItemButton onClick={() => navigate('/AllActiveUsers')} sx={{ pl: 4 }}>
+                    <ListItemButton onClick={() => navigate('AllActiveUsers')} sx={{ pl: 4 }}>
                         <ListItemIcon>
                             <PeopleIcon sx={{ marginLeft: '-11px', color: 'white' }} />
                         </ListItemIcon>
@@ -55,7 +55,7 @@ export default function UsersSection() {
             </Collapse>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItemButton onClick={() => navigate('/InActiveUSers')} sx={{ pl: 4 }}>
+                    <ListItemButton onClick={() => navigate('InActiveUSers')} sx={{ pl: 4 }}>
                         <ListItemIcon>
                             <PeopleIcon sx={{ marginLeft: '-11px', color: 'white' }} />
                         </ListItemIcon>
@@ -65,7 +65,7 @@ export default function UsersSection() {
             </Collapse>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItemButton onClick={() => navigate('/BlockUsers')} sx={{ pl: 4 }}>
+                    <ListItemButton onClick={() => navigate('BlockUsers')} sx={{ pl: 4 }}>
                         <ListItemIcon>
                             <PeopleIcon sx={{ marginLeft: '-11px', color: 'white' }} />
                         </ListItemIcon>

@@ -6,8 +6,6 @@ import axios from 'axios';
 import { TablePagination } from '@mui/material';
 
 function StackManage() {
-
-
     const [tableData, setTableData] = useState([]);
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
@@ -30,9 +28,9 @@ function StackManage() {
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = tableData.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = tableData?.slice(indexOfFirstItem, indexOfLastItem);
 
-    const totalPages = Math.ceil(tableData.length / itemsPerPage);
+    const totalPages = Math.ceil(tableData?.length / itemsPerPage);
 
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -40,7 +38,8 @@ function StackManage() {
 
     const getUserNameByUserId = async (userId) => {
         try {
-            const accessToken = token;
+            // const accessToken = token;
+            const accessToken = localStorage.getItem('access_token'); // Retrieve access token from localStorage
             const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
             const response = await axios.get(`${baseURL}/user/profile/${userId}`, {
                 headers: headers
@@ -54,7 +53,8 @@ function StackManage() {
 
     const fetchData = async () => {
         try {
-            const accessToken = token;
+            // const accessToken = token;
+            const accessToken = localStorage.getItem('access_token'); // Retrieve access token from localStorage
             const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
             const response = await axios.get(`${baseURL}/user/transactions`, {
                 headers: headers
@@ -62,7 +62,7 @@ function StackManage() {
             const userData = response.data.data;
 
             // Fetch usernames for each user ID in parallel
-            const promises = userData.map(async (item) => {
+            const promises = userData?.map(async (item) => {
                 const userName = await getUserNameByUserId(item.userId);
                 return {
                     ...item,
@@ -88,7 +88,7 @@ function StackManage() {
     const endIndex = startIndex + rowsPerPage;
 
     // Slice the data to display only the current page
-    const displayedData = tableData.slice(startIndex, endIndex);
+    const displayedData = tableData?.slice(startIndex, endIndex);
 
     // Create a function to handle page change
     const handleChangePage = (event, newPage) => {
@@ -102,8 +102,8 @@ function StackManage() {
     };
     const handleSearch = (e) => {
         e.preventDefault();
-        const filteredData = tableData.filter((item) => {
-            const itemDate = new Date(item.createdAt);
+        const filteredData = tableData?.filter((item) => {
+            const itemDate = new Date(item?.createdAt);
             const startDateObj = startDate ? new Date(startDate) : null;
             const endDateObj = endDate ? new Date(endDate) : null;
 
@@ -143,7 +143,7 @@ function StackManage() {
             }
 
             // Check the user name
-            if (searchQuery && !item.userName.toLowerCase().includes(searchQuery.toLowerCase())) {
+            if (searchQuery && !item?.userName?.toLowerCase().includes(searchQuery.toLowerCase())) {
                 return false;
             }
 
@@ -155,7 +155,7 @@ function StackManage() {
         console.log(filteredData);
     };
 
-   
+
 
     return (
         <>
@@ -209,7 +209,7 @@ function StackManage() {
                                                     <input
                                                         type="text"
                                                         className="form-control"
-                                                        placeholder="Name,Username"
+                                                        placeholder="Username"
                                                         name="userid"
                                                         value={searchQuery}
                                                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -250,18 +250,18 @@ function StackManage() {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {tableData.map((item) => {
-                                                            const createdAt = new Date(item.createdAt);
+                                                        {tableData?.map((item) => {
+                                                            const createdAt = new Date(item?.createdAt);
                                                             const formattedDate = createdAt.toLocaleDateString();
                                                             const formattedTime = createdAt.toLocaleTimeString();
                                                             // console.log(createdAt, formattedDate, formattedTime);
                                                             return (
-                                                                <tr key={item.transaction_id}>
-                                                                    <td>{item.transaction_id}</td>
-                                                                    <td>{item.userId}</td>
-                                                                    <td>{item.userName}</td>
-                                                                    <td>{item.detail}</td>
-                                                                    <td>{item.amount}</td>
+                                                                <tr key={item?.transaction_id}>
+                                                                    <td>{item?.transaction_id}</td>
+                                                                    <td>{item?.userId}</td>
+                                                                    <td>{item?.userName}</td>
+                                                                    <td>{item?.detail}</td>
+                                                                    <td>{item?.amount.toFixed(0, 2)}</td>
                                                                     <td>{formattedDate}</td>
                                                                     <td>{formattedTime}</td>
                                                                 </tr>
@@ -270,7 +270,7 @@ function StackManage() {
                                                     </tbody>
                                                 </table>
                                                 <br /><br />
-                                                
+
                                             </div>
                                         </div>
                                         <center style={{ float: 'right' }}>
@@ -291,7 +291,6 @@ function StackManage() {
                                             </div>
                                         </center>
                                     </div>
-
                                 </div>
                             </div>
                             {/* Primary table end */}
@@ -299,8 +298,6 @@ function StackManage() {
                     </div>
                 </section >
             </div >
-
-
         </>
     )
 }

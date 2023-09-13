@@ -41,6 +41,9 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import ContactMailIcon from '@mui/icons-material/ContactMail'
 import MyIncome from '../IncomeReports copy/MyIncome';
 import MyTeamIncome from '../IncomeReports copy/MyTeamIncome';
+import AccountMenu from './AvatarMenu';
+import brand from "../Okdream25.png";
+import DepositFunds from './DepositFunds';
 
 
 const drawerWidth = 240;
@@ -56,20 +59,20 @@ function Header(props) {
     };
 
     const drawer = (
-        <div>
+        <div style={{ minHeight: "100vh", backgroundColor: 'black' }}>
             <Toolbar sx={{ background: 'black', placeContent: 'center' }}>
-                {/* <img
-                    src="htx-logo.png"
+                <img
+                    src={brand}
                     alt="Your Alt Text"
                     style={{ width: '100px', cursor: 'pointer', height: 'auto' }}
-                /> */}
+                />
             </Toolbar>
             <Divider />
             <List sx={{ color: 'white', background: '#161616', }}>
                 <ListItem disablePadding sx={{ display: 'block', padding: '5px', borderBottom: '1px solid #2e2a2a' }} >
                     <ListItemButton
 
-                        onClick={() => navigate("/")}  >
+                        onClick={() => navigate("dashboard")}  >
                         <ListItemIcon
                             sx={{
                                 minWidth: 0,
@@ -83,7 +86,7 @@ function Header(props) {
                 </ListItem>
                 <ListItem disablePadding sx={{ display: 'block', padding: '5px', borderBottom: '1px solid #2e2a2a' }} >
                     <ListItemButton
-                        onClick={() => navigate("/Profilepage")}  >
+                        onClick={() => navigate("Profilepage")}  >
                         <ListItemIcon
                             sx={{
                                 minWidth: 0,
@@ -98,7 +101,7 @@ function Header(props) {
                 <ListItem disablePadding sx={{ display: 'block', padding: '5px', borderBottom: '1px solid #2e2a2a' }} >
                     <ListItemButton
 
-                        onClick={() => navigate("/StackManage")}  >
+                        onClick={() => navigate("StackManage")}  >
                         <ListItemIcon
                             sx={{
                                 minWidth: 0,
@@ -121,11 +124,11 @@ function Header(props) {
                     <IncomeReport />
 
                 </ListItem>
-                {/* <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
+                <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
 
                     <DepositFunds />
 
-                </ListItem> */}
+                </ListItem>
                 <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
 
                     <WithdrawReport />
@@ -134,7 +137,7 @@ function Header(props) {
                 <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
                     <ListItemButton
 
-                        onClick={() => navigate("/ContactUs")}  >
+                        onClick={() => navigate("ContactUs")}  >
                         <ListItemIcon
                             sx={{
                                 minWidth: 0,
@@ -179,12 +182,15 @@ function Header(props) {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        Dashboard
-                    </Typography>
 
                 </Toolbar>
-                <Avatar sx={{ background: 'transparent', marginRight: '1rem' }} />
+                {/* <Avatar sx={{ background: 'transparent', marginRight: '1rem' }} /> */}
+                <Typography variant="h6" noWrap component="div" sx={{ display: 'flex', alignItems: 'center', fontSize: '0.96rem' }}>
+
+                    Welcome to OkDream25
+                    <AccountMenu />
+                    {/* <Avatar sx={{ color: '#d8af72', borderRadius: '50%', marginLeft: '1rem', border: '2px solid #d8af72 ', background: 'transparent', marginRight: '1rem' }} /> */}
+                </Typography>
             </AppBar>
             <Box
                 component="nav"
@@ -224,27 +230,7 @@ function Header(props) {
                 sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
             >
                 <Toolbar />
-
-                <Routes>
-                    <Route path='/' element={<DashBoard />} ></Route>
-                    <Route exact path='/StackManage' element={<StackManage />} ></Route>
-                    <Route exact path='/ProfilePage' element={<ProfilePage />} ></Route>
-                    <Route exact path='/AllUsers' element={<AllUsers />} ></Route>
-                    <Route exact path='/AllActiveUsers' element={<AllActiveUSers />} ></Route>
-                    <Route exact path='/InActiveUSers' element={<InActiveUSers />} ></Route>
-                    <Route exact path='/BlockUsers' element={<BlockUsers />} ></Route>
-                    {/* <Route exact path='/SigningBonus' element={<SigningBonus />} ></Route>
-                    <Route exact path='/RoboTradingBonus' element={<RoboTradingBonus />} ></Route>
-                    <Route exact path='/TeamGrowthBonus' element={<TeamGrowthBonus />} ></Route> */}
-                    <Route exact path='/myincome' element={<MyIncome />}></Route>
-                    <Route exact path='/myteamincome' element={<MyTeamIncome />}></Route>
-                    {/* <Route exact path='/PendingDeposite' element={<PendingDeposite />} ></Route>
-                    <Route exact path='/CompleteDeposite' element={<CompleteDeposite />} ></Route>
-                    <Route exact path='/RejectDeposite' element={<RejectDeposite />} ></Route> */}
-                    <Route exact path="/RequestHistory" element={<RequestHistory />} ></Route>
-                    <Route exact path="/ContactUs" element={<ContactUs />} ></Route>
-
-                </Routes>
+                {props.outlet}
 
             </Box>
         </Box>

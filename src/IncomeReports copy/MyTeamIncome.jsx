@@ -3,6 +3,7 @@ import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { token, baseURL } from '../token';
 import axios from 'axios';
 import { TablePagination } from '@mui/material';
+import { compareDesc } from 'date-fns';
 
 function MyTeamIncome() {
 
@@ -22,7 +23,7 @@ function MyTeamIncome() {
         console.log("nakdsj");
         e.preventDefault();
         const filteredData = tableData.filter((item) => {
-            const itemDate = new Date(item.data.createdAt);
+            const itemDate = new Date(item?.data?.createdAt);
             console.log("date", itemDate);
             const startDateObj = startDate ? new Date(startDate) : null;
             const endDateObj = endDate ? new Date(endDate) : null;
@@ -64,7 +65,7 @@ function MyTeamIncome() {
             // Check the user name
             console.log(item.data.username);
             console.log(searchQuery);
-            if (searchQuery && !item.data.username.toLowerCase().includes(searchQuery.toLowerCase())) {
+            if (searchQuery && !item?.data?.username.toLowerCase().includes(searchQuery.toLowerCase())) {
                 return false;
             }
 
@@ -78,7 +79,8 @@ function MyTeamIncome() {
 
     const getallusers = async () => {
         try {
-            const accessToken = token;
+            // const accessToken = token;
+            const accessToken = localStorage.getItem('access_token'); // Retrieve access token from localStorage
             const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
             console.log(headers);
             const response = await axios.get(baseURL + '/user/myteam', {
@@ -96,14 +98,16 @@ function MyTeamIncome() {
                         headers: headers
                     });
                     console.log(`User ID: ${userId}`, secondApiResponse.data.data);
-                    userProfileData.push(secondApiResponse.data); // Accumulate user profile data
-                    // extraProfile.push(secondApiResponse.data.metadata);
+                    if (secondApiResponse.data.data) {
+                        userProfileData.push(secondApiResponse.data); // Accumulate user profile data
+                    }                    // extraProfile.push(secondApiResponse.data.metadata);
                 } catch (error) {
                     console.error("Second API error:", error);
                 }
             }
 
             console.log("userprofiledata", userProfileData);
+            userProfileData.sort((a, b) => compareDesc(new Date(a.data.createdAt), new Date(b.data.createdAt)));
             setTableData(userProfileData);
             // setExtradata(extraProfile);
             // console.log("tabledata", tableData);
@@ -205,7 +209,7 @@ function MyTeamIncome() {
                                                 </div>
                                             </div> */}
                                             <div style={{ clear: 'both' }} />
-                                            <div className='row'/>
+                                            <div className='row' />
                                             <br />
                                             <div className="col-12">
                                                 <center>
@@ -242,18 +246,18 @@ function MyTeamIncome() {
                                                                     </td>
                                                                 </tr>
                                                             ) : tableData.map((item, index) => {
-                                                                const createdAt = new Date(item.data.createdAt);
+                                                                const createdAt = new Date(item?.data?.createdAt);
                                                                 const formattedDate = createdAt.toLocaleDateString();
                                                                 const formattedTime = createdAt.toLocaleTimeString();
                                                                 return (<tr key={index}>
                                                                     <td>{index + 1}</td>
-                                                                    <td>{item.data.name}</td>
-                                                                    <td>{item.data.username}</td>
-                                                                    <td>{item.data.income_report.referral}</td>
-                                                                    <td>{item.data.income_report.levelincome}</td>
-                                                                    <td>{item.data.income_report.autopool1}</td>
-                                                                    <td>{item.data.income_report.autopool2}</td>
-                                                                    <td>{item.data.income_report.totalincome}</td>
+                                                                    <td>{item?.data?.name}</td>
+                                                                    <td>{item?.data?.username}</td>
+                                                                    <td>{item?.data?.income_report?.referral}</td>
+                                                                    <td>{item?.data?.income_report?.levelincome}</td>
+                                                                    <td>{item?.data?.income_report?.autopool1}</td>
+                                                                    <td>{item?.data?.income_report?.autopool2}</td>
+                                                                    <td>{item?.data?.income_report?.totalincome}</td>
                                                                     <td>{formattedDate}</td>
                                                                     <td>{formattedTime}</td>
                                                                 </tr>)
@@ -261,7 +265,7 @@ function MyTeamIncome() {
                                                     </tbody>
                                                 </table>
                                                 <br /><br />
-                                                
+
                                             </div>
                                         </div>
                                         <center style={{ float: 'right' }}>

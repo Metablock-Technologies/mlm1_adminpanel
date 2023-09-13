@@ -126,6 +126,10 @@ section {
 .tab-content>.active {
     display: block;
 }
+.form-control2 {
+    background-color: #313131 !important;
+    color: white !important;
+}
 
 .fade {
     transition: opacity .15s linear;

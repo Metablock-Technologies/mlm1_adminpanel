@@ -110,6 +110,7 @@ function isAuthenticated() {
     const storedAccessToken = localStorage.getItem('access_token');
     const expirationDate = new Date(localStorage.getItem('access_token_expiration'));
     const date = new Date();
+
     console.log(date);
     console.log(expirationDate > date);
     if (storedAccessToken && expirationDate > date) {

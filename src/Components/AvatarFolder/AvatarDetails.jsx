@@ -9,8 +9,8 @@ function AvatarDetails() {
         localStorage.removeItem('access_token');
         await new Promise(resolve => setTimeout(resolve, 0));
 
-        // localStorage.removeItem('access_token_expiration');
-        // await new Promise(resolve => setTimeout(resolve, 0));
+        localStorage.removeItem('access_token_expiration');
+        await new Promise(resolve => setTimeout(resolve, 0));
 
         navigate('/'); // Try navigating to a specific route
     }

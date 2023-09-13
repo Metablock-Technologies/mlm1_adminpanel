@@ -24,6 +24,7 @@ function BlockUsers() {
     const [iconRotation, setIconRotation] = useState(0);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const rowsPerPageOptions = [10, 25, 50];
     const handleSearch = (e) => {
@@ -184,124 +185,125 @@ function BlockUsers() {
 
     return (
         <>
-            <div className="content-header">
-                <div className="container-fluid">
-                    <div className="row mb-2">
-                        <div className="col-sm-6">
-                            <h1 className="m-0 text-dark">Block Users</h1>
-                        </div>{/* /.col */}
-                        <div className="col-sm-6">
-                            <ol className="breadcrumb float-sm-right">
-                                <li className="breadcrumb-item"><a href="https://hammertradex.com">Home</a></li>
-                                <li className="breadcrumb-item active">Block Users</li>
-                            </ol>
-                        </div>{/* /.col */}
-                    </div>{/* /.row */}
-                </div>{/* /.container-fluid */}
-            </div>
-            <section className="content">
-                <div className="container-fluid" style={{ marginTop: '-35px' }}>
-                    <div className="row">
-                        {/* Primary table start */}
-                        <div className="col-12 mt-5">
-                            <div className="card">
-                                <div className="card-body">
-                                    <form role="form" type="submit">
-                                        {/* <input type="hidden" name="_token" defaultValue="eLkpGsUBYr9izTDYhoNZCCY6pxm06c8hRkw1N41O" /> */}
-                                        <div className="col-md-6 col-12 mb-3">
+            <div className={`fade-in ${loading ? '' : 'active'}`}>
+                <div className="content-header">
+                    <div className="container-fluid">
+                        <div className="row mb-2">
+                            <div className="col-sm-6">
+                                <h1 className="m-0 text-dark">Block Users</h1>
+                            </div>{/* /.col */}
+                            <div className="col-sm-6">
+                                <ol className="breadcrumb float-sm-right">
+                                    <li className="breadcrumb-item"><a href="https://hammertradex.com">Home</a></li>
+                                    <li className="breadcrumb-item active">Block Users</li>
+                                </ol>
+                            </div>{/* /.col */}
+                        </div>{/* /.row */}
+                    </div>{/* /.container-fluid */}
+                </div>
+                <section className="content">
+                    <div className="container-fluid" style={{ marginTop: '-35px' }}>
+                        <div className="row">
+                            {/* Primary table start */}
+                            <div className="col-12 mt-5">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <form role="form" type="submit">
+                                            {/* <input type="hidden" name="_token" defaultValue="eLkpGsUBYr9izTDYhoNZCCY6pxm06c8hRkw1N41O" /> */}
+                                            <div className="col-md-6 col-12 mb-3">
 
-                                            <div className="form-group">
-                                                <label>Pick a start date:</label>
-                                                <div className="input-group date" id="datepicker" data-target-input="nearest">
-                                                    <input type="date" className="form-control t" placeholder="yyyy-mm-dd" name="start_date" onChange={(e) => setStartDate(e.target.value)} value={startDate} />
+                                                <div className="form-group">
+                                                    <label>Pick a start date:</label>
+                                                    <div className="input-group date" id="datepicker" data-target-input="nearest">
+                                                        <input type="date" className="form-control t" placeholder="yyyy-mm-dd" name="start_date" onChange={(e) => setStartDate(e.target.value)} value={startDate} />
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div className="col-md-6 col-12 mb-3 ">
+
+                                                <div className="form-group ">
+                                                    <label>Pick a end date:</label>
+                                                    <div className="input-group date" id="datepicker1" data-target-input="nearest">
+                                                        <input type="date" className="form-control " placeholder="yyyy-mm-dd" name="end_date" onChange={(e) => setEndDate(e.target.value)} value={endDate} />
+                                                    </div>
                                                 </div>
                                             </div>
-
-                                        </div>
-                                        <div className="col-md-6 col-12 mb-3 ">
-
-                                            <div className="form-group ">
-                                                <label>Pick a end date:</label>
-                                                <div className="input-group date" id="datepicker1" data-target-input="nearest">
-                                                    <input type="date" className="form-control " placeholder="yyyy-mm-dd" name="end_date" onChange={(e) => setEndDate(e.target.value)} value={endDate} />
+                                            <div style={{ clear: 'both' }} />
+                                            <div className="col-md-6 col-12 mb-3">
+                                                <label htmlFor="validationCustomUsername"> User Name</label>
+                                                <div className="input-group">
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        placeholder="Username"
+                                                        name="userid"
+                                                        value={searchQuery}
+                                                        onChange={(e) => setSearchQuery(e.target.value)}
+                                                    />
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div style={{ clear: 'both' }} />
-                                        <div className="col-md-6 col-12 mb-3">
-                                            <label htmlFor="validationCustomUsername"> User Name</label>
-                                            <div className="input-group">
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="Username"
-                                                    name="userid"
-                                                    value={searchQuery}
-                                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                                />
+                                            <div style={{ clear: 'both' }} />
+                                            <div className='row' />
+                                            <br />
+                                            <div className="col-12">
+                                                <center>
+                                                    <button className="btn btn-primary" onClick={(e) => handleSearch(e)} >Search Now</button>
+                                                    <button className="btn btn-info" style={{ marginLeft: '20px' }} type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
+                                                </center>
                                             </div>
-                                        </div>
-                                        <div style={{ clear: 'both' }} />
-                                        <div className='row' />
-                                        <br />
-                                        <div className="col-12">
-                                            <center>
-                                                <button className="btn btn-primary" onClick={(e) => handleSearch(e)} >Search Now</button>
-                                                <button className="btn btn-info" style={{ marginLeft: '20px' }} type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
-                                            </center>
-                                        </div>
-                                        <br />
-                                    </form>
-                                    <div className="single-table">
-                                        <div className="table-responsive">
-                                            <table className="table text-center" id>
-                                                <thead className="text-capitalize">
-                                                    <tr>
-                                                        <th>SR.No.</th>
-                                                        <th>Name</th>
-                                                        <th>User Name</th>
-                                                        <th>Refer Code</th>
-                                                        <th>Email</th>
-                                                        <th>Mobile Number</th>
-                                                        <th>Joning Date</th>
-                                                        <th>Type</th>
-                                                        <th>Status</th>
-                                                        <th>Total members</th>
-                                                        <th>Sponser ID</th>
-                                                        <th>Active users</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {
-                                                        tableData?.length === 0 ? (
-                                                            <tr>
-                                                                <td colSpan="12" style={{ color: 'black', textAlign: 'center' }}>
-                                                                    No results found
-                                                                </td>
-                                                            </tr>
-                                                        ) :
-                                                            tableData?.map((row, index) => (
-                                                                <tr key={index}>
-                                                                    <td>{index + 1}</td>
-                                                                    <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)}>{row?.data?.name}</td>
-                                                                    <td>{row?.data?.username}</td>
-                                                                    <td>{row?.data?.hashcode}</td>
-                                                                    <td>{row?.data?.email}</td>
-                                                                    <td>{row?.data?.phonenumber}</td>
-                                                                    <td>{row?.data?.createdAt}</td>
-                                                                    <td>{row?.data?.type}</td>
-                                                                    <td>
-                                                                        {/* Convert Status field into a button */}
-                                                                        {/* <button className={`btn ${row?.data?.status === 'Active' ? 'btn-success' : 'btn-danger'}`}> */}
-                                                                        {row?.data?.status}
-                                                                        {/* </button> */}
+                                            <br />
+                                        </form>
+                                        <div className="single-table">
+                                            <div className="table-responsive">
+                                                <table className="table text-center" id>
+                                                    <thead className="text-capitalize">
+                                                        <tr>
+                                                            <th>SR.No.</th>
+                                                            <th>Name</th>
+                                                            <th>User Name</th>
+                                                            <th>Refer Code</th>
+                                                            <th>Email</th>
+                                                            <th>Mobile Number</th>
+                                                            <th>Joning Date</th>
+                                                            <th>Type</th>
+                                                            <th>Status</th>
+                                                            <th>Total members</th>
+                                                            <th>Sponser ID</th>
+                                                            <th>Active users</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {
+                                                            tableData?.length === 0 ? (
+                                                                <tr>
+                                                                    <td colSpan="12" style={{ color: 'black', textAlign: 'center' }}>
+                                                                        No results found
                                                                     </td>
-                                                                    <td>{row?.metadata?.totalUsers}</td>
-                                                                    <td>{row?.metadata?.sponsorId}</td>
-                                                                    <td>{row?.metadata?.activeUsers}</td>
-                                                                    {/* ... render other fields */}
-                                                                    {/* <td>
+                                                                </tr>
+                                                            ) :
+                                                                tableData?.map((row, index) => (
+                                                                    <tr key={index}>
+                                                                        <td>{index + 1}</td>
+                                                                        <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)}>{row?.data?.name}</td>
+                                                                        <td>{row?.data?.username}</td>
+                                                                        <td>{row?.data?.hashcode}</td>
+                                                                        <td>{row?.data?.email}</td>
+                                                                        <td>{row?.data?.phonenumber}</td>
+                                                                        <td>{row?.data?.createdAt}</td>
+                                                                        <td>{row?.data?.type}</td>
+                                                                        <td>
+                                                                            {/* Convert Status field into a button */}
+                                                                            {/* <button className={`btn ${row?.data?.status === 'Active' ? 'btn-success' : 'btn-danger'}`}> */}
+                                                                            {row?.data?.status}
+                                                                            {/* </button> */}
+                                                                        </td>
+                                                                        <td>{row?.metadata?.totalUsers}</td>
+                                                                        <td>{row?.metadata?.sponsorId}</td>
+                                                                        <td>{row?.metadata?.activeUsers}</td>
+                                                                        {/* ... render other fields */}
+                                                                        {/* <td>
                                                                         <Tooltip content="Unblock User">
                                                                             <IconButton
                                                                                 variant="text"
@@ -313,57 +315,59 @@ function BlockUsers() {
                                                                         </Tooltip>
 
                                                                     </td> */}
-                                                                    <td>
-                                                                        {
+                                                                        <td>
+                                                                            {
 
-                                                                            <span onClick={() => handleblockuser(row?.data?.id, "false")}>
-                                                                                <i className="fa fa-ban"
-                                                                                ></i>
-                                                                            </span>
-                                                                            // <Tooltip content="Block User">
-                                                                            //     <IconButton
-                                                                            //         variant="text"
-                                                                            //         color="blue-gray"
-                                                                            //         onClick={() => handleBlockUser(row?.data?.id, "true")}
-                                                                            //     >
-                                                                            //     </IconButton>
-                                                                            // </Tooltip>
-                                                                        }
-                                                                    </td>
-                                                                </tr>
-                                                            ))
-                                                    }
-                                                </tbody>
-                                            </table>
-                                            <br /><br />
+                                                                                <span onClick={() => handleblockuser(row?.data?.id, "false")}>
+                                                                                    <i className="fa fa-ban"
+                                                                                    ></i>
+                                                                                </span>
+                                                                                // <Tooltip content="Block User">
+                                                                                //     <IconButton
+                                                                                //         variant="text"
+                                                                                //         color="blue-gray"
+                                                                                //         onClick={() => handleBlockUser(row?.data?.id, "true")}
+                                                                                //     >
+                                                                                //     </IconButton>
+                                                                                // </Tooltip>
+                                                                            }
+                                                                        </td>
+                                                                    </tr>
+                                                                ))
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                                <br /><br />
 
 
+                                            </div>
                                         </div>
+                                        <center style={{ float: 'right' }}>
+                                            <div>
+                                                <nav>
+                                                    <ul className="pagination">
+                                                        <TablePagination sx={{ color: 'orange' }}
+                                                            rowsPerPageOptions={rowsPerPageOptions}
+                                                            component="div"
+                                                            count={tableData?.length}
+                                                            rowsPerPage={rowsPerPage}
+                                                            page={page}
+                                                            onPageChange={handleChangePage}
+                                                            onRowsPerPageChange={handleChangeRowsPerPage}
+                                                        />
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                        </center>
                                     </div>
-                                    <center style={{ float: 'right' }}>
-                                        <div>
-                                            <nav>
-                                                <ul className="pagination">
-                                                    <TablePagination sx={{ color: 'orange' }}
-                                                        rowsPerPageOptions={rowsPerPageOptions}
-                                                        component="div"
-                                                        count={tableData?.length}
-                                                        rowsPerPage={rowsPerPage}
-                                                        page={page}
-                                                        onPageChange={handleChangePage}
-                                                        onRowsPerPageChange={handleChangeRowsPerPage}
-                                                    />
-                                                </ul>
-                                            </nav>
-                                        </div>
-                                    </center>
                                 </div>
                             </div>
+                            {/* Primary table end */}
                         </div>
-                        {/* Primary table end */}
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
+
 
 
         </>

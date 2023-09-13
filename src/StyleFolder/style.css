@@ -309,7 +309,7 @@ input[type="text"], input[type="password"] {
     border-radius: 5px !important;
     border-radius: 0;
     border: 0;
-    border-bottom: 1px solid rgba(235, 237, 242, .8);
+  
     padding: 1rem 0;
     color: #6c7293;
     width: 100%;

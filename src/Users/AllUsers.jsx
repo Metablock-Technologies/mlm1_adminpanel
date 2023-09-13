@@ -30,6 +30,7 @@ function AllUsers() {
     const [endDate, setEndDate] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
+    const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const navigate = useNavigate();
@@ -200,41 +201,42 @@ function AllUsers() {
 
     return (
         <>
-            <div className="content-wrapper" style={{ minHeight: '706.4px' }}>
-                <div className="content-header">
-                    <div className="container-fluid">
-                        <div className="row mb-2">
-                            <div className="col-sm-6">
-                                <h1 className="m-0 text-dark">All Users</h1>
-                            </div>{/* /.col */}
-                            <div className="col-sm-6">
-                                <ol className="breadcrumb float-sm-right">
-                                    <li className="breadcrumb-item"><a href="https://hammertradex.com">Home</a></li>
-                                    <li className="breadcrumb-item active">All Users</li>
-                                </ol>
-                            </div>{/* /.col */}
-                        </div>{/* /.row */}
-                    </div>{/* /.container-fluid */}
-                </div>
+            <div className={`fade-in ${loading ? '' : 'active'}`}>
+                <div className="content-wrapper" style={{ minHeight: '706.4px' }}>
+                    <div className="content-header">
+                        <div className="container-fluid">
+                            <div className="row mb-2">
+                                <div className="col-sm-6">
+                                    <h1 className="m-0 text-dark">All Users</h1>
+                                </div>{/* /.col */}
+                                <div className="col-sm-6">
+                                    <ol className="breadcrumb float-sm-right">
+                                        <li className="breadcrumb-item"><a href="https://hammertradex.com">Home</a></li>
+                                        <li className="breadcrumb-item active">All Users</li>
+                                    </ol>
+                                </div>{/* /.col */}
+                            </div>{/* /.row */}
+                        </div>{/* /.container-fluid */}
+                    </div>
 
-                <section className="content">
-                    <div className="container-fluid" style={{ marginTop: '-35px' }}>
-                        <div className="row">
-                            {/* Primary table start */}
-                            <div className="col-12 mt-5">
-                                <div className="card">
-                                    <div className="card-body">
-                                        <form role="form" type="submit">
-                                            {/* <input type="hidden" name="_token" defaultValue="eLkpGsUBYr9izTDYhoNZCCY6pxm06c8hRkw1N41O" /> */}
-                                            <div className='col-md-6 col-12 mb-3'>
+                    <section className="content">
+                        <div className="container-fluid" style={{ marginTop: '-35px' }}>
+                            <div className="row">
+                                {/* Primary table start */}
+                                <div className="col-12 mt-5">
+                                    <div className="card">
+                                        <div className="card-body">
+                                            <form role="form" type="submit">
+                                                {/* <input type="hidden" name="_token" defaultValue="eLkpGsUBYr9izTDYhoNZCCY6pxm06c8hRkw1N41O" /> */}
+                                                <div className='col-md-6 col-12 mb-3'>
 
-                                                <div className="form-group ">
-                                                    <label>Pick a start date:</label>
-                                                    <div className="input-group date" id="datepicker" data-target-input="nearest">
-                                                        <input type="date" className="form-control t" placeholder="yyyy-mm-dd" name="start_date" onChange={(e) => setStartDate(e.target.value)} value={startDate} />
+                                                    <div className="form-group ">
+                                                        <label>Pick a start date:</label>
+                                                        <div className="input-group date" id="datepicker" data-target-input="nearest">
+                                                            <input type="date" className="form-control t" placeholder="yyyy-mm-dd" name="start_date" onChange={(e) => setStartDate(e.target.value)} value={startDate} />
+                                                        </div>
                                                     </div>
                                                 </div>
-
                                                 <div className="col-md-6 col-12 mb-3" >
                                                     <div className="form-group ">
                                                         <label>Pick a end date:</label>
@@ -243,172 +245,176 @@ function AllUsers() {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
 
-                                            <div style={{ clear: 'both' }} />
-                                            <div className="col-md-6 col-12 mb-3" >
-                                                <label htmlFor="validationCustomUsername"> User Name</label>
-                                                <div className="input-group">
-                                                    <input
-                                                        type="text"
-                                                        className="form-control"
-                                                        placeholder="Username"
-                                                        name="userid"
-                                                        value={searchQuery}
-                                                        onChange={(e) => setSearchQuery(e.target.value)}
-                                                    />
+
+                                                <div style={{ clear: 'both' }} />
+                                                <div className="col-md-6 col-12 mb-3" >
+                                                    <label htmlFor="validationCustomUsername"> User Name</label>
+                                                    <div className="input-group">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            placeholder="Username"
+                                                            name="userid"
+                                                            value={searchQuery}
+                                                            onChange={(e) => setSearchQuery(e.target.value)}
+                                                        />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="col-md-6 col-md-12" >
-                                                <label htmlFor="validationCustomUsername">Select id status</label>
-                                                <select className="custom-select selectbox" name="status" value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)}>
-                                                    <option value> ----Select---- </option>
-                                                    <option >active</option>
-                                                    <option >inactive</option>
-                                                    <option >blocked</option>
-                                                </select>
-                                            </div>
-                                            {/* <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
+                                                <div className="col-md-6 col-md-12" >
+                                                    <label htmlFor="validationCustomUsername">Select id status</label>
+                                                    <select className="custom-select selectbox" name="status" value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)}>
+                                                        <option value> ----Select---- </option>
+                                                        <option >active</option>
+                                                        <option >inactive</option>
+                                                        <option >blocked</option>
+                                                    </select>
+                                                </div>
+                                                {/* <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
                                                 <label htmlFor="validationCustomUsername">Type</label>
                                                 <div className="input-group">
                                                     <input type="text" className="form-control" placeholder="Type" defaultValue name="type_id" />
                                                 </div>
                                             </div> */}
 
-                                            <div className='row' />
-                                            <br />
-                                            <div className="col-12">
-                                                <center>
-                                                    <button className="btn btn-primary" onClick={(e) => handleSearch(e)} >Search Now</button>
-                                                    <button className="button-reset btn btn-info" style={{ marginLeft: '20px' }} type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
+                                                <div style={{ clear: 'both' }} />
 
-                                                </center>
-                                            </div>
-                                            <br />
-                                        </form>
-                                        <div className="single-table">
-                                            <div className="table-responsive">
-                                                <table className="table text-center">
-                                                    <thead className="text-capitalize">
-                                                        <tr>
-                                                            <th>SR.No.</th>
-                                                            <th>Name</th>
-                                                            <th>User Name</th>
-                                                            <th>Refer Code</th>
-                                                            <th>Email</th>
-                                                            <th>Mobile Number</th>
-                                                            <th>Date</th>
-                                                            <th>Time</th>
-                                                            <th>Type</th>
-                                                            <th>Status</th>
-                                                            <th>Total members</th>
-                                                            <th>Sponser ID</th>
-                                                            <th>Active users</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {tableData?.length === 0 ? (
+                                                <div className='row' />
+                                                <br />
+                                                <div className="col-12">
+                                                    <center>
+                                                        <button style={{ color: 'black', backgroundColor: 'rgb(195 161 119)' }} className="btn btn-primary" onClick={(e) => handleSearch(e)} >Search Now</button>
+                                                        <button style={{ marginLeft: '20px', background: 'black', color: '#d8af72', border: '1px solid #d8af72' }} className=" btn btn-info" type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
+
+                                                    </center>
+                                                </div>
+                                                <br />
+                                            </form>
+                                            <div className="single-table">
+                                                <div className="table-responsive">
+                                                    <table className="table text-center">
+                                                        <thead className="text-capitalize">
                                                             <tr>
-                                                                <td colSpan="12" style={{ color: 'black', textAlign: 'center' }}>
-                                                                    No results found
-                                                                </td>
+                                                                <th>SR.No.</th>
+                                                                <th>Name</th>
+                                                                <th>User Name</th>
+                                                                <th>Refer Code</th>
+                                                                <th>Email</th>
+                                                                <th>Mobile Number</th>
+                                                                <th>Date</th>
+                                                                <th>Time</th>
+                                                                <th>Type</th>
+                                                                <th>Status</th>
+                                                                <th>Total members</th>
+                                                                <th>Sponser ID</th>
+                                                                <th>Active users</th>
+                                                                <th>Action</th>
                                                             </tr>
-                                                        ) :
-                                                            tableData?.map((row, index) => {
-                                                                const createdAt = new Date(row?.data?.createdAt);
-                                                                const formattedDate = createdAt.toLocaleDateString();
-                                                                const formattedTime = createdAt.toLocaleTimeString();
-                                                                return (
-                                                                    <tr key={index}>
-                                                                        <td>{index + 1}</td>
-                                                                        <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)}>{row?.data?.name}</td>
-                                                                        <td>{row?.data?.username}</td>
-                                                                        <td>{row?.data?.hashcode}</td>
-                                                                        <td>{row?.data?.email}</td>
-                                                                        <td>{row?.data?.phonenumber}</td>
-                                                                        <td>{formattedDate}</td>
-                                                                        <td>{formattedTime}</td>
-                                                                        <td>{row?.data?.type}</td>
-                                                                        <td>
-                                                                            {/* Convert Status field into a button */}
-                                                                            {/* <button className={`btn ${row?.data?.status === 'Active' ? 'btn-success' : 'btn-danger'}`}> */}
-                                                                            {row?.data?.status}
-                                                                            {/* </button> */}
-                                                                        </td>
-                                                                        <td>{row?.metadata?.totalUsers}</td>
-                                                                        <td>{row?.metadata?.sponsorId}</td>
-                                                                        <td>{row?.metadata?.activeUsers}</td>
-                                                                        <td>
-                                                                            {row?.data?.status === "blocked" ?
-                                                                                <span onClick={() => handleBlockUser(row?.data?.id, "false")}>
+                                                        </thead>
+                                                        <tbody>
+                                                            {tableData?.length === 0 ? (
+                                                                <tr>
+                                                                    <td colSpan="12" style={{ color: 'black', textAlign: 'center' }}>
+                                                                        No results found
+                                                                    </td>
+                                                                </tr>
+                                                            ) :
+                                                                tableData?.map((row, index) => {
+                                                                    const createdAt = new Date(row?.data?.createdAt);
+                                                                    const formattedDate = createdAt.toLocaleDateString();
+                                                                    const formattedTime = createdAt.toLocaleTimeString();
+                                                                    return (
+                                                                        <tr key={index}>
+                                                                            <td>{index + 1}</td>
+                                                                            <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)}>{row?.data?.name}</td>
+                                                                            <td>{row?.data?.username}</td>
+                                                                            <td>{row?.data?.hashcode}</td>
+                                                                            <td>{row?.data?.email}</td>
+                                                                            <td>{row?.data?.phonenumber}</td>
+                                                                            <td>{formattedDate}</td>
+                                                                            <td>{formattedTime}</td>
+                                                                            <td>{row?.data?.type}</td>
+                                                                            <td>
+                                                                                {/* Convert Status field into a button */}
+                                                                                {/* <button className={`btn ${row?.data?.status === 'Active' ? 'btn-success' : 'btn-danger'}`}> */}
+                                                                                {row?.data?.status}
+                                                                                {/* </button> */}
+                                                                            </td>
+                                                                            <td>{row?.metadata?.totalUsers}</td>
+                                                                            <td>{row?.metadata?.sponsorId}</td>
+                                                                            <td>{row?.metadata?.activeUsers}</td>
+                                                                            <td>
+                                                                                {row?.data?.status === "blocked" ?
+                                                                                    <span onClick={() => handleBlockUser(row?.data?.id, "false")}>
 
-                                                                                    <i className="fa-sharp fa-solid fa-unlock"></i>
-                                                                                </span>
-                                                                                // <Tooltip content="Unblock User">
-                                                                                //     <IconButton
-                                                                                //         variant="text"
-                                                                                //         color="blue-gray"
-                                                                                //         onClick={() => handleBlockUser(row?.data?.id, "false")} // Define your unblock user handler
-                                                                                //     >
-                                                                                //         <i className="fa fa-check-circle"></i>
-                                                                                //         {/* <LockOpenIcon className="h-5 w-5" /> */}
-                                                                                //     </IconButton>
-                                                                                // </Tooltip>
-                                                                                :
-                                                                                <span onClick={() => handleBlockUser(row?.data?.id, "true")}>
+                                                                                        <i className="fa-sharp fa-solid fa-unlock"></i>
+                                                                                    </span>
+                                                                                    // <Tooltip content="Unblock User">
+                                                                                    //     <IconButton
+                                                                                    //         variant="text"
+                                                                                    //         color="blue-gray"
+                                                                                    //         onClick={() => handleBlockUser(row?.data?.id, "false")} // Define your unblock user handler
+                                                                                    //     >
+                                                                                    //         <i className="fa fa-check-circle"></i>
+                                                                                    //         {/* <LockOpenIcon className="h-5 w-5" /> */}
+                                                                                    //     </IconButton>
+                                                                                    // </Tooltip>
+                                                                                    :
+                                                                                    <span onClick={() => handleBlockUser(row?.data?.id, "true")}>
 
-                                                                                    <i className="fa fa-ban"></i>
-                                                                                </span>
-                                                                                // <Tooltip content="Block User">
-                                                                                //     <IconButton
-                                                                                //         variant="text"
-                                                                                //         color="blue-gray"
-                                                                                //         onClick={() => handleBlockUser(row?.data?.id, "true")}
-                                                                                //     >
-                                                                                //     </IconButton>
-                                                                                // </Tooltip>
-                                                                            }
-                                                                        </td>
-                                                                        {/* ... render other fields */}
-                                                                    </tr>
-                                                                )
-                                                            })
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                                <br /><br />
+                                                                                        <i className="fa fa-ban"></i>
+                                                                                    </span>
+                                                                                    // <Tooltip content="Block User">
+                                                                                    //     <IconButton
+                                                                                    //         variant="text"
+                                                                                    //         color="blue-gray"
+                                                                                    //         onClick={() => handleBlockUser(row?.data?.id, "true")}
+                                                                                    //     >
+                                                                                    //     </IconButton>
+                                                                                    // </Tooltip>
+                                                                                }
+                                                                            </td>
+                                                                            {/* ... render other fields */}
+                                                                        </tr>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                    <br /><br />
 
+                                                </div>
                                             </div>
+
+                                            <center style={{ float: 'right' }}>
+                                                <div>
+                                                    <nav>
+                                                        <ul className="pagination">
+                                                            <TablePagination sx={{ color: 'orange' }}
+                                                                rowsPerPageOptions={rowsPerPageOptions}
+                                                                component="div"
+                                                                count={tableData?.length}
+                                                                rowsPerPage={rowsPerPage}
+                                                                page={page}
+                                                                onPageChange={handleChangePage}
+                                                                onRowsPerPageChange={handleChangeRowsPerPage}
+                                                            />
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                            </center>
+                                            {/* <Demo tableData={tableData} /> */}
                                         </div>
-
-                                        <center style={{ float: 'right' }}>
-                                            <div>
-                                                <nav>
-                                                    <ul className="pagination">
-                                                        <TablePagination sx={{ color: 'orange' }}
-                                                            rowsPerPageOptions={rowsPerPageOptions}
-                                                            component="div"
-                                                            count={tableData?.length}
-                                                            rowsPerPage={rowsPerPage}
-                                                            page={page}
-                                                            onPageChange={handleChangePage}
-                                                            onRowsPerPageChange={handleChangeRowsPerPage}
-                                                        />
-                                                    </ul>
-                                                </nav>
-                                            </div>
-                                        </center>
-                                        {/* <Demo tableData={tableData} /> */}
                                     </div>
                                 </div>
+                                {/* Primary table end */}
                             </div>
-                            {/* Primary table end */}
                         </div>
-                    </div>
-                </section >
-            </div >
+                    </section >
+                </div >
+            </div>
+
 
         </>
     )

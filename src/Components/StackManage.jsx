@@ -4,6 +4,7 @@ import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { token, baseURL } from '../token';
 import axios from 'axios';
 import { TablePagination } from '@mui/material';
+import LinearProgress from '@mui/material/LinearProgress';
 
 function StackManage() {
     const [tableData, setTableData] = useState([]);
@@ -12,6 +13,8 @@ function StackManage() {
     const [searchQuery, setSearchQuery] = useState("");
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [loading, setLoading] = useState(true);
+
 
     const rowsPerPageOptions = [10, 25, 50];
 
@@ -73,9 +76,11 @@ function StackManage() {
             // Wait for all promises to resolve
             const updatedData = await Promise.all(promises);
             setTableData(updatedData);
+            setLoading(false);
             console.log("tabledata", tableData);
         } catch (error) {
             console.error("Error fetching data:", error);
+            setLoading(true);
         }
     };
 
@@ -159,6 +164,7 @@ function StackManage() {
 
     return (
         <>
+
             <div className="content-wrapper" style={{ minHeight: 679 }}>
                 {/* Content Header (Page header) */}
                 <div className="content-header">
@@ -227,14 +233,16 @@ function StackManage() {
                                             <br />
                                             <div className="col-md-12 mb-12">
                                                 <center>
-                                                    <button className="btn btn-primary" onClick={(e) => handleSearch(e)} >Search Now</button>
-                                                    <button className="btn btn-info" style={{ marginLeft: '20px' }} type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
+                                                    <button style={{ color: 'black', backgroundColor: 'rgb(195 161 119)' }} className="btn btn-primary" onClick={(e) => handleSearch(e)} >Search Now</button>
+                                                    <button style={{ marginLeft: '20px', background: 'black', color: '#d8af72', border: '1px solid #d8af72' }} className="btn btn-info" type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
 
                                                 </center>
                                             </div>
                                             <br />
                                         </form>
                                         <h4 className="header-title">All Transaction</h4>
+
+
                                         <div className="single-table">
                                             <div className="table-responsive">
                                                 <table className="table text-center">

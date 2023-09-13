@@ -100,14 +100,12 @@ function Header(props) {
                 </ListItem>
                 <ListItem disablePadding sx={{ display: 'block', padding: '5px', borderBottom: '1px solid #2e2a2a' }} >
                     <ListItemButton
-
                         onClick={() => navigate("StackManage")}  >
                         <ListItemIcon
                             sx={{
                                 minWidth: 0,
                                 justifyContent: 'center',
                             }}
-
                         >
                             <SubtitlesIcon sx={{ color: "white", marginRight: '10px', fontSize: "30px" }} />
                         </ListItemIcon>

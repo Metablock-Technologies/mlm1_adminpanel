@@ -22,8 +22,6 @@ function Addcoins() {
     const [usernames, setUsernames] = useState({});
 
     // Define options for the dropdown
-
-
     const handleOpenDialog = (imageUrl) => {
         setSelectedImageUrl(imageUrl);
         setDialogOpen(true);
@@ -338,7 +336,7 @@ function Addcoins() {
                                                                     <td>{index + 1}</td>
                                                                     <td>{data?.amount}</td>
                                                                     <td>
-                                                                        <Button color="primary" onClick={() => handleImageClick(data?.image)}>
+                                                                        <Button color="primary" onClick={() => handleImageClick(data?.link)}>
                                                                             <Visibility sx={{ color: '#3b3ba3' }} />
                                                                         </Button>
                                                                     </td>

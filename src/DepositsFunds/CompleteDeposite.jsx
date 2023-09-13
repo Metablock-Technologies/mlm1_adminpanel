@@ -124,7 +124,7 @@ function Addcoins() {
     const handleSearch = (e) => {
         e.preventDefault();
         const filteredData = tableData?.filter((item) => {
-            const itemDate = new Date(item?.addMoney?.createdAt);
+            const itemDate = new Date(item?.createdAt);
             const startDateObj = startDate ? new Date(startDate) : null;
             const endDateObj = endDate ? new Date(endDate) : null;
 
@@ -165,14 +165,14 @@ function Addcoins() {
 
             // Check the user name
             console.log(searchQuery);
-            console.log(item.user.username);
+            // console.log(item.user.username);
             console.log(statusFilter);
-            console.log(item.status);
+            console.log(item?.status);
 
-            if (searchQuery && !item?.user?.username?.toLowerCase().includes(searchQuery.toLowerCase())) {
+            if (searchQuery && !usernames[item?.user_id].toLowerCase().includes(searchQuery.toLowerCase())) {
                 return false;
             }
-            if (statusFilter !== "" && item?.addMoney?.status !== statusFilter) {
+            if (statusFilter !== "" && item?.status !== statusFilter) {
                 return false;
             }
             return true;
@@ -276,7 +276,7 @@ function Addcoins() {
                                                             <option value="all">All</option>
                                                             <option value="pending">Pending</option>
                                                             <option value="rejected">Rejected</option>
-                                                            <option value="approved">Approved</option>
+                                                            <option value="approved">accepted</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -338,7 +338,7 @@ function Addcoins() {
                                                                     <td>{index + 1}</td>
                                                                     <td>{data?.amount}</td>
                                                                     <td>
-                                                                        <Button color="primary" onClick={() => handleImageClick(data?.addMoney?.image)}>
+                                                                        <Button color="primary" onClick={() => handleImageClick(data?.image)}>
                                                                             <Visibility sx={{ color: '#3b3ba3' }} />
                                                                         </Button>
                                                                     </td>

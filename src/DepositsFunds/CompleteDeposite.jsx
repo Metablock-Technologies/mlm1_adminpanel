@@ -276,7 +276,7 @@ function Addcoins() {
                                                             <option value="all">All</option>
                                                             <option value="pending">Pending</option>
                                                             <option value="rejected">Rejected</option>
-                                                            <option value="approved">accepted</option>
+                                                            <option value="accepted">accepted</option>
                                                         </select>
                                                     </div>
                                                 </div>

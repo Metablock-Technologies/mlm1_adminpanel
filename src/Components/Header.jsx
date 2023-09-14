@@ -44,6 +44,9 @@ import MyTeamIncome from '../IncomeReports copy/MyTeamIncome';
 import AccountMenu from './AvatarMenu';
 import brand from "../Okdream25.png";
 import DepositFunds from './DepositFunds';
+import FundSection from './FundSection';
+import ActivateId from './ActivateID';
+
 
 
 const drawerWidth = 240;
@@ -129,9 +132,19 @@ function Header(props) {
                 </ListItem>
                 <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
 
+                    <FundSection />
+
+                </ListItem>
+                <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
+
                     <WithdrawReport />
 
                 </ListItem>
+                {/* <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
+
+                    <ActivateId />
+
+                </ListItem> */}
                 <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
                     <ListItemButton
 

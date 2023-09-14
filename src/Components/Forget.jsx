@@ -126,7 +126,7 @@ function Forget() {
                         <div className="container">
                             <div className="form_box">
                                 <div className="loginForm">
-                                    <h2 style={{ color: 'rgb(195 161 119)', marginBottom: '0.5em', textAlign: 'center', fontSize: '2em' }}>Forgot Passwor</h2>
+                                    <h2 style={{ color: 'rgb(195 161 119)', marginBottom: '0.5em', textAlign: 'center', fontSize: '2em' }}>Forgot Password</h2>
                                     <div className={`fade-in ${loading ? '' : 'active'}`}>
                                         <p style={{ color: 'white', textAlign: 'center' }}>{message}</p>
                                         {step === 1 && (
@@ -158,7 +158,7 @@ function Forget() {
                                                     onChange={handleOtpChange}
                                                     style={{ borderRadius: 15, paddingLeft: 15, fontWeight: 'bold' }}
                                                 />
-                                                <button onClick={handleVerifyOtp}>Verify OTP</button>
+                                                <button className="btn-default btn-block form_submit_btn" onClick={handleVerifyOtp}>Verify OTP</button>
                                             </div>
                                         )}
                                         {step === 3 && (
@@ -188,7 +188,7 @@ function Forget() {
                                                         />
                                                     </div>
                                                     <div className="dash_second_col_third">
-                                                        <input type="submit" className="button_submit" defaultValue="Update" />
+                                                        <input className="btn-default btn-block form_submit_btn" type="submit" className="button_submit" defaultValue="Update" />
                                                     </div>
                                                 </form>
                                             </div>

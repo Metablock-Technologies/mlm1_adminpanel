@@ -47,7 +47,16 @@ export default function WithdrawReport() {
                 </List>
             </Collapse>
 
-
+            <Collapse in={open} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                    <ListItemButton onClick={() => navigate('/PendingDeposite')} sx={{ pl: 4 }}>
+                        <ListItemIcon>
+                            <PeopleIcon sx={{ marginLeft: '-11px', color: 'white' }} />
+                        </ListItemIcon>
+                        <ListItemText sx={{ marginLeft: '-30px' }} primary="Withdraw Requests" />
+                    </ListItemButton>
+                </List>
+            </Collapse>
 
         </List>
     );

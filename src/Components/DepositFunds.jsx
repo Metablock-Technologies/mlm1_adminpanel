@@ -38,7 +38,7 @@ export default function DepositFunds() {
                 <ListItemText primary="Deposite Sections" />
                 {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
-            <Collapse in={open} timeout="auto" unmountOnExit>
+            {/* <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     <ListItemButton onClick={() => navigate('/PendingDeposite')} sx={{ pl: 4 }}>
                         <ListItemIcon>
@@ -47,14 +47,14 @@ export default function DepositFunds() {
                         <ListItemText primary="Withdraw Money Requests" />
                     </ListItemButton>
                 </List>
-            </Collapse>
+            </Collapse> */}
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     <ListItemButton onClick={() => navigate('/CompleteDeposite')} sx={{ pl: 4 }}>
                         <ListItemIcon>
-                            <PeopleIcon sx={{ color: 'white' }} />
+                            <PeopleIcon sx={{ marginLeft: '-11px', color: 'white' }} />
                         </ListItemIcon>
-                        <ListItemText sx={{fontSize:'10px'}}primary="Add Money requests" />
+                        <ListItemText sx={{ marginLeft: '-30px', fontSize: '10px' }} primary="Add Money requests" />
                     </ListItemButton>
                 </List>
             </Collapse>

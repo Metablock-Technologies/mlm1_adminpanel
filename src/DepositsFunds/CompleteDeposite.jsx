@@ -42,6 +42,7 @@ function Addcoins() {
     const startIndex = page * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
 
+    const displayedData = tableData.slice(startIndex, endIndex);
     // pagination part
     const addcoins = async () => {
         try {
@@ -330,7 +331,7 @@ function Addcoins() {
 
                                                         </thead>
                                                         <tbody>
-                                                            {tableData.map((data, index) => {
+                                                            {displayedData.map((data, index) => {
                                                                 const createdAt = new Date(data?.createdAt);
                                                                 const formattedDate = createdAt.toLocaleDateString();
                                                                 const formattedTime = createdAt.toLocaleTimeString();
@@ -339,12 +340,14 @@ function Addcoins() {
                                                                     <td>{index + 1}</td>
                                                                     <td>{data?.amount}</td>
                                                                     <td>
-                                                                        <Button color="primary" onClick={() => handleOpenDialog(data?.link)}>
-                                                                            <Visibility sx={{ color: '#3b3ba3' }} />
+                                                                        <Button color="primary" onClick={() => {
+                                                                            handleOpenDialog(data?.link)
+                                                                        }}>
+                                                                            <Visibility sx={{ color: 'black' }} />
                                                                         </Button>
                                                                     </td>
                                                                     <td>{usernames[data?.user_id]}</td>                                                                    <td>
-                                                                        <input style={{}}
+                                                                        <input style={{ background: 'white', height: '30px', width: '200px' }}
                                                                             type="text"
                                                                             placeholder="Enter message"
                                                                             variant="outlined"

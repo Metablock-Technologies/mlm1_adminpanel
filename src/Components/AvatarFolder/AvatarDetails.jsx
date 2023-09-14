@@ -6,11 +6,25 @@ function AvatarDetails() {
     const navigate = useNavigate();
     // const { logout } = useAuth();
     const handlelogout = async () => {
-        localStorage.removeItem('access_token');
-        await new Promise(resolve => setTimeout(resolve, 0));
+        // localStorage.removeItem('access_token');
+        // await new Promise(resolve => setTimeout(resolve, 0));
 
-        localStorage.removeItem('access_token_expiration');
-        await new Promise(resolve => setTimeout(resolve, 0));
+        // localStorage.removeItem('access_token_expiration');
+        // await new Promise(resolve => setTimeout(resolve, 0));
+
+        const removalPromises = [
+            new Promise((resolve) => {
+                localStorage.removeItem('access_token');
+                setTimeout(resolve, 0); // Ensure this operation completes before moving on
+            }),
+            new Promise((resolve) => {
+                localStorage.removeItem('access_token_expiration');
+                setTimeout(resolve, 0); // Ensure this operation completes before moving on
+            }),
+        ];
+
+        // Wait for both removal operations to complete
+        await Promise.all(removalPromises);
 
         navigate('/'); // Try navigating to a specific route
     }

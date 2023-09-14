@@ -213,8 +213,8 @@ function MyTeamIncome() {
                                             <br />
                                             <div className="col-12">
                                                 <center>
-                                                    <button className="btn btn-primary" onClick={(e) => handleSearch(e)} >Search Now</button>
-                                                    <button className="btn btn-info" style={{ marginLeft: '20px' }} type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
+                                                    <button style={{ color: 'black', backgroundColor: 'rgb(195 161 119)' }} className="btn btn-primary" onClick={(e) => handleSearch(e)} >Search Now</button>
+                                                    <button style={{ marginLeft: '20px', background: 'black', color: '#d8af72', border: '1px solid #d8af72' }} className="btn btn-info"type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
 
                                                 </center>
                                             </div>

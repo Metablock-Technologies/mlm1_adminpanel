@@ -221,8 +221,8 @@ function RejectRequest() {
                                             <br />
                                             <div className="col-12">
                                                 <center>
-                                                    <button className="btn btn-primary" onClick={(e) => handleSearch(e)} >Search Now</button>
-                                                    <button className="btn btn-info" style={{ marginLeft: '20px' }} type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
+                                                    <button className="btn btn-primary" style={{ color: 'black', backgroundColor: 'rgb(195 161 119)' }} onClick={(e) => handleSearch(e)} >Search Now</button>
+                                                    <button className="btn btn-info" style={{ marginLeft: '20px', background: 'black', color: '#d8af72', border: '1px solid #d8af72' }} type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
 
                                                 </center>
                                             </div>

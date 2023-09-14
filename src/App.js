@@ -76,6 +76,8 @@ import RenewalUser from './Users/RenewalUser';
 import PendingDeposite from './DepositsFunds/PendingDeposite';
 import CompleteDeposite from './DepositsFunds/CompleteDeposite'
 import RejectDeposite from './DepositsFunds/RejectDeposite'
+import ActivateId from './Components/ActivateID';
+import FundsTransfer from './Funds/FundsTransfer'
 
 function PrivateRoute({ element }) {
     // const { isLoggedIn } = useAuth();
@@ -156,6 +158,8 @@ function App() {
                         <Route exact path='PendingDeposite' element={<PendingDeposite />} ></Route>
                         <Route exact path='CompleteDeposite' element={<CompleteDeposite />} ></Route>
                         <Route exact path='RejectDeposite' element={<RejectDeposite />} ></Route>
+                        <Route exact path='activateid' element={<PrivateRoute element={<ActivateId />} />} ></Route>
+                        <Route exact path='FundsTransfer' element={<PrivateRoute element={<FundsTransfer />} />}></Route>
 
 
                         {/* <Route path='dashboard' element={<DashBoard />} ></Route>

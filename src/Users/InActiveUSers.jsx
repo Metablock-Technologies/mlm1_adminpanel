@@ -4,7 +4,7 @@ import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { token, baseURL } from '../token';
 import { compareDesc } from 'date-fns';
 import axios from 'axios';
-import { TablePagination } from '@mui/material';
+import { CircularProgress, TablePagination } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 function InActiveUSers() {
@@ -20,6 +20,7 @@ function InActiveUSers() {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
     const [loading, setLoading] = useState(true);
+    const [loadings, setLoadings] = useState(true);
 
 
     const rowsPerPageOptions = [10, 25, 50];
@@ -130,6 +131,7 @@ function InActiveUSers() {
             userProfileData.sort((a, b) => compareDesc(new Date(a.data.createdAt), new Date(b.data.createdAt)));
             setTableData(userProfileData);
             // setExtradata(extraProfile);
+            setLoadings(false)
             // console.log("tabledata", tableData);
         } catch (error) {
             console.error("error:--", error);
@@ -229,8 +231,8 @@ function InActiveUSers() {
                                                 <br />
                                                 <div className="col-md-12 mb-12">
                                                     <center>
-                                                        <button className="btn btn-primary" onClick={(e) => handleSearch(e)} >Search Now</button>
-                                                        <button className="btn btn-info" style={{ marginLeft: '20px' }} type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
+                                                        <button style={{ color: 'black', backgroundColor: 'rgb(195 161 119)' }} className="btn btn-primary" onClick={(e) => handleSearch(e)} >Search Now</button>
+                                                        <button className="btn btn-info" style={{ marginLeft: '20px', background: 'black', color: '#d8af72', border: '1px solid #d8af72' }} type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
 
                                                     </center>
                                                 </div>
@@ -239,54 +241,63 @@ function InActiveUSers() {
                                             <div className="single-table">
                                                 <div className="table-responsive">
 
-                                                    <table className="table text-center">
-                                                        <thead className="text-capitalize">
-                                                            <tr>
-                                                                <th>SR.No.</th>
-                                                                <th>Name</th>
-                                                                <th>User Name</th>
-                                                                <th>Refer Code</th>
-                                                                <th>Email</th>
-                                                                <th>Mobile Number</th>
-                                                                <th>Joning Date</th>
-                                                                <th>Type</th>
-                                                                <th>Status</th>
-                                                                <th>Total members</th>
-                                                                <th>Sponser ID</th>
-                                                                <th>Active users</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {tableData?.length === 0 ? (
+                                                    {loading ? (<>
+                                                        <div className="loading-overlay">
+                                                            <CircularProgress sx={{ color: 'orange' }} />
+                                                        </div>
+
+                                                    </>) : (<>
+                                                        <table className="table text-center">
+                                                            <thead className="text-capitalize">
                                                                 <tr>
-                                                                    <td colSpan="12" style={{ color: 'black', textAlign: 'center' }}>
-                                                                        No results found
-                                                                    </td>
+                                                                    <th>SR.No.</th>
+                                                                    <th>Name</th>
+                                                                    <th>User Name</th>
+                                                                    <th>Refer Code</th>
+                                                                    <th>Email</th>
+                                                                    <th>Mobile Number</th>
+                                                                    <th>Joning Date</th>
+                                                                    <th>Type</th>
+                                                                    <th>Status</th>
+                                                                    <th>Total members</th>
+                                                                    <th>Sponser ID</th>
+                                                                    <th>Active users</th>
                                                                 </tr>
-                                                            ) : tableData?.map((row, index) => (
-                                                                <tr key={index}>
-                                                                    <td>{index + 1}</td>
-                                                                    <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)}>{row?.data?.name}</td>
-                                                                    <td>{row?.data?.username}</td>
-                                                                    <td>{row?.data?.hashcode}</td>
-                                                                    <td>{row?.data?.email}</td>
-                                                                    <td>{row?.data?.phonenumber}</td>
-                                                                    <td>{row?.data?.createdAt}</td>
-                                                                    <td>{row?.data?.type}</td>
-                                                                    <td>
-                                                                        {/* Convert Status field into a button */}
-                                                                        {/* <button className={`btn ${row?.data?.status === 'Active' ? 'btn-success' : 'btn-danger'}`}> */}
-                                                                        {row?.data?.status}
-                                                                        {/* </button> */}
-                                                                    </td>
-                                                                    <td>{row?.metadata?.totalUsers}</td>
-                                                                    <td>{row?.metadata?.sponsorId}</td>
-                                                                    <td>{row?.metadata?.activeUsers}</td>
-                                                                    {/* ... render other fields */}
-                                                                </tr>
-                                                            ))}
-                                                        </tbody>
-                                                    </table>
+                                                            </thead>
+                                                            <tbody>
+                                                                {tableData?.length === 0 ? (
+                                                                    <tr>
+                                                                        <td colSpan="12" style={{ color: 'black', textAlign: 'center' }}>
+                                                                            No results found
+                                                                        </td>
+                                                                    </tr>
+                                                                ) : tableData?.map((row, index) => (
+                                                                    <tr key={index} className="fade-in-row" >
+                                                                        <td>{index + 1}</td>
+                                                                        <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)}>{row?.data?.name}</td>
+                                                                        <td>{row?.data?.username}</td>
+                                                                        <td>{row?.data?.hashcode}</td>
+                                                                        <td>{row?.data?.email}</td>
+                                                                        <td>{row?.data?.phonenumber}</td>
+                                                                        <td>{row?.data?.createdAt}</td>
+                                                                        <td>{row?.data?.type}</td>
+                                                                        <td>
+                                                                            {/* Convert Status field into a button */}
+                                                                            {/* <button className={`btn ${row?.data?.status === 'Active' ? 'btn-success' : 'btn-danger'}`}> */}
+                                                                            {row?.data?.status}
+                                                                            {/* </button> */}
+                                                                        </td>
+                                                                        <td>{row?.metadata?.totalUsers}</td>
+                                                                        <td>{row?.metadata?.sponsorId}</td>
+                                                                        <td>{row?.metadata?.activeUsers}</td>
+                                                                        {/* ... render other fields */}
+                                                                    </tr>
+                                                                ))}
+                                                            </tbody>
+                                                        </table>
+
+                                                    </>)}
+
                                                     <br /><br />
 
 

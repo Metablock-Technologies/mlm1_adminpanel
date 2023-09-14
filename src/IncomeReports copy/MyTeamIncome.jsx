@@ -2,25 +2,37 @@ import React, { useEffect, useState } from 'react'
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { token, baseURL } from '../token';
 import axios from 'axios';
-import { TablePagination } from '@mui/material';
+import { CircularProgress, TablePagination } from '@mui/material';
 import { compareDesc } from 'date-fns';
 
 function MyTeamIncome() {
 
     const [loading, setLoading] = useState(true);
+    const [loadings, setLoadings] = useState(true);
     const [tableData, setTableData] = useState([]);
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const itemsPerPage = 10; // Number of items per page
+    const rowsPerPageOptions = [10, 25, 50]; // You can customize the available options
 
-    const rowsPerPageOptions = [10, 25, 50];
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0); // Reset to the first page when changing rows per page
+    };
+
+
+
 
     const handleSearch = (e) => {
         console.log("nakdsj");
+        setPage(0);
         e.preventDefault();
         const filteredData = tableData.filter((item) => {
             const itemDate = new Date(item?.data?.createdAt);
@@ -109,6 +121,7 @@ function MyTeamIncome() {
             console.log("userprofiledata", userProfileData);
             userProfileData.sort((a, b) => compareDesc(new Date(a.data.createdAt), new Date(b.data.createdAt)));
             setTableData(userProfileData);
+            setLoadings(false);
             // setExtradata(extraProfile);
             // console.log("tabledata", tableData);
         } catch (error) {
@@ -130,23 +143,10 @@ function MyTeamIncome() {
         getallusers();
     };
 
-    // Calculate the index of the first and last data items to display
+
     const startIndex = page * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
 
-    // Slice the data to display only the current page
-    const displayedData = tableData.slice(startIndex, endIndex);
-
-    // Create a function to handle page change
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    // Create a function to handle rows per page change
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0); // Reset to the first page when changing rows per page
-    };
     return (
         <> <div className={`fade-in ${loading ? '' : 'active'}`}>
             <div className="content-wrapper" style={{ minHeight: '512px' }}>
@@ -222,48 +222,60 @@ function MyTeamIncome() {
                                         </form>
                                         <div className="single-table">
                                             <div className="table-responsive">
-                                                <table className="table text-center">
-                                                    <thead className="text-capitalize">
-                                                        <tr>
-                                                            <th>Sr.No.</th>
-                                                            <th>Name</th>
-                                                            <th>User ID</th>
-                                                            <th> Refer By</th>
-                                                            <th>Level</th>
-                                                            <th>Auto Pol 1</th>
-                                                            <th>Auto Pol 2</th>
-                                                            <th>Total</th>
-                                                            <th>Date</th>
-                                                            <th>Time</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {
-                                                            tableData.length === 0 ? (
-                                                                <tr>
-                                                                    <td colSpan="12" style={{ color: 'black', textAlign: 'center' }}>
-                                                                        No results found
-                                                                    </td>
-                                                                </tr>
-                                                            ) : tableData.map((item, index) => {
-                                                                const createdAt = new Date(item?.data?.createdAt);
-                                                                const formattedDate = createdAt.toLocaleDateString();
-                                                                const formattedTime = createdAt.toLocaleTimeString();
-                                                                return (<tr key={index}>
-                                                                    <td>{index + 1}</td>
-                                                                    <td>{item?.data?.name}</td>
-                                                                    <td>{item?.data?.username}</td>
-                                                                    <td>{item?.data?.income_report?.referral}</td>
-                                                                    <td>{item?.data?.income_report?.levelincome}</td>
-                                                                    <td>{item?.data?.income_report?.autopool1}</td>
-                                                                    <td>{item?.data?.income_report?.autopool2}</td>
-                                                                    <td>{item?.data?.income_report?.totalincome}</td>
-                                                                    <td>{formattedDate}</td>
-                                                                    <td>{formattedTime}</td>
-                                                                </tr>)
-                                                            })}
-                                                    </tbody>
-                                                </table>
+
+
+                                                {loadings ? (<>
+
+                                                    <div className="loading-overlay">
+                                                        <CircularProgress sx={{ color: 'orange' }} />
+                                                    </div>
+                                                </>) : (<>
+                                                    <table className="table text-center">
+                                                        <thead className="text-capitalize">
+                                                            <tr>
+                                                                <th>Sr.No.</th>
+                                                                <th>Name</th>
+                                                                <th>User ID</th>
+                                                                <th> Refer By</th>
+                                                                <th>Level</th>
+                                                                <th>Monthly Income</th>
+                                                                <th>Daily Income</th>
+                                                                <th>Total</th>
+                                                                <th>Date</th>
+                                                                <th>Time</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {
+                                                                tableData.length === 0 ? (
+                                                                    <tr>
+                                                                        <td colSpan="12" style={{ color: 'black', textAlign: 'center' }}>
+                                                                            No results found
+                                                                        </td>
+                                                                    </tr>
+                                                                ) : tableData.map((item, index) => {
+                                                                    if (index >= startIndex && index < endIndex) {
+                                                                        const createdAt = new Date(item?.data?.createdAt);
+                                                                        const formattedDate = createdAt.toLocaleDateString();
+                                                                        const formattedTime = createdAt.toLocaleTimeString();
+                                                                        return (<tr key={index} className="fade-in-row">
+                                                                            <td>{index + 1}</td>
+                                                                            <td>{item?.data?.name}</td>
+                                                                            <td>{item?.data?.username}</td>
+                                                                            <td>{item?.data?.income_report?.referral}</td>
+                                                                            <td>{item?.data?.income_report?.levelincome}</td>
+                                                                            <td>{item?.data?.income_report?.autopool1}</td>
+                                                                            <td>{item?.data?.income_report?.autopool2}</td>
+                                                                            <td>{item?.data?.income_report?.totalincome}</td>
+                                                                            <td>{formattedDate}</td>
+                                                                            <td>{formattedTime}</td>
+                                                                        </tr>)
+                                                                    }
+                                                                })}
+                                                        </tbody>
+                                                    </table>
+                                                </>)}
+
                                                 <br /><br />
 
                                             </div>
@@ -272,7 +284,8 @@ function MyTeamIncome() {
                                             <div>
                                                 <nav>
                                                     <ul className="pagination">
-                                                        <TablePagination sx={{ color: 'orange' }}
+                                                        <TablePagination
+                                                            sx={{ color: 'orange' }}
                                                             rowsPerPageOptions={rowsPerPageOptions}
                                                             component="div"
                                                             count={tableData.length}

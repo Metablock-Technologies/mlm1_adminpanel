@@ -205,7 +205,7 @@ const ProfilePage = () => {
                         <h2 className="welcome_heading">Profile </h2>
                     </section>
                     {/* Main content */}
-                    <section className="profile_main_section" style={{ padding: '20px 40px' }}>
+                    <section className="profile_main_section" style={{ padding: '20px 40px', display: 'flex', justifyContent: 'center' }}>
                         <div className="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
                             <div className="card h-100">
                                 <div className="card-body">

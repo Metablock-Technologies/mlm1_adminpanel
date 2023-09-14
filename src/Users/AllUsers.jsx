@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import LockOpenIcon from '@mui/icons-material/LockOpen'; // Import the LockOpenIcon
 import 'font-awesome/css/font-awesome.min.css';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
+import CircularProgress from '@mui/material/CircularProgress';
 import { compareDesc } from 'date-fns';
 
 import {
@@ -32,6 +33,7 @@ function AllUsers() {
     const [selectedStatus, setSelectedStatus] = useState("");
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(0);
+    const [loadings, setLoadings] = useState(true); // Initially, set loading to true
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const navigate = useNavigate();
 
@@ -145,6 +147,7 @@ function AllUsers() {
             console.log("userprofiledata", userProfileData);
             userProfileData.sort((a, b) => compareDesc(new Date(a.data.createdAt), new Date(b.data.createdAt)));
             setTableData(userProfileData);
+            setLoadings(false)
             // setExtradata(extraProfile);
             // console.log("tabledata", tableData);
         } catch (error) {
@@ -201,6 +204,7 @@ function AllUsers() {
 
     return (
         <>
+
             <div className={`fade-in ${loading ? '' : 'active'}`}>
                 <div className="content-wrapper" style={{ minHeight: '706.4px' }}>
                     <div className="content-header">
@@ -293,95 +297,104 @@ function AllUsers() {
                                             </form>
                                             <div className="single-table">
                                                 <div className="table-responsive">
-                                                    <table className="table text-center">
-                                                        <thead className="text-capitalize">
-                                                            <tr>
-                                                                <th>SR.No.</th>
-                                                                <th>Name</th>
-                                                                <th>User Name</th>
-                                                                <th>Refer Code</th>
-                                                                <th>Email</th>
-                                                                <th>Mobile Number</th>
-                                                                <th>Date</th>
-                                                                <th>Time</th>
-                                                                <th>Type</th>
-                                                                <th>Status</th>
-                                                                <th>Total members</th>
-                                                                <th>Sponser ID</th>
-                                                                <th>Active users</th>
-                                                                <th>Action</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {tableData?.length === 0 ? (
+
+                                                    {loadings ? (<>
+                                                        <div className="loading-overlay">
+                                                            <CircularProgress sx={{ color: 'orange' }} />
+                                                        </div>
+                                                    </>) : (<>
+
+                                                        <table className="table text-center">
+                                                            <thead className="text-capitalize">
                                                                 <tr>
-                                                                    <td colSpan="12" style={{ color: 'black', textAlign: 'center' }}>
-                                                                        No results found
-                                                                    </td>
+                                                                    <th>SR.No.</th>
+                                                                    <th>Name</th>
+                                                                    <th>User Name</th>
+                                                                    <th>Refer Code</th>
+                                                                    <th>Email</th>
+                                                                    <th>Mobile Number</th>
+                                                                    <th>Date</th>
+                                                                    <th>Time</th>
+                                                                    <th>Type</th>
+                                                                    <th>Status</th>
+                                                                    <th>Total members</th>
+                                                                    <th>Sponser ID</th>
+                                                                    <th>Active users</th>
+                                                                    <th>Action</th>
                                                                 </tr>
-                                                            ) :
-                                                                tableData?.map((row, index) => {
-                                                                    const createdAt = new Date(row?.data?.createdAt);
-                                                                    const formattedDate = createdAt.toLocaleDateString();
-                                                                    const formattedTime = createdAt.toLocaleTimeString();
-                                                                    return (
-                                                                        <tr key={index}>
-                                                                            <td>{index + 1}</td>
-                                                                            <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)}>{row?.data?.name}</td>
-                                                                            <td>{row?.data?.username}</td>
-                                                                            <td>{row?.data?.hashcode}</td>
-                                                                            <td>{row?.data?.email}</td>
-                                                                            <td>{row?.data?.phonenumber}</td>
-                                                                            <td>{formattedDate}</td>
-                                                                            <td>{formattedTime}</td>
-                                                                            <td>{row?.data?.type}</td>
-                                                                            <td>
-                                                                                {/* Convert Status field into a button */}
-                                                                                {/* <button className={`btn ${row?.data?.status === 'Active' ? 'btn-success' : 'btn-danger'}`}> */}
-                                                                                {row?.data?.status}
-                                                                                {/* </button> */}
-                                                                            </td>
-                                                                            <td>{row?.metadata?.totalUsers}</td>
-                                                                            <td>{row?.metadata?.sponsorId}</td>
-                                                                            <td>{row?.metadata?.activeUsers}</td>
-                                                                            <td>
-                                                                                {row?.data?.status === "blocked" ?
-                                                                                    <span onClick={() => handleBlockUser(row?.data?.id, "false")}>
+                                                            </thead>
+                                                            <tbody>
+                                                                {tableData?.length === 0 ? (
+                                                                    <tr>
+                                                                        <td colSpan="12" style={{ color: 'black', textAlign: 'center' }}>
+                                                                            No results found
+                                                                        </td>
+                                                                    </tr>
+                                                                ) :
+                                                                    displayedData?.map((row, index) => {
+                                                                        const createdAt = new Date(row?.data?.createdAt);
+                                                                        const formattedDate = createdAt.toLocaleDateString();
+                                                                        const formattedTime = createdAt.toLocaleTimeString();
+                                                                        return (
+                                                                            <tr className="fade-in-row" key={index}>
+                                                                                <td>{index + 1}</td>
+                                                                                <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)}>{row?.data?.name}</td>
+                                                                                <td>{row?.data?.username}</td>
+                                                                                <td>{row?.data?.hashcode}</td>
+                                                                                <td>{row?.data?.email}</td>
+                                                                                <td>{row?.data?.phonenumber}</td>
+                                                                                <td>{formattedDate}</td>
+                                                                                <td>{formattedTime}</td>
+                                                                                <td>{row?.data?.type}</td>
+                                                                                <td>
+                                                                                    {/* Convert Status field into a button */}
+                                                                                    {/* <button className={`btn ${row?.data?.status === 'Active' ? 'btn-success' : 'btn-danger'}`}> */}
+                                                                                    {row?.data?.status}
+                                                                                    {/* </button> */}
+                                                                                </td>
+                                                                                <td>{row?.metadata?.totalUsers}</td>
+                                                                                <td>{row?.metadata?.sponsorId}</td>
+                                                                                <td>{row?.metadata?.activeUsers}</td>
+                                                                                <td>
+                                                                                    {row?.data?.status === "blocked" ?
+                                                                                        <span onClick={() => handleBlockUser(row?.data?.id, "false")}>
 
-                                                                                        <i className="fa-sharp fa-solid fa-unlock"></i>
-                                                                                    </span>
-                                                                                    // <Tooltip content="Unblock User">
-                                                                                    //     <IconButton
-                                                                                    //         variant="text"
-                                                                                    //         color="blue-gray"
-                                                                                    //         onClick={() => handleBlockUser(row?.data?.id, "false")} // Define your unblock user handler
-                                                                                    //     >
-                                                                                    //         <i className="fa fa-check-circle"></i>
-                                                                                    //         {/* <LockOpenIcon className="h-5 w-5" /> */}
-                                                                                    //     </IconButton>
-                                                                                    // </Tooltip>
-                                                                                    :
-                                                                                    <span onClick={() => handleBlockUser(row?.data?.id, "true")}>
+                                                                                            <i className="fa-sharp fa-solid fa-unlock"></i>
+                                                                                        </span>
+                                                                                        // <Tooltip content="Unblock User">
+                                                                                        //     <IconButton
+                                                                                        //         variant="text"
+                                                                                        //         color="blue-gray"
+                                                                                        //         onClick={() => handleBlockUser(row?.data?.id, "false")} // Define your unblock user handler
+                                                                                        //     >
+                                                                                        //         <i className="fa fa-check-circle"></i>
+                                                                                        //         {/* <LockOpenIcon className="h-5 w-5" /> */}
+                                                                                        //     </IconButton>
+                                                                                        // </Tooltip>
+                                                                                        :
+                                                                                        <span onClick={() => handleBlockUser(row?.data?.id, "true")}>
 
-                                                                                        <i className="fa fa-ban"></i>
-                                                                                    </span>
-                                                                                    // <Tooltip content="Block User">
-                                                                                    //     <IconButton
-                                                                                    //         variant="text"
-                                                                                    //         color="blue-gray"
-                                                                                    //         onClick={() => handleBlockUser(row?.data?.id, "true")}
-                                                                                    //     >
-                                                                                    //     </IconButton>
-                                                                                    // </Tooltip>
-                                                                                }
-                                                                            </td>
-                                                                            {/* ... render other fields */}
-                                                                        </tr>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </tbody>
-                                                    </table>
+                                                                                            <i className="fa fa-ban"></i>
+                                                                                        </span>
+                                                                                        // <Tooltip content="Block User">
+                                                                                        //     <IconButton
+                                                                                        //         variant="text"
+                                                                                        //         color="blue-gray"
+                                                                                        //         onClick={() => handleBlockUser(row?.data?.id, "true")}
+                                                                                        //     >
+                                                                                        //     </IconButton>
+                                                                                        // </Tooltip>
+                                                                                    }
+                                                                                </td>
+                                                                                {/* ... render other fields */}
+                                                                            </tr>
+                                                                        )
+                                                                    })
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </>)}
+
                                                     <br /><br />
 
                                                 </div>

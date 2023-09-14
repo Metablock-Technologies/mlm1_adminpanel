@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, TablePagination, TextField, Dialog, DialogContent, DialogTitle } from '@mui/material';
+import { DialogActions } from '@mui/material';
+
 import { Edit, Visibility } from '@mui/icons-material';
 // import ImageViewer from './ImageViewer';
 import { baseURL } from '../token';
@@ -26,7 +28,6 @@ function Addcoins() {
         setSelectedImageUrl(imageUrl);
         setDialogOpen(true);
     };
-
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -203,9 +204,11 @@ function Addcoins() {
                     <DialogContent>
                         <img src={selectedImageUrl} alt="Image" style={{ maxWidth: '100%' }} />
                     </DialogContent>
-                    <Button onClick={() => setDialogOpen(false)} color="primary" variant="contained">
-                        Close
-                    </Button>
+                    <DialogActions>
+                        <Button onClick={() => setDialogOpen(false)} color="primary" variant="contained">
+                            Close
+                        </Button>
+                    </DialogActions>
                 </Dialog>
                 <div className="content-header">
                     <div className="container-fluid">
@@ -336,7 +339,7 @@ function Addcoins() {
                                                                     <td>{index + 1}</td>
                                                                     <td>{data?.amount}</td>
                                                                     <td>
-                                                                        <Button color="primary" onClick={() => handleImageClick(data?.link)}>
+                                                                        <Button color="primary" onClick={() => handleOpenDialog(data?.link)}>
                                                                             <Visibility sx={{ color: '#3b3ba3' }} />
                                                                         </Button>
                                                                     </td>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { token, baseURL } from '../token';
 import axios from 'axios';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
-import { TablePagination } from '@mui/material';
+import { CircularProgress, TablePagination } from '@mui/material';
 import LockOpenIcon from '@mui/icons-material/LockOpen'; // Import the LockOpenIcon
 import { compareDesc } from 'date-fns';
 
@@ -25,6 +25,7 @@ function BlockUsers() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [loading, setLoading] = useState(true);
+    const [loadings, setLoadings] = useState(true);
     const navigate = useNavigate();
     const rowsPerPageOptions = [10, 25, 50];
     const handleSearch = (e) => {
@@ -129,6 +130,7 @@ function BlockUsers() {
             console.log("userprofiledata", userProfileData);
             userProfileData.sort((a, b) => compareDesc(new Date(a.data.createdAt), new Date(b.data.createdAt)));
             setTableData(userProfileData);
+            setLoadings(false);
             // setExtradata(extraProfile);
             // console.log("tabledata", tableData);
         } catch (error) {
@@ -248,62 +250,70 @@ function BlockUsers() {
                                             <br />
                                             <div className="col-12">
                                                 <center>
-                                                    <button className="btn btn-primary" onClick={(e) => handleSearch(e)} >Search Now</button>
-                                                    <button className="btn btn-info" style={{ marginLeft: '20px' }} type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
+                                                    <button style={{ color: 'black', backgroundColor: 'rgb(195 161 119)' }} className="btn btn-primary" onClick={(e) => handleSearch(e)} >Search Now</button>
+                                                    <button className="btn btn-info" style={{ marginLeft: '20px', background: 'black', color: '#d8af72', border: '1px solid #d8af72' }} type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
                                                 </center>
                                             </div>
                                             <br />
                                         </form>
                                         <div className="single-table">
                                             <div className="table-responsive">
-                                                <table className="table text-center" id>
-                                                    <thead className="text-capitalize">
-                                                        <tr>
-                                                            <th>SR.No.</th>
-                                                            <th>Name</th>
-                                                            <th>User Name</th>
-                                                            <th>Refer Code</th>
-                                                            <th>Email</th>
-                                                            <th>Mobile Number</th>
-                                                            <th>Joning Date</th>
-                                                            <th>Type</th>
-                                                            <th>Status</th>
-                                                            <th>Total members</th>
-                                                            <th>Sponser ID</th>
-                                                            <th>Active users</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {
-                                                            tableData?.length === 0 ? (
-                                                                <tr>
-                                                                    <td colSpan="12" style={{ color: 'black', textAlign: 'center' }}>
-                                                                        No results found
-                                                                    </td>
-                                                                </tr>
-                                                            ) :
-                                                                tableData?.map((row, index) => (
-                                                                    <tr key={index}>
-                                                                        <td>{index + 1}</td>
-                                                                        <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)}>{row?.data?.name}</td>
-                                                                        <td>{row?.data?.username}</td>
-                                                                        <td>{row?.data?.hashcode}</td>
-                                                                        <td>{row?.data?.email}</td>
-                                                                        <td>{row?.data?.phonenumber}</td>
-                                                                        <td>{row?.data?.createdAt}</td>
-                                                                        <td>{row?.data?.type}</td>
-                                                                        <td>
-                                                                            {/* Convert Status field into a button */}
-                                                                            {/* <button className={`btn ${row?.data?.status === 'Active' ? 'btn-success' : 'btn-danger'}`}> */}
-                                                                            {row?.data?.status}
-                                                                            {/* </button> */}
+
+                                                {loadings ? (<>
+                                                    <div className="loading-overlay">
+                                                        <CircularProgress sx={{ color: 'orange' }} />
+                                                    </div>
+
+                                                </>) : (<>
+
+                                                    <table className="table text-center" id>
+                                                        <thead className="text-capitalize">
+                                                            <tr>
+                                                                <th>SR.No.</th>
+                                                                <th>Name</th>
+                                                                <th>User Name</th>
+                                                                <th>Refer Code</th>
+                                                                <th>Email</th>
+                                                                <th>Mobile Number</th>
+                                                                <th>Joning Date</th>
+                                                                <th>Type</th>
+                                                                <th>Status</th>
+                                                                <th>Total members</th>
+                                                                <th>Sponser ID</th>
+                                                                <th>Active users</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {
+                                                                tableData?.length === 0 ? (
+                                                                    <tr>
+                                                                        <td colSpan="12" style={{ color: 'black', textAlign: 'center' }}>
+                                                                            No results found
                                                                         </td>
-                                                                        <td>{row?.metadata?.totalUsers}</td>
-                                                                        <td>{row?.metadata?.sponsorId}</td>
-                                                                        <td>{row?.metadata?.activeUsers}</td>
-                                                                        {/* ... render other fields */}
-                                                                        {/* <td>
+                                                                    </tr>
+                                                                ) :
+                                                                    tableData?.map((row, index) => (
+                                                                        <tr key={index} className="fade-in-row" >
+                                                                            <td>{index + 1}</td>
+                                                                            <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)}>{row?.data?.name}</td>
+                                                                            <td>{row?.data?.username}</td>
+                                                                            <td>{row?.data?.hashcode}</td>
+                                                                            <td>{row?.data?.email}</td>
+                                                                            <td>{row?.data?.phonenumber}</td>
+                                                                            <td>{row?.data?.createdAt}</td>
+                                                                            <td>{row?.data?.type}</td>
+                                                                            <td>
+                                                                                {/* Convert Status field into a button */}
+                                                                                {/* <button className={`btn ${row?.data?.status === 'Active' ? 'btn-success' : 'btn-danger'}`}> */}
+                                                                                {row?.data?.status}
+                                                                                {/* </button> */}
+                                                                            </td>
+                                                                            <td>{row?.metadata?.totalUsers}</td>
+                                                                            <td>{row?.metadata?.sponsorId}</td>
+                                                                            <td>{row?.metadata?.activeUsers}</td>
+                                                                            {/* ... render other fields */}
+                                                                            {/* <td>
                                                                         <Tooltip content="Unblock User">
                                                                             <IconButton
                                                                                 variant="text"
@@ -315,28 +325,30 @@ function BlockUsers() {
                                                                         </Tooltip>
 
                                                                     </td> */}
-                                                                        <td>
-                                                                            {
+                                                                            <td>
+                                                                                {
 
-                                                                                <span onClick={() => handleblockuser(row?.data?.id, "false")}>
-                                                                                    <i className="fa fa-ban"
-                                                                                    ></i>
-                                                                                </span>
-                                                                                // <Tooltip content="Block User">
-                                                                                //     <IconButton
-                                                                                //         variant="text"
-                                                                                //         color="blue-gray"
-                                                                                //         onClick={() => handleBlockUser(row?.data?.id, "true")}
-                                                                                //     >
-                                                                                //     </IconButton>
-                                                                                // </Tooltip>
-                                                                            }
-                                                                        </td>
-                                                                    </tr>
-                                                                ))
-                                                        }
-                                                    </tbody>
-                                                </table>
+                                                                                    <span onClick={() => handleblockuser(row?.data?.id, "false")}>
+                                                                                        <i className="fa fa-ban"
+                                                                                        ></i>
+                                                                                    </span>
+                                                                                    // <Tooltip content="Block User">
+                                                                                    //     <IconButton
+                                                                                    //         variant="text"
+                                                                                    //         color="blue-gray"
+                                                                                    //         onClick={() => handleBlockUser(row?.data?.id, "true")}
+                                                                                    //     >
+                                                                                    //     </IconButton>
+                                                                                    // </Tooltip>
+                                                                                }
+                                                                            </td>
+                                                                        </tr>
+                                                                    ))
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </>)}
+
                                                 <br /><br />
 
 

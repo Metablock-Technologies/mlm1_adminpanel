@@ -705,6 +705,7 @@ tr>th{
 .table.text-center td
     {
     background: #be9a64;
+    padding: 15px;
     text-align: left !important;
 
 }

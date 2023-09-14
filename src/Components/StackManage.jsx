@@ -14,6 +14,7 @@ function StackManage() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [loading, setLoading] = useState(true);
+    const [loadings, setLoadings] = useState(true);
 
 
     const rowsPerPageOptions = [10, 25, 50];

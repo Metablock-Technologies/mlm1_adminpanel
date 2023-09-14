@@ -117,77 +117,84 @@ function Forget() {
     return (
         <>
             <div className={`fade-in ${loading ? '' : 'active'}`}>
-                <div className="dflex">
+                <div className="start-box"><div id="stars" /><div id="stars2" /><div id="stars3" /></div>
+                <div style={{ backgroundColor: 'black' }} className="dflex">
                     <div className="dLeft" style={{ borderRadius: 30 }}>
-                        <div className="logo wow fadeInDown" style={{ visibility: 'visible', animationName: 'fadeInDown' }}><img src="https://hammertradex.com/public/front/assets/img/htx-logo.png" style={{ width: 200 }} alt="Logo" /></div>
-                        <div className="loginForm">
-                            <h4 style={{ color: 'white', textAlign: 'center' }}>Forget Password</h4>
-                            <div className={`fade-in ${loading ? '' : 'active'}`}>
-                                <p style={{ color: 'white', textAlign: 'center' }}>{message}</p>
-                                {step === 1 && (
-                                    <div className="step1">
-                                        {/* Step 1: Enter Email and Send OTP */}
-                                        <input
-                                            type="text"
-                                            name="email"
-                                            placeholder="Enter Email"
-                                            className="form-control"
-                                            required="username"
-                                            value={email}
-                                            onChange={handleEmailChange}
-                                            style={{ borderRadius: 15, paddingLeft: 15, fontWeight: 'bold' }}
-                                        />
-                                        <button onClick={handleSendOtp}>Send OTP</button>
-                                    </div>
-                                )}
-                                {step === 2 && (
-                                    <div className="step2">
-                                        {/* Step 2: Enter OTP */}
-                                        <input
-                                            type="text"
-                                            name="otp"
-                                            placeholder="Enter OTP"
-                                            className="form-control"
-                                            required="otp"
-                                            value={otp}
-                                            onChange={handleOtpChange}
-                                            style={{ borderRadius: 15, paddingLeft: 15, fontWeight: 'bold' }}
-                                        />
-                                        <button onClick={handleVerifyOtp}>Verify OTP</button>
-                                    </div>
-                                )}
-                                {step === 3 && (
-                                    <div className="step3">
-                                        {/* Step 3: Change Password */}
-                                        <form onSubmit={handlePasswordUpdate}>
-                                            <div className="input_box_div">
-                                                <label htmlFor="new_pass">New password:</label>
+                        <div className="start-box"><div id="stars" /><div id="stars2" /><div id="stars3" /></div>
+
+                        {/* <div className="logo wow fadeInDown" style={{ visibility: 'visible', animationName: 'fadeInDown' }}><img src="https://hammertradex.com/public/front/assets/img/htx-logo.png" style={{ width: 200 }} alt="Logo" /></div> */}
+                        <div className="container">
+                            <div className="form_box">
+                                <div className="loginForm">
+                                    <h2 style={{ color: 'rgb(195 161 119)', marginBottom: '0.5em', textAlign: 'center', fontSize: '2em' }}>Forgot Passwor</h2>
+                                    <div className={`fade-in ${loading ? '' : 'active'}`}>
+                                        <p style={{ color: 'white', textAlign: 'center' }}>{message}</p>
+                                        {step === 1 && (
+                                            <div className="step1">
+                                                {/* Step 1: Enter Email and Send OTP */}
                                                 <input
-                                                    className="input_box"
-                                                    type="password"
-                                                    name="new_pass"
-                                                    ref={newPassRef}
-                                                    placeholder="New password"
-                                                    required
+                                                    type="text"
+                                                    name="email"
+                                                    placeholder="Enter Email"
+                                                    className="form-control"
+                                                    required="username"
+                                                    value={email}
+                                                    onChange={handleEmailChange}
+                                                    style={{ borderRadius: 15, paddingLeft: 15, fontWeight: 'bold' }}
                                                 />
+                                                <button style={{ marginTop: '5px', borderRadius: '5px', backgroundColor: 'rgb(195 161 119)', border: 'none' }} className="btn-default btn-block form_submit_btn" onClick={handleSendOtp}>Send OTP</button>
                                             </div>
-                                            <div className="input_box_div">
-                                                <label htmlFor="con_pass">Confirm password:</label>
+                                        )}
+                                        {step === 2 && (
+                                            <div className="step2">
+                                                {/* Step 2: Enter OTP */}
                                                 <input
-                                                    className="input_box"
-                                                    type="password"
-                                                    name="con_pass"
-                                                    ref={conPassRef}
-                                                    placeholder="Confirm password"
-                                                    required
+                                                    type="text"
+                                                    name="otp"
+                                                    placeholder="Enter OTP"
+                                                    className="form-control"
+                                                    required="otp"
+                                                    value={otp}
+                                                    onChange={handleOtpChange}
+                                                    style={{ borderRadius: 15, paddingLeft: 15, fontWeight: 'bold' }}
                                                 />
+                                                <button onClick={handleVerifyOtp}>Verify OTP</button>
                                             </div>
-                                            <div className="dash_second_col_third">
-                                                <input type="submit" className="button_submit" defaultValue="Update" />
+                                        )}
+                                        {step === 3 && (
+                                            <div className="step3">
+                                                {/* Step 3: Change Password */}
+                                                <form onSubmit={handlePasswordUpdate}>
+                                                    <div className="input_box_div">
+                                                        <label htmlFor="new_pass">New password:</label>
+                                                        <input
+                                                            className="input_box"
+                                                            type="password"
+                                                            name="new_pass"
+                                                            ref={newPassRef}
+                                                            placeholder="New password"
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="input_box_div">
+                                                        <label htmlFor="con_pass">Confirm password:</label>
+                                                        <input
+                                                            className="input_box"
+                                                            type="password"
+                                                            name="con_pass"
+                                                            ref={conPassRef}
+                                                            placeholder="Confirm password"
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="dash_second_col_third">
+                                                        <input type="submit" className="button_submit" defaultValue="Update" />
+                                                    </div>
+                                                </form>
                                             </div>
-                                        </form>
+                                        )}
                                     </div>
-                                )}
+                                </div>
                             </div>
                         </div>
                     </div>

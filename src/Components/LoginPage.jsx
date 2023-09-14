@@ -6,6 +6,7 @@ import DashBoard from './DashBoard';
 // import PaymentDetails from './payment';
 // import "../StyleFolder/dashboards.css"
 // import "../StyleFolder/style.css"
+import { Visibility, VisibilityOff } from '@mui/icons-material'; // Import Material-UI icons
 import brand from "../Okdream25.png";
 
 function LoginPage() {
@@ -13,6 +14,7 @@ function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(true);
+    const [passwordVisible, setPasswordVisible] = useState(false);
     const [userData, setuserData] = useState(null);
     const [newToken, setNewToken] = useState("");
     const [message, setMessage] = useState("");
@@ -21,10 +23,13 @@ function LoginPage() {
         setMessage('');
         setEmail(event.target.value);
     };
-
     const handlePasswordChange = (event) => {
-        setMessage('')
+        setMessage('');
         setPassword(event.target.value);
+    };
+
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
     };
 
     const handleSubmit = async (event) => {
@@ -112,63 +117,83 @@ function LoginPage() {
     return (
         <>
             {
-                <div className={`fade-in ${loading ? '' : 'active'}`}>
-                    {/* <div className="start-box"><div id="stars" /><div id="stars2" /><div id="stars3" /></div> */}
-                    <div style={{ backgroundColor: 'black' }} className="dflex">
-                        <div className="dLeft" style={{ borderRadius: 30 }}>
-                            <div className="start-box"><div id="stars" /><div id="stars2" /><div id="stars3" /></div>
+                <div className="login-page-container">
 
-                            {/* <div className="logo wow fadeInDown" style={{ visibility: 'visible', animationName: 'fadeInDown', display: 'flex', justifyContent: 'center' }}><img src={brand} style={{ width: 200 }} alt="Logo" /></div> */}
-                            <div className="container">
-                                {/* <div className="col-lg-6 col-md-12 col-sm-12"> */}
-                                <div className="form_box">
-                                    <div className="loginForm">
-                                        <h2 style={{ color: 'rgb(195 161 119)', marginBottom: '0.5em', textAlign: 'center', fontSize: '2em' }}>Admin Panel</h2>
-                                        <form onSubmit={handleSubmit} method="post">
-                                            <input type="hidden" name="_token" defaultValue="b66aFctTonKhd73PjlzMG7wu4Oj0Wd3BFxkyEZXS" />
-                                            <div className="field-group wow fadeInUp" style={{ visibility: 'visible', animationName: 'fadeInUp' }}>
-                                                <input
-                                                    type="text"
-                                                    name="email"
-                                                    placeholder="Enter Email"
-                                                    id="identity"
-                                                    className="form-control"
-                                                    required="username"
-                                                    value={email}
-                                                    onChange={handleEmailChange}
-                                                    style={{ borderRadius: 15, paddingLeft: 15, fontWeight: 'bold' }} />
-                                            </div>
-                                            {/* <style dangerouslySetInnerHTML={{ __html: "\n                                  button:focus{\n                                      outline: 0px auto -webkit-focus-ring-color;\n                      }\n                              " }} /> */}
-                                            {/* <button type="button" style={{ border: 'none', float: 'right', background: 'no-repeat', color: '#fff' }} id="pass" className="hide" onclick="passwordclick()">Show</button> */}
-                                            <div style={{ clear: 'both' }} />
-                                            <div className="field-group wow fadeInUp" style={{ visibility: 'visible', animationName: 'fadeInUp' }}>
-                                                <input className="mb-2 text-sm bg-gray-200 appearance-none rounded w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline h-10 form-control"
-                                                    type="password"
-                                                    name="password"
-                                                    id="password"
-                                                    placeholder="Enter Password"
-                                                    required="password"
-                                                    // className="form-control"
-                                                    value={password}
-                                                    onChange={handlePasswordChange}
-                                                    style={{ borderRadius: 15, paddingLeft: 15, fontWeight: 'bold' }} />
-                                            </div>
-                                            <p style={{ color: 'rgb(195 161 119)', textAlign: 'left', background: 'none' }} onClick={navigatebtn} >Forget Password</p>
-                                            {/* <button style={{ color: 'white', textAlign: 'left', background: 'none' }} onClick={navigatebtn} >forget password</button> */}
-                                            {/* {message && */}
-                                            <p style={{ color: 'red', textAlign: 'center', marginTop: '1em', marginBottom: '-2em' }}>{message}</p>
-                                            {/* } */}
-                                            <div className="loginAction wow flipInX" style={{ visibility: 'visible', animationName: 'flipInX' }}>
-                                                <input style={{ backgroundColor: 'rgb(195 161 119)', border: 'none' }} type="submit" name="submit" defaultValue="Sign in" id className="btn-default btn-block form_submit_btn" />
-                                            </div>
-                                        </form>
+                    <div className={`fade-in ${loading ? '' : 'active'}`}>
+                        <div className="start-box"><div id="stars" /><div id="stars2" /><div id="stars3" /></div>
+                        <div style={{ backgroundColor: 'black' }} className="dflex">
+                            <div className="dLeft" style={{ borderRadius: 30 }}>
+                                <div className="start-box"><div id="stars" /><div id="stars2" /><div id="stars3" /></div>
+
+
+                                {/* <div className="logo wow fadeInDown" style={{ visibility: 'visible', animationName: 'fadeInDown', display: 'flex', justifyContent: 'center' }}><img src={brand} style={{ width: 200 }} alt="Logo" /></div> */}
+                                <div className="container">
+                                    {/* <div className="col-lg-6 col-md-12 col-sm-12"> */}
+                                    <div className="form_box">
+                                        <div className="loginForm">
+                                            <h2 style={{ color: 'rgb(195 161 119)', marginBottom: '0.5em', textAlign: 'center', fontSize: '2em' }}>Admin Panel</h2>
+                                            <form onSubmit={handleSubmit} method="post">
+                                                <input type="hidden" name="_token" defaultValue="b66aFctTonKhd73PjlzMG7wu4Oj0Wd3BFxkyEZXS" />
+                                                <div className="field-group wow fadeInUp" style={{ visibility: 'visible', animationName: 'fadeInUp' }}>
+                                                    <input
+                                                        type="text"
+                                                        name="email"
+                                                        placeholder="Enter Email"
+                                                        id="identity"
+                                                        className="form-control"
+                                                        required="username"
+                                                        value={email}
+                                                        onChange={handleEmailChange}
+                                                        style={{ borderRadius: 15, paddingLeft: 15, fontWeight: 'bold' }} />
+                                                </div>
+                                                {/* <style dangerouslySetInnerHTML={{ __html: "\n                                  button:focus{\n                                      outline: 0px auto -webkit-focus-ring-color;\n                      }\n                              " }} /> */}
+                                                {/* <button type="button" style={{ border: 'none', float: 'right', background: 'no-repeat', color: '#fff' }} id="pass" className="hide" onclick="passwordclick()">Show</button> */}
+                                                <div style={{ clear: 'both' }} />
+                                                <div className="field-group wow fadeInUp" style={{ visibility: 'visible', animationName: 'fadeInUp' }}>
+                                                    <input className="mb-2 text-sm bg-gray-200 appearance-none rounded w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline h-10 form-control"
+                                                        type={passwordVisible ? 'text' : 'password'}
+                                                        name="password"
+                                                        id="password"
+                                                        placeholder="Enter Password"
+                                                        required="password"
+                                                        // className="form-control"
+                                                        value={password}
+                                                        onChange={handlePasswordChange}
+                                                        style={{ borderRadius: 15, paddingLeft: 15, fontWeight: 'bold' }} />
+                                                    <span
+                                                        className="eye-icon"
+                                                        onClick={togglePasswordVisibility}
+                                                        style={{
+                                                            position: 'absolute',
+                                                            top: '50%',
+                                                            right: '10px',
+                                                            transform: 'translateY(-50%)',
+                                                            cursor: 'pointer',
+                                                            fontSize: '20px', // Adjust the font size for responsiveness
+                                                        }}
+                                                    >
+                                                        {passwordVisible ? <VisibilityOff sx={{ color: 'rgb(195 161 119)' }} /> : <Visibility sx={{ color: 'rgb(195 161 119)' }} />} {/* Material-UI icons */}
+                                                    </span>
+                                                </div>
+                                                <p style={{ cursor: 'pointer', color: 'rgb(195 161 119)', textAlign: 'left', background: 'none' }} onClick={navigatebtn} >Forget Password</p>
+                                                {/* <button style={{ color: 'white', textAlign: 'left', background: 'none' }} onClick={navigatebtn} >forget password</button> */}
+                                                {/* {message && */}
+                                                <p style={{ color: 'red', textAlign: 'center', marginTop: '1em', marginBottom: '-2em' }}>{message}</p>
+                                                {/* } */}
+                                                <div className="loginAction wow flipInX" style={{ visibility: 'visible', animationName: 'flipInX' }}>
+                                                    <input style={{ backgroundColor: 'rgb(195 161 119)', border: 'none' }} type="submit" name="submit" defaultValue="Sign in" id className="btn-default btn-block form_submit_btn" />
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
+
+
             }
         </>
     )

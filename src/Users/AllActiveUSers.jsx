@@ -7,6 +7,7 @@ import "../StyleFolder/dashboards.css"
 import { TablePagination } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { compareDesc } from 'date-fns';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 function AllActiveUSers() {
@@ -20,6 +21,7 @@ function AllActiveUSers() {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
     const [page, setPage] = useState(0);
+    const [loadings, setLoadings] = useState(true); // Initially, set loading to true
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const navigate = useNavigate();
@@ -129,6 +131,7 @@ function AllActiveUSers() {
             setTableData(userProfileData);
             // setExtradata(extraProfile);
             console.log("tabledata", tableData);
+            setLoadings(false)
         } catch (error) {
             console.error("error:--", error);
         }
@@ -236,55 +239,64 @@ function AllActiveUSers() {
                                             <div className="single-table">
                                                 <div className="table-responsive">
 
-                                                    <table className="table text-center">
-                                                        <thead className="text-capitalize">
-                                                            <tr>
-                                                                <th>SR.No.</th>
-                                                                <th>Name</th>
-                                                                <th>User Name</th>
-                                                                <th>Refer Code</th>
-                                                                <th>Email</th>
-                                                                <th>Mobile Number</th>
-                                                                <th>Joning Date</th>
-                                                                <th>Type</th>
-                                                                <th>Status</th>
-                                                                <th>Total members</th>
-                                                                <th>Sponser ID</th>
-                                                                <th>Active users</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {tableData?.length === 0 ? (
+                                                    {loading ? (<>
+                                                        <div className="loading-overlay">
+                                                            <CircularProgress sx={{ color: 'orange' }} />
+                                                        </div>
+
+                                                    </>) : (<>
+                                                        <table className="table text-center">
+                                                            <thead className="text-capitalize">
                                                                 <tr>
-                                                                    <td colSpan="12" style={{ color: 'black', textAlign: 'center' }}>
-                                                                        No results found
-                                                                    </td>
+                                                                    <th>SR.No.</th>
+                                                                    <th>Name</th>
+                                                                    <th>User Name</th>
+                                                                    <th>Refer Code</th>
+                                                                    <th>Email</th>
+                                                                    <th>Mobile Number</th>
+                                                                    <th>Joning Date</th>
+                                                                    <th>Type</th>
+                                                                    <th>Status</th>
+                                                                    <th>Total members</th>
+                                                                    <th>Sponser ID</th>
+                                                                    <th>Active users</th>
                                                                 </tr>
-                                                            ) :
-                                                                tableData?.map((row, index) => (
-                                                                    <tr key={index}>
-                                                                        <td>{index + 1}</td>
-                                                                        <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)} >{row?.data?.name}</td>
-                                                                        <td>{row?.data?.username}</td>
-                                                                        <td>{row?.data?.hashcode}</td>
-                                                                        <td>{row?.data?.email}</td>
-                                                                        <td>{row?.data?.phonenumber}</td>
-                                                                        <td>{row?.data?.createdAt}</td>
-                                                                        <td>{row?.data?.type}</td>
-                                                                        <td>
-                                                                            {/* Convert Status field into a button */}
-                                                                            {/* <button className={`btn ${row?.data?.status === 'Active' ? 'btn-success' : 'btn-danger'}`}> */}
-                                                                            {row?.data?.status}
-                                                                            {/* </button> */}
+                                                            </thead>
+                                                            <tbody>
+                                                                {tableData?.length === 0 ? (
+                                                                    <tr>
+                                                                        <td colSpan="12" style={{ color: 'black', textAlign: 'center' }}>
+                                                                            No results found
                                                                         </td>
-                                                                        <td>{row?.metadata?.totalUsers}</td>
-                                                                        <td>{row?.metadata?.sponsorId}</td>
-                                                                        <td>{row?.metadata?.activeUsers}</td>
-                                                                        {/* ... render other fields */}
                                                                     </tr>
-                                                                ))}
-                                                        </tbody>
-                                                    </table>
+                                                                ) :
+                                                                    tableData?.map((row, index) => (
+                                                                        <tr key={index} className="fade-in-row" >
+                                                                            <td>{index + 1}</td>
+                                                                            <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)} >{row?.data?.name}</td>
+                                                                            <td>{row?.data?.username}</td>
+                                                                            <td>{row?.data?.hashcode}</td>
+                                                                            <td>{row?.data?.email}</td>
+                                                                            <td>{row?.data?.phonenumber}</td>
+                                                                            <td>{row?.data?.createdAt}</td>
+                                                                            <td>{row?.data?.type}</td>
+                                                                            <td>
+                                                                                {/* Convert Status field into a button */}
+                                                                                {/* <button className={`btn ${row?.data?.status === 'Active' ? 'btn-success' : 'btn-danger'}`}> */}
+                                                                                {row?.data?.status}
+                                                                                {/* </button> */}
+                                                                            </td>
+                                                                            <td>{row?.metadata?.totalUsers}</td>
+                                                                            <td>{row?.metadata?.sponsorId}</td>
+                                                                            <td>{row?.metadata?.activeUsers}</td>
+                                                                            {/* ... render other fields */}
+                                                                        </tr>
+                                                                    ))}
+                                                            </tbody>
+                                                        </table>
+                                                    </>)}
+
+
                                                     <br /><br />
                                                 </div>
                                             </div>

@@ -19,9 +19,18 @@ function MyIncome() {
                 headers: headers
             });
             console.log(response.data.data);
-            const updateProfile = response.data.data.incomeReport;
-            updateProfile.sort((a, b) => compareDesc(new Date(a?.createdAt), new Date(b?.createdAt)));
+            const updateProfile = response?.data?.data?.incomeReport;
+            console.log("updateprofile", updateProfile);
+            // updateProfile.sort((a, b) => compareDesc(new Date(a?.createdAt), new Date(b?.createdAt)));
+            // setIncomedetails(updateProfile);
+            // if (Array.isArray(updateProfile)) {
+            //     // Sort the array
+            //     updateProfile.sort((a, b) => compareDesc(new Date(a?.createdAt), new Date(b?.createdAt)));
+
+            // Set the sorted array in state
             setIncomedetails(updateProfile);
+            // }
+            setLoading(false);
         } catch (error) {
             console.error("error:--", error);
         }
@@ -61,6 +70,7 @@ function MyIncome() {
                                 <div className="detail-box">
                                     <p className="box-header"> <i className="fa fa-rupee" /> User Income Detail </p>
                                     {/* {incomeDetails.map((detail, index) => ( */}
+
                                     <div className="collection-item" style={{ padding: 4, borderBottom: '1px solid #a2a0a0' }}>
                                         <div className="row">
                                             <div className="col s8">

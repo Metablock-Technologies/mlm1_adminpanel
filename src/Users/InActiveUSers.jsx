@@ -20,7 +20,7 @@ function InActiveUSers() {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
     const [loading, setLoading] = useState(true);
-    const [loadings, setLoadings] = useState(true);
+    // const [loadings, setLoading] = useState(true);
 
 
     const rowsPerPageOptions = [10, 25, 50];
@@ -131,7 +131,7 @@ function InActiveUSers() {
             userProfileData.sort((a, b) => compareDesc(new Date(a.data.createdAt), new Date(b.data.createdAt)));
             setTableData(userProfileData);
             // setExtradata(extraProfile);
-            setLoadings(false)
+            setLoading(false)
             // console.log("tabledata", tableData);
         } catch (error) {
             console.error("error:--", error);

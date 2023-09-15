@@ -259,14 +259,14 @@ function StackManage() {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {tableData?.map((item) => {
+                                                        {tableData?.map((item, index) => {
                                                             const createdAt = new Date(item?.createdAt);
                                                             const formattedDate = createdAt.toLocaleDateString();
                                                             const formattedTime = createdAt.toLocaleTimeString();
                                                             // console.log(createdAt, formattedDate, formattedTime);
                                                             return (
                                                                 <tr key={item?.transaction_id}>
-                                                                    <td>{item?.transaction_id}</td>
+                                                                    <td>{index + 1}</td>
                                                                     <td>{item?.userId}</td>
                                                                     <td>{item?.userName}</td>
                                                                     <td>{item?.detail}</td>

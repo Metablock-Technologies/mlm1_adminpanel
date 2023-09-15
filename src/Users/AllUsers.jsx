@@ -134,9 +134,9 @@ function AllUsers() {
                     // if (secondApiResponse.data.data) {
                     //     userProfileData.push(secondApiResponse.data); // Accumulate user profile data
                     // }
-                    if (secondApiResponse.data.data.type === 'main') {
+                    if (secondApiResponse?.data?.data?.type === 'main') {
                         console.log(`User ID: ${userId}`, secondApiResponse.data.data);
-                        userProfileData.push(secondApiResponse.data); // Accumulate user profile data
+                        userProfileData.push(secondApiResponse?.data); // Accumulate user profile data
                     }
                     // extraProfile.push(secondApiResponse.data.metadata);
                 } catch (error) {
@@ -145,11 +145,11 @@ function AllUsers() {
             }
 
             console.log("userprofiledata", userProfileData);
-            userProfileData.sort((a, b) => compareDesc(new Date(a.data.createdAt), new Date(b.data.createdAt)));
+            userProfileData.sort((a, b) => compareDesc(new Date(a?.data?.createdAt), new Date(b?.data?.createdAt)));
             setTableData(userProfileData);
             setLoadings(false)
             // setExtradata(extraProfile);
-            // console.log("tabledata", tableData);
+            console.log("tabledata", tableData);
         } catch (error) {
             console.error("error:--", error);
         }

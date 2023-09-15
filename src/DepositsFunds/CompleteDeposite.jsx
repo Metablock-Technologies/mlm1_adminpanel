@@ -93,7 +93,7 @@ function Addcoins() {
                 headers: headers,
             });
 
-            console.log(response.data);
+            console.log("responseese", response.data);
             addcoins();
         }
         catch (err) {
@@ -352,14 +352,15 @@ function Addcoins() {
                                                                             placeholder="Enter message"
                                                                             variant="outlined"
                                                                             size="small"
-                                                                            disabled={data?.status !== 'pending'} // Disable when status is not 'pending'
+                                                                            disabled={data?.status !== 'pending'}
                                                                             onChange={(e) => {
                                                                                 // setInputValues(e.target.value)
                                                                                 setInputValues(prevInputValues => ({
                                                                                     ...prevInputValues,
-                                                                                    [data?.id]: e.target.value, // Store input value for specific row
+                                                                                    [data?.id]: e.target.value,
                                                                                 }));
                                                                             }}
+                                                                            value={inputValues[data?.id]}
                                                                         />
                                                                     </td>
                                                                     <td>{data?.account_type}</td>

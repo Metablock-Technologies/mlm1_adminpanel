@@ -62,7 +62,7 @@ function FundsTransfer() {
     };
 
     const fetchData = async () => {
-        setMessage("");
+        // setMessage("");
         try {
             // const accessToken = token;
             const accessToken = localStorage.getItem('access_token'); // Retrieve access token from localStorage
@@ -176,7 +176,7 @@ function FundsTransfer() {
     const handleVerifyOtp = async (event) => {
         event.preventDefault();
         // setStep(3)
-        setMessage("");
+        // setMessage("");
         try {
             const requestBody = {
                 email: email,
@@ -274,7 +274,7 @@ function FundsTransfer() {
                                                         <input type="text" id="username" className="form-control input-shadow input_box" placeholder="Enter Your Wallet Address or Username" name="username" required="reqired" autoComplete="none" onChange={(e) => {
                                                             setMessage("");
                                                             setWallet(e.target.value);
-                                                        }} />
+                                                        }} value={wallet} />
                                                         <div className="form-control-position">
                                                             <i className="icon-user" />
                                                         </div>
@@ -284,10 +284,10 @@ function FundsTransfer() {
                                                 <p id="msg1" style={{ fontSize: 14, fontWeight: 'bold' }} />
                                                 <div className="col-md-12 mb-3">
                                                     <label htmlFor="validationCustom02" className="text-white">Amount $</label>
-                                                    <input type="number" className="form-control input_box" name="amount" id="validationCustom02" defaultValue placeholder="Amount" required onChange={(e) => {
+                                                    <input type="number" className="form-control input_box" name="amount" id="validationCustom02" placeholder="Amount" required onChange={(e) => {
                                                         setMessage("");
                                                         setAmount(e.target.value);
-                                                    }} />
+                                                    }} value={amount} />
                                                 </div>
                                                 <div className="col-md-12 mb-3" style={{ display: 'none' }}>
                                                     <label htmlFor="validationCustomUsername">Enter OTP <span id="otpmessage" style={{ color: 'green', fontWeight: 700, fontSize: 13, letterSpacing: '.5px' }} /> </label>

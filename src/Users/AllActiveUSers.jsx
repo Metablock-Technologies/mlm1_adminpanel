@@ -21,7 +21,7 @@ function AllActiveUSers() {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
     const [page, setPage] = useState(0);
-    const [loadings, setLoadings] = useState(true); // Initially, set loading to true
+    // const [loadings, setLoading] = useState(true); // Initially, set loading to true
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const navigate = useNavigate();
@@ -117,9 +117,9 @@ function AllActiveUSers() {
                     const secondApiResponse = await axios.get(baseURL + `/user/profile/${userId}`, {
                         headers: headers
                     });
-                    if (secondApiResponse.data.data.status === 'active' && secondApiResponse.data.data.type === "main") {
-                        console.log(`User ID: ${userId}`, secondApiResponse.data.data);
-                        userProfileData.push(secondApiResponse.data); // Accumulate user profile data
+                    if (secondApiResponse?.data?.data?.status === 'active' && secondApiResponse?.data?.data?.type === "main") {
+                        console.log(`User ID: ${userId}`, secondApiResponse?.data?.data);
+                        userProfileData.push(secondApiResponse?.data); // Accumulate user profile data
                     }
                 } catch (error) {
                     console.error("Second API error:", error);
@@ -130,8 +130,8 @@ function AllActiveUSers() {
             userProfileData.sort((a, b) => compareDesc(new Date(a.data.createdAt), new Date(b.data.createdAt)));
             setTableData(userProfileData);
             // setExtradata(extraProfile);
+            setLoading(false)
             console.log("tabledata", tableData);
-            setLoadings(false)
         } catch (error) {
             console.error("error:--", error);
         }
@@ -160,7 +160,7 @@ function AllActiveUSers() {
 
     const handlerenew = async (id) => {
         // navigate(`${id}`)
-        navigate(`/AllActiveUsers/${id}`)
+        navigate(`/AllUsers/${id}`)
     }
 
     return (
@@ -273,7 +273,7 @@ function AllActiveUSers() {
                                                                     tableData?.map((row, index) => (
                                                                         <tr key={index} className="fade-in-row" >
                                                                             <td>{index + 1}</td>
-                                                                            <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)} >{row?.data?.name}</td>
+                                                                            <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)}>{row?.data?.name}</td>
                                                                             <td>{row?.data?.username}</td>
                                                                             <td>{row?.data?.hashcode}</td>
                                                                             <td>{row?.data?.email}</td>

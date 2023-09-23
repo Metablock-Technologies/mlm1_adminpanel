@@ -134,10 +134,10 @@ function AllUsers() {
                     // if (secondApiResponse.data.data) {
                     //     userProfileData.push(secondApiResponse.data); // Accumulate user profile data
                     // }
-                    if (secondApiResponse?.data?.data?.type === 'main') {
-                        console.log(`User ID: ${userId}`, secondApiResponse.data.data);
-                        userProfileData.push(secondApiResponse?.data); // Accumulate user profile data
-                    }
+                    // if (secondApiResponse?.data?.data?.type === 'main') {
+                    console.log(`User ID: ${userId}`, secondApiResponse.data.data);
+                    userProfileData.push(secondApiResponse?.data); // Accumulate user profile data
+                    // }
                     // extraProfile.push(secondApiResponse.data.metadata);
                 } catch (error) {
                     console.error("Second API error:", error);
@@ -308,6 +308,7 @@ function AllUsers() {
                                                             <thead className="text-capitalize">
                                                                 <tr>
                                                                     <th>SR.No.</th>
+                                                                    <th>User_id</th>
                                                                     <th>Name</th>
                                                                     <th>User Name</th>
                                                                     <th>Refer Code</th>
@@ -338,6 +339,7 @@ function AllUsers() {
                                                                         return (
                                                                             <tr className="fade-in-row" key={index}>
                                                                                 <td>{index + 1}</td>
+                                                                                <td>{row?.data?.id}</td>
                                                                                 <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)}>{row?.data?.name}</td>
                                                                                 <td>{row?.data?.username}</td>
                                                                                 <td>{row?.data?.hashcode}</td>

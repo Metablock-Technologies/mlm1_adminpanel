@@ -1,23 +1,23 @@
-
 import React, { useState, useEffect } from 'react'
 import "../StyleFolder/stackManage.css";
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { token, baseURL } from '../token';
 import axios from 'axios';
 import { TablePagination } from '@mui/material';
-import { compareDesc } from 'date-fns';
+import LinearProgress from '@mui/material/LinearProgress';
 
-function RejectRequest() {
+function AutoPool1() {
     const [tableData, setTableData] = useState([]);
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [loading, setLoading] = useState(true);
+    const [loadings, setLoadings] = useState(true);
+
 
     const rowsPerPageOptions = [10, 25, 50];
-
-
     const handleReset = () => {
         setStartDate("");
         setEndDate("");
@@ -26,7 +26,18 @@ function RejectRequest() {
         fetchData()
     };
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10; // Number of items to display per page
 
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = tableData?.slice(indexOfFirstItem, indexOfLastItem);
+
+    const totalPages = Math.ceil(tableData?.length / itemsPerPage);
+
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
 
     const getUserNameByUserId = async (userId) => {
         try {
@@ -48,29 +59,29 @@ function RejectRequest() {
             // const accessToken = token;
             const accessToken = localStorage.getItem('access_token'); // Retrieve access token from localStorage
             const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
-            const response = await axios.get(`${baseURL}/user/transactions`, {
+            const response = await axios.get(`${baseURL}/admin/autopool`, {
                 headers: headers
             });
-            const userData = response.data.data;
-            const withdrawData = userData.filter(item => item.detail === 'Withdraw');
+            const userData = response?.data?.data?.autopool1;
+            console.log(userData);
+
             // Fetch usernames for each user ID in parallel
-            const promises = withdrawData.map(async (item) => {
-                const userName = await getUserNameByUserId(item.userId);
-                return {
-                    ...item,
-                    userName: userName,
-                };
-            });
+            // const promises = userData?.map(async (item) => {
+            //     const userName = await getUserNameByUserId(item.userId);
+            //     return {
+            //         ...item,
+            //         userName: userName,
+            //     };
+            // });
 
             // Wait for all promises to resolve
-            const updatedData = await Promise.all(promises);
-            console.log(updatedData);
-            updatedData.sort((a, b) => compareDesc(new Date(a?.createdAt), new Date(b?.createdAt)));
-
-            setTableData(updatedData);
+            // const updatedData = await Promise.all(promises);
+            setTableData(userData);
+            setLoading(false);
             console.log("tabledata", tableData);
         } catch (error) {
             console.error("Error fetching data:", error);
+            setLoading(true);
         }
     };
 
@@ -78,10 +89,26 @@ function RejectRequest() {
         fetchData();
     }, []);
 
+    // Calculate the index of the first and last data items to display
+    const startIndex = page * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
 
+    // Slice the data to display only the current page
+    const displayedData = tableData?.slice(startIndex, endIndex);
+
+    // Create a function to handle page change
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    // Create a function to handle rows per page change
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0); // Reset to the first page when changing rows per page
+    };
     const handleSearch = (e) => {
         e.preventDefault();
-        const filteredData = tableData.filter((item) => {
+        const filteredData = tableData?.filter((item) => {
             const itemDate = new Date(item?.createdAt);
             const startDateObj = startDate ? new Date(startDate) : null;
             const endDateObj = endDate ? new Date(endDate) : null;
@@ -122,7 +149,7 @@ function RejectRequest() {
             }
 
             // Check the user name
-            if (searchQuery && !item?.username?.toLowerCase().includes(searchQuery.toLowerCase())) {
+            if (searchQuery && !item?.userName?.toLowerCase().includes(searchQuery.toLowerCase())) {
                 return false;
             }
 
@@ -135,32 +162,17 @@ function RejectRequest() {
     };
 
 
-    // Calculate the index of the first and last data items to display
-    const startIndex = page * rowsPerPage;
-    const endIndex = startIndex + rowsPerPage;
 
-    // Slice the data to display only the current page
-    const displayedData = tableData.slice(startIndex, endIndex);
-
-    // Create a function to handle page change
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    // Create a function to handle rows per page change
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0); // Reset to the first page when changing rows per page
-    };
     return (
         <>
+
             <div className="content-wrapper" style={{ minHeight: 679 }}>
                 {/* Content Header (Page header) */}
                 <div className="content-header">
                     <div className="container-fluid">
                         <div className="row mb-2">
                             <div className="col-sm-6">
-                                <h1 className="m-0 text-dark">Request History</h1>
+                                <h1 className="m-0 text-dark">Autopool1</h1>
                             </div>{/* /.col */}
                             <div className="col-sm-6">
                                 <ol className="breadcrumb float-sm-right">
@@ -181,7 +193,7 @@ function RejectRequest() {
                                     <div className="card-body">
                                         <form role="form" type="submit">
                                             {/* <input type="hidden" name="_token" defaultValue="eLkpGsUBYr9izTDYhoNZCCY6pxm06c8hRkw1N41O" /> */}
-                                            <div className="col-md-6 col-12 mb-3">
+                                            <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
                                                 <div className="form-group">
                                                     <label>Pick a start date:</label>
                                                     <div className="input-group date" id="datepicker" data-target-input="nearest">
@@ -189,7 +201,7 @@ function RejectRequest() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-md-6 col-12 mb-3" >
+                                            <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
                                                 <div className="form-group">
                                                     <label>Pick a end date:</label>
                                                     <div className="input-group date" id="datepicker1" data-target-input="nearest">
@@ -198,7 +210,7 @@ function RejectRequest() {
                                                 </div>
                                             </div>
                                             <div style={{ clear: 'both' }} />
-                                            <div className="col-md-6 col-12 mb-3">
+                                            {/* <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
                                                 <label htmlFor="validationCustomUsername"> User Name</label>
                                                 <div className="input-group">
                                                     <input
@@ -210,52 +222,54 @@ function RejectRequest() {
                                                         onChange={(e) => setSearchQuery(e.target.value)}
                                                     />
                                                 </div>
-                                            </div>
-                                            {/* <div className="col-md-6 col-12 mb-3">
+                                            </div> */}
+                                            {/* <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
                                                 <label htmlFor="validationCustomUsername">Type</label>
                                                 <div className="input-group">
                                                     <input type="text" className="form-control" placeholder="Type" defaultValue name="type_id" />
                                                 </div>
                                             </div> */}
+
                                             <div style={{ clear: 'both' }} />
-                                            <div className='row' />
                                             <br />
-                                            <div className="col-12">
+                                            <div className="col-md-12 mb-12">
                                                 <center>
-                                                    <button className="btn btn-primary" style={{ color: 'black', backgroundColor: 'rgb(195 161 119)' }} onClick={(e) => handleSearch(e)} >Search Now</button>
-                                                    <button className="btn btn-info" style={{ marginLeft: '20px', background: 'black', color: '#d8af72', border: '1px solid #d8af72' }} type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
+                                                    <button style={{ color: 'black', backgroundColor: 'rgb(195 161 119)' }} className="btn btn-primary" onClick={(e) => handleSearch(e)} >Search Now</button>
+                                                    <button style={{ marginLeft: '20px', background: 'black', color: '#d8af72', border: '1px solid #d8af72' }} className="btn btn-info" type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
 
                                                 </center>
                                             </div>
                                             <br />
                                         </form>
                                         <h4 className="header-title">All Transaction</h4>
+
+
                                         <div className="single-table">
                                             <div className="table-responsive">
                                                 <table className="table text-center">
                                                     <thead className="text-capitalize">
                                                         <tr>
-                                                            {/* <th>SR. No.</th> */}
-                                                            <th>User ID</th>
-                                                            <th>User Name</th>
-                                                            <th>Details</th>
+                                                            <th>SR. No.</th>
+                                                            <th>Month</th>
+                                                            {/* <th>User Name</th> */}
+                                                            <th>Status</th>
                                                             <th>Amount</th>
                                                             <th>Date</th>
                                                             <th>Time</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {tableData?.map((item) => {
+                                                        {tableData?.map((item, index) => {
                                                             const createdAt = new Date(item?.createdAt);
                                                             const formattedDate = createdAt.toLocaleDateString();
                                                             const formattedTime = createdAt.toLocaleTimeString();
                                                             // console.log(createdAt, formattedDate, formattedTime);
                                                             return (
                                                                 <tr key={item?.transaction_id}>
-                                                                    {/* <td>{item.transaction_id}</td> */}
-                                                                    <td>{item?.userId}</td>
-                                                                    <td>{item?.userName}</td>
-                                                                    <td>{item?.detail}</td>
+                                                                    <td>{index + 1}</td>
+                                                                    <td>{item?.month}</td>
+                                                                    {/* <td>{item?.userName}</td> */}
+                                                                    <td>{item?.status}</td>
                                                                     <td>{item?.amount}</td>
                                                                     <td>{formattedDate}</td>
                                                                     <td>{formattedTime}</td>
@@ -275,7 +289,7 @@ function RejectRequest() {
                                                         <TablePagination sx={{ color: 'orange' }}
                                                             rowsPerPageOptions={rowsPerPageOptions}
                                                             component="div"
-                                                            count={tableData?.length}
+                                                            count={tableData.length}
                                                             rowsPerPage={rowsPerPage}
                                                             page={page}
                                                             onPageChange={handleChangePage}
@@ -293,10 +307,8 @@ function RejectRequest() {
                     </div>
                 </section >
             </div >
-
-
         </>
     )
 }
 
-export default RejectRequest;
+export default AutoPool1;

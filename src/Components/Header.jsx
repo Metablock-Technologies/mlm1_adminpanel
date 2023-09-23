@@ -46,6 +46,7 @@ import brand from "../Okdream25.png";
 import DepositFunds from './DepositFunds';
 import FundSection from './FundSection';
 import ActivateId from './ActivateID';
+import AutoPool from './AutoPool';
 
 
 
@@ -116,45 +117,31 @@ function Header(props) {
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
-
                     <UsersSection />
-
                 </ListItem>
                 <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
-
                     <IncomeReport />
-
                 </ListItem>
                 <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
-
                     <DepositFunds />
-
                 </ListItem>
                 <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
-
                     <FundSection />
-
                 </ListItem>
                 <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
-
                     <WithdrawReport />
-
                 </ListItem>
-                {/* <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
-
-                    <ActivateId />
-
-                </ListItem> */}
+                <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
+                    <AutoPool />
+                </ListItem>
                 <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
                     <ListItemButton
-
                         onClick={() => navigate("ContactUs")}  >
                         <ListItemIcon
                             sx={{
                                 minWidth: 0,
                                 justifyContent: 'center',
                             }}
-
                         >
                             <ContactMailIcon sx={{ color: "white", marginRight: '10px', fontSize: "30px" }} />
                         </ListItemIcon>

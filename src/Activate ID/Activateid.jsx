@@ -109,6 +109,8 @@ function ActivateId() {
             console.log(response, "ejsk");
             setMessage(response?.data?.data?.message)
             fetchData()
+            setEmailverify(false);
+
             // return response.data.data.username;
         } catch (error) {
             setMessage(error.response?.data?.data?.message);

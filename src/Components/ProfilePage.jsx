@@ -18,6 +18,8 @@ const ProfilePage = () => {
     });
     // State for tracking if the user is in edit mode
     const [isEditing, setIsEditing] = useState(false);
+    const [referrallink, setReferrallink] = useState("");
+
     const navigate = useNavigate();
 
     const oldPassRef = useRef();
@@ -82,11 +84,13 @@ const ProfilePage = () => {
             // const accessToken = token;.
             const accessToken = localStorage.getItem('access_token'); // Retrieve access token from localStorage
             const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
-            const response = await axios.get(`${baseURL}/user/profile`, {
+            const response = await axios.get(baseURL + `/user/profile`, {
                 headers: headers
             });
+            console.log(response);
             const userData = response.data.data;
-
+            console.log(userData);
+            setReferrallink(userData?.hashcode)
             // Fetch usernames for each user ID in parallel
             setUserData(userData)
         } catch (error) {
@@ -168,10 +172,29 @@ const ProfilePage = () => {
     };
     // /Link ka kam  h idr 
 
+    // const handleCopyLink = () => {
+    //     // Create a temporary input element to copy the link
+    //     const input = document.createElement('input');
+    //     input.value = 'https://htx/register?id=63be505e76bb22053eff15d7';
+    //     document.body.appendChild(input);
+    //     input.select();
+    //     document.execCommand('copy');
+    //     document.body.removeChild(input);
+    //     setSnackbarOpen(true);
+    //     // Set isLinkCopied to true to display the dialog box
+    //     setIsLinkCopied(true);
+
+    //     // Reset isLinkCopied after 2 seconds
+    //     setTimeout(() => {
+    //         setIsLinkCopied(false);
+    //     }, 2000);
+    // };
+
     const handleCopyLink = () => {
         // Create a temporary input element to copy the link
         const input = document.createElement('input');
-        input.value = 'https://htx/register?id=63be505e76bb22053eff15d7';
+        input.value = `http://okdream25.com/#/registrationpage/${referrallink}`;
+        // input.value = `http://localhost:3000/#/registrationpage/${referrallink}`;
         document.body.appendChild(input);
         input.select();
         document.execCommand('copy');
@@ -185,6 +208,7 @@ const ProfilePage = () => {
             setIsLinkCopied(false);
         }, 2000);
     };
+
 
     useEffect(() => {
         // Simulate a delay to showcase the loading animation
@@ -275,7 +299,7 @@ const ProfilePage = () => {
                                                                                                 {/* // )} */}
                                                                                             </div>
                                                                                             {/* </div> */}
-                                                                                            <div className="form-group">
+                                                                                            {/* <div className="form-group">
                                                                                                 <label htmlFor="validationCustomUsername">Expiry Date</label>
                                                                                                 <input
                                                                                                     type="text"
@@ -287,9 +311,7 @@ const ProfilePage = () => {
                                                                                                     required
                                                                                                     disabled
                                                                                                 />
-                                                                                                {/* <p>{userData?.pack_expiry}</p> */}
-                                                                                                {/* // )} */}
-                                                                                            </div>
+                                                                                            </div> */}
                                                                                             <div className="form-group">
                                                                                                 <label htmlFor="validationCustom01">Full Name</label>
                                                                                                 {isEditing ? (
@@ -395,9 +417,15 @@ const ProfilePage = () => {
                                                                             <div style={{ color: 'white' }} className="refer_link_main">
                                                                                 <p>Referral link</p>
                                                                                 <div className="refer_link">
-                                                                                    <p>https://htx/register?id=63be505e76bb22053eff15d7</p>
-                                                                                    <button onClick={handleCopyLink}><i className="fa fa-copy" /></button>
+                                                                                    <p style={{
+                                                                                        flexGrow: 1, // Allow the link to expand to fill available space
+                                                                                        whiteSpace: 'nowrap', // Prevent link from breaking into multiple lines
+                                                                                        overflow: 'hidden',
+                                                                                        textOverflow: 'ellipsis', // Add ellipsis (...) if the link overflows
+                                                                                        marginRight: '10px', // Add some spacing between link and button
+                                                                                    }}>{`http://okdream25.com/#/registrationpage/${referrallink}`}</p>
 
+                                                                                    <button onClick={handleCopyLink}><i className="fa fa-copy" /></button>
                                                                                     <Snackbar
                                                                                         open={isSnackbarOpen}
                                                                                         autoHideDuration={2000} // 2 seconds

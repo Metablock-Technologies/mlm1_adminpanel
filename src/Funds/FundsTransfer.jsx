@@ -89,10 +89,16 @@ function FundsTransfer() {
     const handleFundTransfer = async (e) => {
         e.preventDefault();
         setMessage("");
+        console.log("hasjdanb", amount);
+        console.log("hasjdanb", wallet);
+        if (!emailverify) {
+            setOpenDialog(true)
+            return;
+        }
         try {
             const body = {
-                amount: amount,
-                username: wallet
+                walletaddress: wallet,
+                amount: amount
             }
             // const accessToken = token;
             const accessToken = localStorage.getItem('access_token'); // Retrieve access token from localStorage
@@ -100,16 +106,18 @@ function FundsTransfer() {
             const response = await axios.post(`${baseURL}/user/fundtransfer`, body, {
                 headers: headers
             });
-            fetchData()
+            fetchData();
             console.log("responseee", response);
             setMessage(response?.data?.message)
             setAmount("");
             setWallet("");
+            setEmailverify(false);
+            // fetchData();
             // setOpenDialog(true);
             // return response.data.data.username;
         } catch (error) {
-            setMessage(error.response?.data?.message);
-            console.error("Error fetching username:", error);
+            setMessage("If your are facing any issue login again");
+            console.error("Error", error);
             return "";
         }
     }
@@ -138,7 +146,7 @@ function FundsTransfer() {
         setUpperInputDisabled(true);
 
         // Show the OTP input field
-        setShowOtpInput(true);
+        // setShowOtpInput(true);
         handleSendOtp();
     };
 
@@ -153,7 +161,7 @@ function FundsTransfer() {
 
             const requestBody = {
                 email: email,
-                role: 'basic'
+                role: 'admin'
             };
             console.log(requestBody.phone);
 
@@ -167,6 +175,7 @@ function FundsTransfer() {
                 setMessage('OTP sent successfully.');
                 // setStep(2); // Move to OTP entry step
             }
+            setShowOtpInput(true);
         } catch (err) {
             console.log(err);
             setMessage(err.response?.data?.message);
@@ -181,12 +190,10 @@ function FundsTransfer() {
             const requestBody = {
                 email: email,
                 OTP: otp,
-                role: 'basic'
+                role: 'admin'
             };
             console.log(requestBody.phone);
-
             const response = await axios.post(baseURL + '/user/verifyemail', requestBody);
-
             // console.log(response.data);
             // console.log("name", response.data.data.accessToken);
             if (response.status === 200) {
@@ -194,11 +201,11 @@ function FundsTransfer() {
                 console.log("vv");
                 setOpenDialog(false);
                 setEmailverify(true);
+                setShowOtpInput(false);
                 // setStep(3); // Move to OTP entry step
                 // localStorage.setItem('access_token', response.data.data.accessToken);
                 // const now = new Date();
                 // const expirationDate = new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000); // 10 days from now
-
                 // localStorage.setItem('access_token', response.data.data.token);
                 // localStorage.setItem('access_token_expiration', expirationDate.toISOString());
             }
@@ -269,9 +276,9 @@ function FundsTransfer() {
                                                 <div style={{ clear: 'both' }} />
                                                 <p id="msg" style={{ fontSize: 14, fontWeight: 'bold' }} />
                                                 <div className="col-md-12 mb-3">
-                                                    <label htmlFor="validationCustomUsername" className="text-white">Wallet Address/Username</label>
+                                                    <label htmlFor="validationCustomUsername" className="text-white">Wallet Address</label>
                                                     <div className="position-relative has-icon-right">
-                                                        <input type="text" id="username" className="form-control input-shadow input_box" placeholder="Enter Your Wallet Address or Username" name="username" required="reqired" autoComplete="none" onChange={(e) => {
+                                                        <input type="text" id="username" className="form-control input-shadow input_box" placeholder="Enter Your Wallet Address" name="username" required="reqired" autoComplete="none" onChange={(e) => {
                                                             setMessage("");
                                                             setWallet(e.target.value);
                                                         }} value={wallet} />
@@ -314,8 +321,8 @@ function FundsTransfer() {
                                                             <DialogContent>
                                                                 <DialogContentText>
                                                                     Please enter your email address to verify the withdrawal.
+                                                                    <p style={{ color: "red" }}>{emailError}</p>
                                                                 </DialogContentText>
-                                                                <p style={{ color: "red" }}>{emailError}</p>
                                                                 {/* <input
                                                                         type="text"
                                                                         className="form-control"

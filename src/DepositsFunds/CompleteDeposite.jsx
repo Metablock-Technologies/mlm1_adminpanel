@@ -182,20 +182,6 @@ function Addcoins() {
         console.log(tableData);
         console.log(filteredData);
     };
-    // const filteredtableData = statusFilter === 'all'
-    //     ? tableData
-    //     : tableData.filter(data => data.status === statusFilter);
-
-    // const filteredData = tableData.filter(data => {
-    //   if (!startDate || !endDate) {
-    //     return true;
-    //   }
-    //   const dataDate = new Date(data.date);
-    //   const start = new Date(startDate);
-    //   const end = new Date(endDate);
-    //   return dataDate >= start && dataDate <= end;
-    // });
-
 
     return (
         <>
@@ -203,7 +189,7 @@ function Addcoins() {
                 <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
                     <DialogTitle>Image Viewer</DialogTitle>
                     <DialogContent>
-                        <img src={selectedImageUrl} alt="Image" style={{ maxWidth: '100%' }} />
+                        {selectedImageUrl ? <img src={baseURL + `image/${selectedImageUrl}`} alt="Preview" /> : 'No Image'}
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={() => setDialogOpen(false)} color="primary" variant="contained">
@@ -328,7 +314,6 @@ function Addcoins() {
                                                                 <th className="sorting" tabIndex={0} aria-controls="table_id" rowSpan={1} colSpan={1} style={{ width: 81 }} aria-label="Time: activate to sort column ascending">Date</th>
                                                                 <th className="sorting" tabIndex={0} aria-controls="table_id" rowSpan={1} colSpan={1} style={{ width: 81 }} aria-label="Time: activate to sort column ascending">Time</th>
                                                             </tr>
-
                                                         </thead>
                                                         <tbody>
                                                             {displayedData.map((data, index) => {
@@ -347,7 +332,23 @@ function Addcoins() {
                                                                         </Button>
                                                                     </td>
                                                                     <td>{usernames[data?.user_id]}</td>                                                                    <td>
-                                                                        <input style={{ background: 'white', height: '30px', width: '200px' }}
+                                                                        <input
+                                                                            style={{ background: 'white', height: '30px', width: '200px', color: "black" }}
+                                                                            type="text"
+                                                                            placeholder="Enter message"
+                                                                            variant="outlined"
+                                                                            size="small"
+                                                                            disabled={data?.status !== 'pending'}
+                                                                            onChange={(e) => {
+                                                                                setInputValues((prevInputValues) => ({
+                                                                                    ...prevInputValues,
+                                                                                    [data?.id]: e.target.value,
+                                                                                }));
+                                                                            }}
+                                                                            value={inputValues[data?.id] || ''}
+                                                                        />
+
+                                                                        {/* <input style={{ background: 'white', height: '30px', width: '200px' }}
                                                                             type="text"
                                                                             placeholder="Enter message"
                                                                             variant="outlined"
@@ -361,7 +362,7 @@ function Addcoins() {
                                                                                 }));
                                                                             }}
                                                                             value={inputValues[data?.id]}
-                                                                        />
+                                                                        /> */}
                                                                     </td>
                                                                     <td>{data?.account_type}</td>
                                                                     <td>{data?.status}</td>

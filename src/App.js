@@ -78,6 +78,9 @@ import CompleteDeposite from './DepositsFunds/CompleteDeposite'
 import RejectDeposite from './DepositsFunds/RejectDeposite'
 import ActivateId from './Components/ActivateID';
 import FundsTransfer from './Funds/FundsTransfer'
+import FundsTransferHistory from './Funds/FundsTransferHistory';
+import AutoPool1 from './AutoPool/autopool1';
+import AutoPool2 from './AutoPool/autopool2';
 
 function PrivateRoute({ element }) {
     // const { isLoggedIn } = useAuth();
@@ -160,6 +163,9 @@ function App() {
                         <Route exact path='RejectDeposite' element={<RejectDeposite />} ></Route>
                         <Route exact path='activateid' element={<PrivateRoute element={<ActivateId />} />} ></Route>
                         <Route exact path='FundsTransfer' element={<PrivateRoute element={<FundsTransfer />} />}></Route>
+                        <Route exact path='FundsTransferHistory' element={<PrivateRoute element={<FundsTransferHistory />} />}></Route>
+                        <Route exact path='autopool1' element={<PrivateRoute element={<AutoPool1 />} />}></Route>
+                        <Route exact path='autopool2' element={<PrivateRoute element={<AutoPool2 />} />}></Route>
 
 
                         {/* <Route path='dashboard' element={<DashBoard />} ></Route>

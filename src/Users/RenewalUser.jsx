@@ -293,6 +293,7 @@ function RenewalUser() {
                                                     <thead className="text-capitalize">
                                                         <tr>
                                                             <th>SR.No.</th>
+                                                            <th>User_id</th>
                                                             <th>Name</th>
                                                             <th>User Name</th>
                                                             <th>Refer Code</th>
@@ -323,6 +324,7 @@ function RenewalUser() {
                                                                 return (
                                                                     <tr key={index}>
                                                                         <td>{index + 1}</td>
+                                                                        <td>{row?.data?.id}</td>
                                                                         <td>{row?.data?.name}</td>
                                                                         <td>{row?.data?.username}</td>
                                                                         <td>{row?.data?.hashcode}</td>

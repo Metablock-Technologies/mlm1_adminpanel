@@ -145,25 +145,25 @@ function DashBoard() {
                                     <div className="collection-item" style={{ padding: 4, borderBottom: '1px solid #a2a0a0' }}>
                                         <div className="row">
                                             <div className="col s8">
-                                                <p className="collections-title font-weight-600">Levelincome:- </p>
+                                                <p className="collections-title font-weight-600">Level Income:- </p>
                                             </div>
                                             <div className="col s3"><span>{incomeDetails?.levelincome}</span></div>
                                         </div>
-                                        <div className="row">
+                                        {/* <div className="row">
                                             <div className="col s8">
                                                 <p className="collections-title font-weight-600">Amount spent:- </p>
                                             </div>
                                             <div className="col s3"><span>{incomeDetails?.amount_spent}</span></div>
-                                        </div>
+                                        </div> */}
                                         <div className="row">
                                             <div className="col s8">
-                                                <p className="collections-title font-weight-600">Autopool1:- </p>
+                                                <p className="collections-title font-weight-600">Monthly Income:- </p>
                                             </div>
                                             <div className="col s3"><span>{incomeDetails?.autopool1}</span></div>
                                         </div>
                                         <div className="row">
                                             <div className="col s8">
-                                                <p className="collections-title font-weight-600">Autopool2:- </p>
+                                                <p className="collections-title font-weight-600">Daily Income:- </p>
                                             </div>
                                             <div className="col s3"><span>{incomeDetails?.autopool2}</span></div>
                                         </div>
@@ -175,20 +175,15 @@ function DashBoard() {
                                         </div>
                                         <div className="row">
                                             <div className="col s8">
-                                                <p className="collections-title font-weight-600">TotalIncome:- </p>
+                                                <p className="collections-title font-weight-600">Total Income:- </p>
                                             </div>
                                             <div className="col s3"><span>{incomeDetails?.totalincome}</span></div>
                                         </div>
                                     </div>
                                     {/* // ))} */}
-
                                 </div>
                             </div>
                             {/* income detail */}
-
-
-
-
                         </div>
                     </div>
                 </section>

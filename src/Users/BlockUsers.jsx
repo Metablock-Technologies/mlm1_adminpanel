@@ -270,6 +270,7 @@ function BlockUsers() {
                                                         <thead className="text-capitalize">
                                                             <tr>
                                                                 <th>SR.No.</th>
+                                                                <th>user_id</th>
                                                                 <th>Name</th>
                                                                 <th>User Name</th>
                                                                 <th>Refer Code</th>
@@ -296,6 +297,7 @@ function BlockUsers() {
                                                                     tableData?.map((row, index) => (
                                                                         <tr key={index} className="fade-in-row" >
                                                                             <td>{index + 1}</td>
+                                                                            <td>{row?.data?.id}</td>
                                                                             <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)}>{row?.data?.name}</td>
                                                                             <td>{row?.data?.username}</td>
                                                                             <td>{row?.data?.hashcode}</td>

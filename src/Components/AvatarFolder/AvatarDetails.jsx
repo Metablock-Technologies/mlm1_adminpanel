@@ -5,29 +5,66 @@ import { Navigate, useNavigate } from 'react-router-dom';
 function AvatarDetails() {
     const navigate = useNavigate();
     // const { logout } = useAuth();
-    const handlelogout = async () => {
-        // localStorage.removeItem('access_token');
-        // await new Promise(resolve => setTimeout(resolve, 0));
+    // const handlelogout = async () => {
+    //     // localStorage.removeItem('access_token');
+    //     // await new Promise(resolve => setTimeout(resolve, 0));
 
-        // localStorage.removeItem('access_token_expiration');
-        // await new Promise(resolve => setTimeout(resolve, 0));
+    //     // localStorage.removeItem('access_token_expiration');
+    //     // await new Promise(resolve => setTimeout(resolve, 0));
 
-        const removalPromises = [
-            new Promise((resolve) => {
+    //     const removalPromises = [
+    //         new Promise((resolve) => {
+    //             localStorage.removeItem('access_token');
+    //             setTimeout(resolve, 0); // Ensure this operation completes before moving on
+    //         }),
+    //         new Promise((resolve) => {
+    //             localStorage.removeItem('access_token_expiration');
+    //             setTimeout(resolve, 0); // Ensure this operation completes before moving on
+    //         }),
+    //     ];
+
+    //     // Wait for both removal operations to complete
+    //     await Promise.all(removalPromises);
+
+    //     navigate('/'); // Try navigating to a specific route
+    // }
+
+    const removeAccessToken = () => {
+        return new Promise((resolve, reject) => {
+            try {
                 localStorage.removeItem('access_token');
-                setTimeout(resolve, 0); // Ensure this operation completes before moving on
-            }),
-            new Promise((resolve) => {
+                resolve();
+            } catch (error) {
+                reject(error);
+            }
+        });
+    };
+
+    const removeExpirationToken = () => {
+        return new Promise((resolve, reject) => {
+            try {
                 localStorage.removeItem('access_token_expiration');
-                setTimeout(resolve, 0); // Ensure this operation completes before moving on
-            }),
-        ];
+                resolve();
+            } catch (error) {
+                reject(error);
+            }
+        });
+    };
 
-        // Wait for both removal operations to complete
-        await Promise.all(removalPromises);
-
-        navigate('/'); // Try navigating to a specific route
-    }
+    const handlelogout = () => {
+        removeAccessToken()
+            .then(() => {
+                // Access token removed, now remove the expiration token
+                return removeExpirationToken();
+            })
+            .then(() => {
+                // Both tokens are removed, navigate to the login page
+                navigate('/');
+            })
+            .catch(error => {
+                console.error('An error occurred:', error);
+            });
+    };
 
     return (
         <>
@@ -50,7 +87,7 @@ function AvatarDetails() {
                     </div> */}
                     <div className="dropdown-divider" />
                     <div className="dropdown-item drop_items">
-                        <span onClick={() => { navigate('/Profilepage') }} >
+                        <span onClick={() => { navigate('/ProfilePAge') }} >
                             <img src="https://presale.golteum.io/static/media/nav2.809346c5.svg" />
                             <span>My Profile</span>
                         </span>

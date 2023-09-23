@@ -43,17 +43,7 @@ function FundSection() {
                             <ListItemText primary="Admin Transfer History" />
                         </ListItemButton>
                     </List>
-                </Collapse>
-                <Collapse in={open} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <ListItemButton onClick={() => navigate('FundsTransferHistory')} sx={{ pl: 4 }}>
-                            <ListItemIcon>
-                                <PeopleIcon sx={{ marginLeft: '-11px', color: 'white' }} />
-                            </ListItemIcon>
-                            <ListItemText primary="Fund Transfer History" />
-                        </ListItemButton>
-                    </List>
-                </Collapse> */}
+                </Collapse>*/}
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                         <ListItemButton onClick={() => navigate('FundsTransfer')} sx={{ pl: 4 }}>
@@ -64,6 +54,17 @@ function FundSection() {
                         </ListItemButton>
                     </List>
                 </Collapse>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        <ListItemButton onClick={() => navigate('FundsTransferHistory')} sx={{ pl: 4 }}>
+                            <ListItemIcon>
+                                <PeopleIcon sx={{ marginLeft: '-11px', color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText sx={{ marginLeft: '-30px' }} primary="Fund Transfer History" />
+                        </ListItemButton>
+                    </List>
+                </Collapse>
+
             </List>
         </>
     )

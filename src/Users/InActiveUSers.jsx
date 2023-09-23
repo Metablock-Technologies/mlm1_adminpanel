@@ -118,7 +118,7 @@ function InActiveUSers() {
                     const secondApiResponse = await axios.get(baseURL + `/user/profile/${userId}`, {
                         headers: headers
                     });
-                    if (secondApiResponse.data.data.status === 'inactive' && secondApiResponse.data.data.type === "main") {
+                    if (secondApiResponse.data.data.status === 'inactive') {
                         console.log(`User ID: ${userId}`, secondApiResponse.data.data);
                         userProfileData.push(secondApiResponse.data); // Accumulate user profile data
                     }
@@ -251,6 +251,7 @@ function InActiveUSers() {
                                                             <thead className="text-capitalize">
                                                                 <tr>
                                                                     <th>SR.No.</th>
+                                                                    <th>User_id</th>
                                                                     <th>Name</th>
                                                                     <th>User Name</th>
                                                                     <th>Refer Code</th>
@@ -274,6 +275,7 @@ function InActiveUSers() {
                                                                 ) : tableData?.map((row, index) => (
                                                                     <tr key={index} className="fade-in-row" >
                                                                         <td>{index + 1}</td>
+                                                                        <td>{row?.data?.id}</td>
                                                                         <td style={{ cursor: "pointer" }} onClick={() => handlerenew(row?.data?.id)}>{row?.data?.name}</td>
                                                                         <td>{row?.data?.username}</td>
                                                                         <td>{row?.data?.hashcode}</td>

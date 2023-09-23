@@ -81,7 +81,7 @@ function PendingDeposite() {
                 message: message,
                 status: status,
                 amount: amount,
-                type: "add",
+                type: "withdraw",
                 account_type: acctype,
                 user_id: userid,
             }
@@ -216,12 +216,12 @@ function PendingDeposite() {
                             <div className="col-sm-6">
                                 <h1 className="m-0 text-dark">Withdraw Money Requests</h1>
                             </div>{/* /.col */}
-                            <div className="col-sm-6">
+                            {/* <div className="col-sm-6">
                                 <ol className="breadcrumb float-sm-right">
                                     <li className="breadcrumb-item"><a href="https://hammertradex.com">Home</a></li>
                                     <li className="breadcrumb-item active">Block Users</li>
                                 </ol>
-                            </div>{/* /.col */}
+                            </div> */}
                         </div>{/* /.row */}
                     </div>{/* /.container-fluid */}
                 </div>
@@ -327,7 +327,6 @@ function PendingDeposite() {
                                                                 <th className="sorting" tabIndex={0} aria-controls="table_id" rowSpan={1} colSpan={1} style={{ width: 81 }} aria-label="Time: activate to sort column ascending">Date</th>
                                                                 <th className="sorting" tabIndex={0} aria-controls="table_id" rowSpan={1} colSpan={1} style={{ width: 81 }} aria-label="Time: activate to sort column ascending">Time</th>
                                                             </tr>
-
                                                         </thead>
                                                         <tbody>
                                                             {tableData.map((data, index) => {

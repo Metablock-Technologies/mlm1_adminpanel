@@ -247,7 +247,7 @@ function AutoPool1() {
                                                     <thead className="text-capitalize">
                                                         <tr>
                                                             <th>SR. No.</th>
-                                                            <th>Month</th>
+                                                            {/* <th>Month</th> */}
                                                             {/* <th>User Name</th> */}
                                                             <th>Status</th>
                                                             <th>Amount</th>
@@ -264,7 +264,7 @@ function AutoPool1() {
                                                             return (
                                                                 <tr key={item?.transaction_id}>
                                                                     <td>{index + 1}</td>
-                                                                    <td>{item?.month}</td>
+                                                                    {/* <td>{item?.month}</td> */}
                                                                     {/* <td>{item?.userName}</td> */}
                                                                     <td>{item?.status}</td>
                                                                     <td>{item?.amount}</td>

@@ -50,7 +50,7 @@ export default function AutoPool() {
                         <ListItemIcon>
                             <PeopleIcon sx={{ marginLeft: '-11px', color: 'white' }} />
                         </ListItemIcon>
-                        <ListItemText sx={{ marginLeft: '-30px' }} primary="AutoPool1 Request" />
+                        <ListItemText sx={{ marginLeft: '-30px' }} primary="AutoPool1 History" />
                     </ListItemButton>
                 </List>
             </Collapse>
@@ -60,7 +60,7 @@ export default function AutoPool() {
                         <ListItemIcon>
                             <PeopleIcon sx={{ marginLeft: '-11px', color: 'white' }} />
                         </ListItemIcon>
-                        <ListItemText sx={{ marginLeft: '-30px' }} primary="AutoPool2 Request" />
+                        <ListItemText sx={{ marginLeft: '-30px' }} primary="AutoPool2 History" />
                     </ListItemButton>
                 </List>
             </Collapse>

@@ -198,6 +198,25 @@ function PendingDeposite() {
     // });
 
 
+    const handleCopyLink = (address) => {
+        // Create a temporary input element to copy the link
+        const input = document.createElement('input');
+        input.value = address;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        // setSnackbarOpen(true);
+        // Set isLinkCopied to true to display the dialog box
+        // setIsLinkCopied(true);
+
+        navigator.clipboard.writeText(address);
+        // Reset isLinkCopied after 2 seconds
+        setTimeout(() => {
+            // setIsLinkCopied(false);
+        }, 2000);
+    };
+
     return (
         <>
             <div className='fade-in'>
@@ -322,6 +341,7 @@ function PendingDeposite() {
                                                                 {/* <th className="sorting" tabIndex={0} aria-controls="table_id" rowSpan={1} colSpan={1} style={{ width: 175 }} aria-label="To User Name: activate to sort column ascending">Type</th> */}
                                                                 <th className="sorting" tabIndex={0} aria-controls="table_id" rowSpan={1} colSpan={1} style={{ width: 109 }} aria-label="Amount: activate to sort column ascending">Account_type</th>
                                                                 <th className="sorting" tabIndex={0} aria-controls="table_id" rowSpan={1} colSpan={1} style={{ width: 129 }} aria-label="Date: activate to sort column ascending">Status</th>
+                                                                <th className="sorting" tabIndex={0} aria-controls="table_id" rowSpan={1} colSpan={1} style={{ width: 129 }} aria-label="Date: activate to sort column ascending">CryptoAddress</th>
                                                                 <th className="sorting" tabIndex={0} aria-controls="table_id" rowSpan={1} colSpan={1} style={{ width: 81 }} aria-label="Time: activate to sort column ascending">Accept</th>
                                                                 <th className="sorting" tabIndex={0} aria-controls="table_id" rowSpan={1} colSpan={1} style={{ width: 81 }} aria-label="Time: activate to sort column ascending">Reject</th>
                                                                 <th className="sorting" tabIndex={0} aria-controls="table_id" rowSpan={1} colSpan={1} style={{ width: 81 }} aria-label="Time: activate to sort column ascending">Date</th>
@@ -360,6 +380,12 @@ function PendingDeposite() {
                                                                     </td>
                                                                     <td>{data?.account_type}</td>
                                                                     <td>{data?.status}</td>
+                                                                    <td>
+                                                                        <div className="refer_link">
+                                                                            <p>{data?.link}</p>
+                                                                            {/* <button><i className="fa fa-copy" /></button> */}
+                                                                            <button style={{ marginLeft: "10px" }} onClick={() => { handleCopyLink(data?.link) }}><i className="fa fa-copy" /></button>
+                                                                        </div></td>
                                                                     {data.status === 'pending' ? (
                                                                         <>
                                                                             <td>

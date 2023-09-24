@@ -236,21 +236,18 @@ function AutoPool1() {
                                                 <center>
                                                     <button style={{ color: 'black', backgroundColor: 'rgb(195 161 119)' }} className="btn btn-primary" onClick={(e) => handleSearch(e)} >Search Now</button>
                                                     <button style={{ marginLeft: '20px', background: 'black', color: '#d8af72', border: '1px solid #d8af72' }} className="btn btn-info" type="button" onClick={handleReset}>Reset <span><RotateLeftIcon /></span> </button>
-
                                                 </center>
                                             </div>
                                             <br />
                                         </form>
                                         <h4 className="header-title">All Transaction</h4>
-
-
                                         <div className="single-table">
                                             <div className="table-responsive">
                                                 <table className="table text-center">
                                                     <thead className="text-capitalize">
                                                         <tr>
                                                             <th>SR. No.</th>
-                                                            <th>Month</th>
+                                                            {/* <th>Month</th> */}
                                                             {/* <th>User Name</th> */}
                                                             <th>Status</th>
                                                             <th>Amount</th>
@@ -267,7 +264,7 @@ function AutoPool1() {
                                                             return (
                                                                 <tr key={item?.transaction_id}>
                                                                     <td>{index + 1}</td>
-                                                                    <td>{item?.month}</td>
+                                                                    {/* <td>{item?.month}</td> */}
                                                                     {/* <td>{item?.userName}</td> */}
                                                                     <td>{item?.status}</td>
                                                                     <td>{item?.amount}</td>

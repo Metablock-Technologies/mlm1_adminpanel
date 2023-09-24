@@ -259,7 +259,7 @@ function StackManage() {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {tableData?.map((item, index) => {
+                                                        {displayedData?.map((item, index) => {
                                                             const createdAt = new Date(item?.createdAt);
                                                             const formattedDate = createdAt.toLocaleDateString();
                                                             const formattedTime = createdAt.toLocaleTimeString();

@@ -932,7 +932,7 @@ label {
   /* line-height: 42px; */
   padding: 9px 5px;
   color: #fff;
-  background: #272727;
+  background: #272727 !important;
   border-radius: 0;
   border: 1px solid rgba(177, 141, 95, .16862745098039217);
 }
@@ -942,7 +942,7 @@ label {
   color: #fff;
   background: none;
   background: transparent;
-  background: #272727;
+
   /* border-radius: 0; */
   border: 1px solid rgba(177, 141, 95, .16862745098039217);
 }

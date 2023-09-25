@@ -64,7 +64,7 @@ function StackManage() {
                 headers: headers
             });
             const userData = response.data.data;
-
+            console.log(userData);
             // Fetch usernames for each user ID in parallel
             const promises = userData?.map(async (item) => {
                 const userName = await getUserNameByUserId(item.userId);
@@ -78,7 +78,7 @@ function StackManage() {
             const updatedData = await Promise.all(promises);
             setTableData(updatedData);
             setLoading(false);
-            setLoadings(true)
+            setLoadings(false)
             console.log("tabledata", tableData);
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -96,7 +96,7 @@ function StackManage() {
 
     // Slice the data to display only the current page
     const displayedData = tableData?.slice(startIndex, endIndex);
-
+    console.log("display", displayedData);
     // Create a function to handle page change
     const handleChangePage = (event, newPage) => {
         setPage(newPage);

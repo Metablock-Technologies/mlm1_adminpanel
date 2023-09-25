@@ -125,9 +125,9 @@ function Header(props) {
                 <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
                     <DepositFunds />
                 </ListItem>
-                <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
+                {/* <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
                     <FundSection />
-                </ListItem>
+                </ListItem> */}
                 <ListItem disablePadding sx={{ display: 'block', borderBottom: '1px solid #2e2a2a' }} >
                     <WithdrawReport />
                 </ListItem>

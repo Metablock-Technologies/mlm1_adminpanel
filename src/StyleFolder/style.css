@@ -125,6 +125,7 @@ section {
     border: none;
 }
 .tab-content>.active {
+  padding: 0px;
     display: block;
 }
 .form-control2 {
@@ -933,8 +934,10 @@ label {
   padding: 9px 5px;
   color: #fff;
   background: #272727 !important;
-  border-radius: 0;
+  border-radius: 5px;
   border: 1px solid rgba(177, 141, 95, .16862745098039217);
+
+  
 }
 
 .input_box[type="text"],input[type="text"],input[type="email"]:focus {
@@ -1235,4 +1238,10 @@ th {
     transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     font-size: 1.5rem;
     color: #000000 !important;
+}
+
+.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input.Mui-disabled {
+    opacity: 1;
+    -webkit-text-fill-color: rgba(0, 0, 0, 0.38);
+    border: none;
 }

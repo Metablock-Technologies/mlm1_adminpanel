@@ -3,7 +3,7 @@ import "../StyleFolder/stackManage.css";
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { token, baseURL } from '../token';
 import axios from 'axios';
-import { TablePagination } from '@mui/material';
+import { CircularProgress, TablePagination } from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
 
 function StackManage() {
@@ -78,6 +78,7 @@ function StackManage() {
             const updatedData = await Promise.all(promises);
             setTableData(updatedData);
             setLoading(false);
+            setLoadings(true)
             console.log("tabledata", tableData);
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -246,38 +247,47 @@ function StackManage() {
 
                                         <div className="single-table">
                                             <div className="table-responsive">
-                                                <table className="table text-center">
-                                                    <thead className="text-capitalize">
-                                                        <tr>
-                                                            <th>SR. No.</th>
-                                                            <th>User ID</th>
-                                                            <th>User Name</th>
-                                                            <th>Details</th>
-                                                            <th>Amount</th>
-                                                            <th>Date</th>
-                                                            <th>Time</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {displayedData?.map((item, index) => {
-                                                            const createdAt = new Date(item?.createdAt);
-                                                            const formattedDate = createdAt.toLocaleDateString();
-                                                            const formattedTime = createdAt.toLocaleTimeString();
-                                                            // console.log(createdAt, formattedDate, formattedTime);
-                                                            return (
-                                                                <tr key={item?.transaction_id}>
-                                                                    <td>{index + 1}</td>
-                                                                    <td>{item?.userId}</td>
-                                                                    <td>{item?.userName}</td>
-                                                                    <td>{item?.detail}</td>
-                                                                    <td>{item?.amount.toFixed(0, 2)}</td>
-                                                                    <td>{formattedDate}</td>
-                                                                    <td>{formattedTime}</td>
-                                                                </tr>
-                                                            );
-                                                        })}
-                                                    </tbody>
-                                                </table>
+
+                                                {loadings ? (<>
+                                                    <div className="loading-overlay">
+                                                        <CircularProgress sx={{ color: 'orange' }} />
+                                                    </div>
+                                                </>) : (<>
+
+                                                    <table className="table text-center">
+                                                        <thead className="text-capitalize">
+                                                            <tr>
+                                                                <th>SR. No.</th>
+                                                                <th>User ID</th>
+                                                                <th>User Name</th>
+                                                                <th>Details</th>
+                                                                <th>Amount</th>
+                                                                <th>Date</th>
+                                                                <th>Time</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {displayedData?.map((item, index) => {
+                                                                const createdAt = new Date(item?.createdAt);
+                                                                const formattedDate = createdAt.toLocaleDateString();
+                                                                const formattedTime = createdAt.toLocaleTimeString();
+                                                                // console.log(createdAt, formattedDate, formattedTime);
+                                                                return (
+                                                                    <tr key={item?.transaction_id}>
+                                                                        <td>{index + 1}</td>
+                                                                        <td>{item?.userId}</td>
+                                                                        <td>{item?.userName}</td>
+                                                                        <td>{item?.detail}</td>
+                                                                        <td>{item?.amount.toFixed(0, 2)}</td>
+                                                                        <td>{formattedDate}</td>
+                                                                        <td>{formattedTime}</td>
+                                                                    </tr>
+                                                                );
+                                                            })}
+                                                        </tbody>
+                                                    </table>
+                                                </>)}
+
                                                 <br /><br />
 
                                             </div>

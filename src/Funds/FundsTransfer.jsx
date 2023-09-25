@@ -335,17 +335,19 @@ function FundsTransfer() {
                                                                         }}
                                                                     /> */}
                                                                 <TextField
+
+                                                                    sx={{ border: 'none' }}
                                                                     autoFocus
                                                                     type="text"
                                                                     margin='dense'
                                                                     label="Enter Email Address"
                                                                     value={email}
-                                                                    disabled
                                                                     fullWidth
+                                                                    disabled
                                                                     onChange={(e) => {
                                                                         setEmailError(""); // Clear the error message
                                                                     }}
-                                                                    InputProps={{ sx: { height: '60px', padding: '15px' } }}
+                                                                    InputProps={{ sx: { border: 'none', height: '60px', color: 'black', padding: '15px' } }}
                                                                 />
                                                             </DialogContent>
 

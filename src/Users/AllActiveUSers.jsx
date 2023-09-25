@@ -271,7 +271,7 @@ function AllActiveUSers() {
                                                                         </td>
                                                                     </tr>
                                                                 ) :
-                                                                    tableData?.map((row, index) => (
+                                                                    displayedData?.map((row, index) => (
                                                                         <tr key={index} className="fade-in-row" >
                                                                             <td>{index + 1}</td>
                                                                             <td>{row?.data?.id}</td>

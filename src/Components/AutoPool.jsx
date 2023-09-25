@@ -31,7 +31,7 @@ export default function AutoPool() {
         >
             <ListItemButton onClick={handleClick}>
                 <CurrencyRupeeIcon sx={{ color: "white", fontSize: "30px", marginRight: '10px' }} />
-                <ListItemText primary="AutoPool Request" />
+                <ListItemText primary="AutoPool Income" />
                 {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             {/* <Collapse in={open} timeout="auto" unmountOnExit>
@@ -50,7 +50,7 @@ export default function AutoPool() {
                         <ListItemIcon>
                             <PeopleIcon sx={{ marginLeft: '-11px', color: 'white' }} />
                         </ListItemIcon>
-                        <ListItemText sx={{ marginLeft: '-30px' }} primary="AutoPool1 History" />
+                        <ListItemText sx={{ marginLeft: '-30px' }} primary="Monthy Income Eligibility" />
                     </ListItemButton>
                 </List>
             </Collapse>
@@ -60,7 +60,27 @@ export default function AutoPool() {
                         <ListItemIcon>
                             <PeopleIcon sx={{ marginLeft: '-11px', color: 'white' }} />
                         </ListItemIcon>
-                        <ListItemText sx={{ marginLeft: '-30px' }} primary="AutoPool2 History" />
+                        <ListItemText sx={{ fontSize: '0.5rem', marginLeft: '-30px' }} primary="Monthly Income Distribution" />
+                    </ListItemButton>
+                </List>
+            </Collapse>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                    <ListItemButton onClick={() => navigate('/dailyIncome')} sx={{ pl: 4 }}>
+                        <ListItemIcon>
+                            <PeopleIcon sx={{ marginLeft: '-11px', color: 'white' }} />
+                        </ListItemIcon>
+                        <ListItemText sx={{ marginLeft: '-30px' }} primary="Daily Income Eligibility" />
+                    </ListItemButton>
+                </List>
+            </Collapse>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                    <ListItemButton onClick={() => navigate('/DailyIncomeDistribution')} sx={{ pl: 4 }}>
+                        <ListItemIcon>
+                            <PeopleIcon sx={{ marginLeft: '-11px', color: 'white' }} />
+                        </ListItemIcon>
+                        <ListItemText sx={{ marginLeft: '-30px' }} primary="Daily Income Distribution" />
                     </ListItemButton>
                 </List>
             </Collapse>

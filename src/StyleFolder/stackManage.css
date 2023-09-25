@@ -216,13 +216,14 @@
     border-radius: 0;
     border: 1px solid rgba(177, 141, 95, .16862745098039217);
     }
-   .custom-select {
-    padding: 0px 3px 4px 3px;
+  .custom-select {
+    padding: 4px;
     color: #fff;
-    background: #272727;
+     background: #333333;
     border-radius: 0;
     border: 1px solid rgba(177, 141, 95, .16862745098039217);
     border-radius: 5px;
+    height: 45px;
 }
 .loading {
   position: fixed;

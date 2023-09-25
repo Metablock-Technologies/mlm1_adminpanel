@@ -81,6 +81,8 @@ import FundsTransfer from './Funds/FundsTransfer'
 import FundsTransferHistory from './Funds/FundsTransferHistory';
 import AutoPool1 from './AutoPool/autopool1';
 import AutoPool2 from './AutoPool/autopool2';
+import DailyIncome from './AutoPool/DailyIncome';
+import DailyIncomeDistribution from './AutoPool/DailyIncomeDistribution';
 
 function PrivateRoute({ element }) {
     // const { isLoggedIn } = useAuth();
@@ -166,6 +168,8 @@ function App() {
                         <Route exact path='FundsTransferHistory' element={<PrivateRoute element={<FundsTransferHistory />} />}></Route>
                         <Route exact path='autopool1' element={<PrivateRoute element={<AutoPool1 />} />}></Route>
                         <Route exact path='autopool2' element={<PrivateRoute element={<AutoPool2 />} />}></Route>
+                        <Route exact path='dailyIncome' element={<PrivateRoute element={<DailyIncome />} />}></Route>
+                        <Route exact path='DailyIncomeDistribution' element={<PrivateRoute element={<DailyIncomeDistribution />} />}></Route>
 
 
                         {/* <Route path='dashboard' element={<DashBoard />} ></Route>

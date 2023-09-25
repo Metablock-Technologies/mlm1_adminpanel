@@ -235,12 +235,12 @@ function PendingDeposite() {
                             <div className="col-sm-6">
                                 <h1 className="m-0 text-dark">Withdraw Money Requests</h1>
                             </div>{/* /.col */}
-                            {/* <div className="col-sm-6">
+                            <div className="col-sm-6">
                                 <ol className="breadcrumb float-sm-right">
                                     <li className="breadcrumb-item"><a href="https://hammertradex.com">Home</a></li>
                                     <li className="breadcrumb-item active">Block Users</li>
                                 </ol>
-                            </div> */}
+                            </div>
                         </div>{/* /.row */}
                     </div>{/* /.container-fluid */}
                 </div>
@@ -363,7 +363,13 @@ function PendingDeposite() {
                                                                         </Button>
                                                                     </td>
                                                                     <td>{usernames[data?.user_id]}</td>                                                                    <td>
-                                                                        <input style={{}}
+                                                                        <input
+                                                                            style={{
+                                                                                background: 'white',
+                                                                                height: '30px',
+                                                                                width: '200px',
+                                                                                color: 'black'
+                                                                            }}
                                                                             type="text"
                                                                             placeholder="Enter message"
                                                                             variant="outlined"

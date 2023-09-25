@@ -5,6 +5,7 @@ import { token, baseURL } from '../token';
 import axios from 'axios';
 import { TablePagination } from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
+import { AccountBalanceWallet } from '@mui/icons-material';
 
 function AutoPool1() {
     const [tableData, setTableData] = useState([]);
@@ -169,13 +170,10 @@ function AutoPool1() {
                     <div className="container-fluid">
                         <div className="row mb-2">
                             <div className="col-sm-6">
-                                <h1 className="m-0 text-dark">Autopool2</h1>
+                                <h1 className="m-0 text-dark">Monthly Income   Distribution </h1>
                             </div>{/* /.col */}
                             <div className="col-sm-6">
-                                <ol className="breadcrumb float-sm-right">
-                                    <li className="breadcrumb-item"><a href="https://hammertradex.com">Home</a></li>
-                                    <li className="breadcrumb-item active">Transaction</li>
-                                </ol>
+                                <h1 style={{ textAlign: 'right', color: '#c3a177' }} className="mt-2 mt-sm-0">Total Monthly Income  :  <span style={{ width: '200px', padding: '10px', border: '1px solid  #D8AF72 ', borderRadius: '5px', color: 'white' }}> <AccountBalanceWallet sx={{ color: '#D8AF72' }} /> 100</span></h1>
                             </div>{/* /.col */}
                         </div>{/* /.row */}
                     </div>{/* /.container-fluid */}
@@ -207,7 +205,7 @@ function AutoPool1() {
                                                 </div>
                                             </div>
                                             <div style={{ clear: 'both' }} />
-                                            {/* <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
+                                            <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
                                                 <label htmlFor="validationCustomUsername"> User Name</label>
                                                 <div className="input-group">
                                                     <input
@@ -219,7 +217,7 @@ function AutoPool1() {
                                                         onChange={(e) => setSearchQuery(e.target.value)}
                                                     />
                                                 </div>
-                                            </div> */}
+                                            </div>
                                             {/* <div className="col-md-6 mb-6" style={{ float: 'left', marginTop: 10 }}>
                                                 <label htmlFor="validationCustomUsername">Type</label>
                                                 <div className="input-group">
@@ -246,17 +244,19 @@ function AutoPool1() {
                                                 <table className="table text-center">
                                                     <thead className="text-capitalize">
                                                         <tr>
-                                                            <th>SR. No.</th>
+                                                            <th> S. No </th>
+
                                                             {/* <th>Month</th> */}
-                                                            {/* <th>User Name</th> */}
-                                                            <th>Status</th>
+
+                                                            <th>User Name</th>
+                                                            <th>User ID </th>
                                                             <th>Amount</th>
                                                             <th>Date</th>
                                                             <th>Time</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {tableData?.map((item, index) => {
+                                                        {displayedData?.map((item, index) => {
                                                             const createdAt = new Date(item?.createdAt);
                                                             const formattedDate = createdAt.toLocaleDateString();
                                                             const formattedTime = createdAt.toLocaleTimeString();
@@ -270,6 +270,8 @@ function AutoPool1() {
                                                                     <td>{item?.amount}</td>
                                                                     <td>{formattedDate}</td>
                                                                     <td>{formattedTime}</td>
+                                                                    <td>{formattedTime}</td>
+
                                                                 </tr>
                                                             );
                                                         })}

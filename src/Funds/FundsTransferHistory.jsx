@@ -164,7 +164,7 @@ function FundsTransferHistory() {
                                                                                 const createdAt = new Date(item?.createdAt);
                                                                                 const formattedDate = createdAt.toLocaleDateString();
                                                                                 const formattedTime = createdAt.toLocaleTimeString();
-                                                                                return (<tr key={index}>
+                                                                                return (<tr key={index} className='fade-in-row'>
                                                                                     <td>{index + 1}</td>
                                                                                     <td>{item?.sender}</td>
                                                                                     <td>{item?.senderUsername}</td>
@@ -217,7 +217,7 @@ function FundsTransferHistory() {
                                                                                 const createdAt = new Date(item?.createdAt);
                                                                                 const formattedDate = createdAt.toLocaleDateString();
                                                                                 const formattedTime = createdAt.toLocaleTimeString();
-                                                                                return (<tr key={index}>
+                                                                                return (<tr key={index} className='fade-in-row'>
                                                                                     <td>{index + 1}</td>
                                                                                     <td>{item?.sender}</td>
                                                                                     <td>{item?.senderUsername}</td>

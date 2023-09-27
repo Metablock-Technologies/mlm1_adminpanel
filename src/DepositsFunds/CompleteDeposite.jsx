@@ -54,6 +54,7 @@ function Addcoins() {
             });
             settableData(response?.data?.data?.addMoney);
             const userdata = response?.data?.data?.addMoney;
+            console.log("coinss", userdata);
             for (const userId of userdata) {
                 const response = await axios.get(baseURL + `/user/profile/${userId.user_id}`, {
                     headers: headers,
@@ -65,6 +66,8 @@ function Addcoins() {
                     [userId.user_id]: response?.data?.data?.username ? response?.data?.data?.username : "",
                 }));                // }
             }
+            // console.log("usernames", usernames);
+            // console.log("tabledata", tableData);
             // console.log("response", response.data.data);
             // console.log(usernames[2]);
         }
@@ -331,7 +334,10 @@ function Addcoins() {
                                                                             <Visibility sx={{ color: 'black' }} />
                                                                         </Button>
                                                                     </td>
-                                                                    <td>{usernames[data?.user_id]}</td>                                                                    <td>
+                                                                    <td>{data?.user_id}</td>
+                                                                    {/* <td>{usernames[data?.user_id]}</td> */}
+                                                                    {/* <td>{usernames[data?.id]}</td> */}
+                                                                    <td>
                                                                         <input
                                                                             style={{ background: 'white', height: '30px', width: '200px', color: "black" }}
                                                                             type="text"

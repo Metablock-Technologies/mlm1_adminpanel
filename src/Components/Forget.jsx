@@ -64,9 +64,9 @@ function Forget() {
             const requestBody = {
                 email: email,
                 OTP: otp,
-                role: 'basic'
+                role: 'admin'
             };
-            console.log(requestBody.phone);
+            console.log(requestBody);
 
             const response = await axios.post(baseURL + '/user/verifyemail', requestBody);
 
@@ -99,7 +99,7 @@ function Forget() {
             // Fetch usernames for each user ID in parallel
             if (response.status === 200) {
                 setMessage('Password updated successfully.');
-                navigate(`/LoginPage`);
+                navigate(`/`);
             }
         } catch (error) {
             console.error("Error fetching data:", error);

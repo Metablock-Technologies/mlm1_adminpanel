@@ -55,7 +55,7 @@
 
 import React, { useEffect } from 'react';
 import Header from './Components/Header';
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, HashRouter } from 'react-router-dom';
 
 import Layout from './Layout/Layout';
 import AuthLayout from './Layout/AuthLayout';
@@ -138,7 +138,7 @@ function App() {
 
     return (
         <>
-            <BrowserRouter>
+            <HashRouter>
                 <Routes>
                     <Route exact path={`/*`} element={<AuthLayout />}>
                         {/* <Route exact path='' element={<LoginPage />} ></Route> */}
@@ -185,7 +185,7 @@ function App() {
                         <Route exact path="ContactUs" element={<ContactUs />} ></Route> */}
                     </Route>
                 </Routes>
-            </BrowserRouter>
+            </HashRouter>
         </>
     );
 }

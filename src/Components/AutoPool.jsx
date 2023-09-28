@@ -44,7 +44,7 @@ export default function AutoPool() {
                     </ListItemButton>
                 </List>
             </Collapse> */}
-            <Collapse in={open} timeout="auto" unmountOnExit>
+            {/* <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     <ListItemButton onClick={() => navigate('/autopool1')} sx={{ pl: 4 }}>
                         <ListItemIcon>
@@ -53,7 +53,7 @@ export default function AutoPool() {
                         <ListItemText sx={{ marginLeft: '-30px' }} primary="Monthy Income Eligibility" />
                     </ListItemButton>
                 </List>
-            </Collapse>
+            </Collapse> */}
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     <ListItemButton onClick={() => navigate('/autopool2')} sx={{ pl: 4 }}>
@@ -64,7 +64,7 @@ export default function AutoPool() {
                     </ListItemButton>
                 </List>
             </Collapse>
-            <Collapse in={open} timeout="auto" unmountOnExit>
+            {/* <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     <ListItemButton onClick={() => navigate('/dailyIncome')} sx={{ pl: 4 }}>
                         <ListItemIcon>
@@ -73,7 +73,7 @@ export default function AutoPool() {
                         <ListItemText sx={{ marginLeft: '-30px' }} primary="Daily Income Eligibility" />
                     </ListItemButton>
                 </List>
-            </Collapse>
+            </Collapse> */}
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     <ListItemButton onClick={() => navigate('/DailyIncomeDistribution')} sx={{ pl: 4 }}>

@@ -213,7 +213,7 @@ function AutoPool1() {
                                                 </div>
                                             </div> */}
                                             <div style={{ clear: 'both' }} />
-                                            <div className="col-md-12 mb-12" style={{ placeContent:'center', marginTop: 10 }}>
+                                            <div className="col-md-12 mb-12" style={{ placeContent: 'center', marginTop: 10 }}>
                                                 <label htmlFor="validationCustomUsername"> User Name</label>
                                                 <div className="input-group">
                                                     <input
@@ -243,18 +243,15 @@ function AutoPool1() {
                                             </div>
                                             <br />
                                         </form>
-                                      
+
                                         <div className="single-table">
                                             <div className="table-responsive">
                                                 <table className="table text-center">
                                                     <thead className="text-capitalize">
                                                         <tr>
                                                             <th>S. No.</th>
-                                                           
-                                                            
                                                             {/* <th>Month</th> */}
                                                             {/* <th>User Name</th> */}
-                                                        
                                                             <th>User Name</th>
                                                             <th>User ID</th>
                                                             <th>Total Referral</th>
@@ -275,7 +272,7 @@ function AutoPool1() {
                                                                     <td>{item?.status}</td>
                                                                     <td>{item?.amount}</td>
                                                                     <td>{formattedDate}</td>
-                                                                    
+
 
                                                                 </tr>
                                                             );

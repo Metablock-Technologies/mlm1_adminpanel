@@ -16,7 +16,7 @@ function AutoPool1() {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [loading, setLoading] = useState(true);
     const [loadings, setLoadings] = useState(true);
-
+    const [autopool2income, setAutopool2] = useState(0);
 
     const rowsPerPageOptions = [10, 25, 50];
     const handleReset = () => {
@@ -63,6 +63,7 @@ function AutoPool1() {
             const response = await axios.get(`${baseURL}/admin/autopool`, {
                 headers: headers
             });
+            setAutopool2(response?.data?.data?.autopool1Total);
             const userData = response?.data?.data?.autopool2;
             console.log(userData);
 
@@ -173,7 +174,7 @@ function AutoPool1() {
                                 <h1 className="m-0 text-dark">Monthly Income   Distribution </h1>
                             </div>{/* /.col */}
                             <div className="col-sm-6">
-                                <h1 style={{ textAlign: 'right', color: '#c3a177' }} className="mt-2 mt-sm-0">Total Monthly Income  :  <span style={{ width: '200px', padding: '10px', border: '1px solid  #D8AF72 ', borderRadius: '5px', color: 'white' }}> <AccountBalanceWallet sx={{ color: '#D8AF72' }} /> 100</span></h1>
+                                <h1 style={{ textAlign: 'right', color: '#c3a177' }} className="mt-2 mt-sm-0">Total Monthly Income  :  <span style={{ width: '200px', padding: '10px', border: '1px solid  #D8AF72 ', borderRadius: '5px', color: 'white' }}> <AccountBalanceWallet sx={{ color: '#D8AF72' }} /> {autopool2income ? autopool2income : "0"}</span></h1>
                             </div>{/* /.col */}
                         </div>{/* /.row */}
                     </div>{/* /.container-fluid */}

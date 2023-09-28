@@ -142,7 +142,8 @@ function App() {
                 <Routes>
                     <Route exact path={`/*`} element={<AuthLayout />}>
                         {/* <Route exact path='' element={<LoginPage />} ></Route> */}
-                        <Route exact path='' element={isAuthenticated() ? <Navigate to="/dashboard" /> : <LoginPage />}></Route>
+                        <Route exact path='' element={<LoginPage />}></Route>
+                        {/* <Route exact path='' element={isAuthenticated() ? <Navigate to="/dashboard" /> : <LoginPage />}></Route> */}
 
                         <Route exact path='forgetpassword' element={<Forget />} />
                     </Route>

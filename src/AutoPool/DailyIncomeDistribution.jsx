@@ -16,7 +16,7 @@ function DailyIncomeDistribution() {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [loading, setLoading] = useState(true);
     const [loadings, setLoadings] = useState(true);
-
+    const [autopool1income, setAutopool1income] = useState("");
 
     const rowsPerPageOptions = [10, 25, 50];
     const handleReset = () => {
@@ -63,9 +63,9 @@ function DailyIncomeDistribution() {
             const response = await axios.get(`${baseURL}/admin/autopool`, {
                 headers: headers
             });
+            setAutopool1income(response?.data?.data?.autopool2Total)
             const userData = response?.data?.data?.autopool2;
             console.log(userData);
-
             // Fetch usernames for each user ID in parallel
             // const promises = userData?.map(async (item) => {
             //     const userName = await getUserNameByUserId(item.userId);
@@ -74,7 +74,6 @@ function DailyIncomeDistribution() {
             //         userName: userName,
             //     };
             // });
-
             // Wait for all promises to resolve
             // const updatedData = await Promise.all(promises);
             setTableData(userData);
@@ -173,7 +172,7 @@ function DailyIncomeDistribution() {
                                 <h1 className="m-0 text-dark">Daily Income Distribution </h1>
                             </div>{/* /.col */}
                             <div className="col-sm-6">
-                                <h1 style={{ textAlign: 'right', color: '#c3a177' }} className="mt-2 mt-sm-0">Total Daily Income : <span style={{ width: '200px', padding: '10px', border: '1px solid  #D8AF72 ', borderRadius: '5px', color: 'white' }}> <AccountBalanceWallet sx={{ color: '#D8AF72' }} /> 100</span></h1>
+                                <h1 style={{ textAlign: 'right', color: '#c3a177' }} className="mt-2 mt-sm-0">Total Daily Income : <span style={{ width: '200px', padding: '10px', border: '1px solid  #D8AF72 ', borderRadius: '5px', color: 'white' }}> <AccountBalanceWallet sx={{ color: '#D8AF72' }} /> {autopool1income ? autopool1income : "0"}</span></h1>
                             </div>{/* /.col */}
                         </div>{/* /.row */}
                     </div>{/* /.container-fluid */}

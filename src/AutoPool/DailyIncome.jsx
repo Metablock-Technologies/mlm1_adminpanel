@@ -60,12 +60,10 @@ function DailyIncome() {
             // const accessToken = token;
             const accessToken = localStorage.getItem('access_token'); // Retrieve access token from localStorage
             const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
-            const response = await axios.get(`${baseURL}/admin/autopool`, {
-                headers: headers
+            const response = await axios.get(`${baseURL}/user/autopool/eligible`, {
             });
-            const userData = response?.data?.data?.autopool1;
+            const userData = response?.data?.eligibleUsersAP2;
             console.log(userData);
-
             // Fetch usernames for each user ID in parallel
             // const promises = userData?.map(async (item) => {
             //     const userName = await getUserNameByUserId(item.userId);
@@ -255,8 +253,10 @@ function DailyIncome() {
                                                             {/* <th>User Name</th> */}
 
                                                             <th>User Name</th>
-                                                            <th>User ID </th>
+                                                            {/* <th></th> */}
+                                                            <th>Amount</th>
                                                             <th>Total Referral</th>
+                                                            <th>Total Renew</th>
 
                                                         </tr>
                                                     </thead>
@@ -271,10 +271,11 @@ function DailyIncome() {
                                                                     <td>{index + 1}</td>
                                                                     {/* <td>{item?.month}</td> */}
                                                                     {/* <td>{item?.userName}</td> */}
-                                                                    <td>{item?.status}</td>
-                                                                    <td>{item?.amount}</td>
-                                                                    <td>{formattedDate}</td>
-                                                                    <td>{item?.amount}</td>
+                                                                    <td>{item?.id}</td>
+                                                                    <td>{item?.username}</td>
+                                                                    <td>{item?.wallet?.balance}</td>
+                                                                    <td>{item?.number_of_referral}</td>
+                                                                    <td>{item?.number_of_renew}</td>
 
                                                                 </tr>
                                                             );

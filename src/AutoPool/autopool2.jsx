@@ -64,7 +64,7 @@ function AutoPool1() {
                 headers: headers
             });
             setAutopool2(response?.data?.data?.autopool1Total);
-            const userData = response?.data?.data?.autopool2;
+            const userData = response?.data?.data?.autopool1;
             console.log(userData);
 
             // Fetch usernames for each user ID in parallel
@@ -249,11 +249,16 @@ function AutoPool1() {
 
                                                             {/* <th>Month</th> */}
 
-                                                            <th>User Name</th>
-                                                            <th>User ID </th>
+                                                            <th>Status</th>
+                                                            {/* <th>User ID </th> */}
                                                             <th>Amount</th>
                                                             <th>Date</th>
                                                             <th>Time</th>
+                                                            {/* <th>User Name</th>
+                                                            <th>User ID </th>
+                                                            <th>Amount</th>
+                                                            <th>Date</th>
+                                                            <th>Time</th> */}
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -270,16 +275,14 @@ function AutoPool1() {
                                                                     <td>{item?.status}</td>
                                                                     <td>{item?.amount}</td>
                                                                     <td>{formattedDate}</td>
+                                                                    {/* <td>{formattedTime}</td> */}
                                                                     <td>{formattedTime}</td>
-                                                                    <td>{formattedTime}</td>
-
                                                                 </tr>
                                                             );
                                                         })}
                                                     </tbody>
                                                 </table>
                                                 <br /><br />
-
                                             </div>
                                         </div>
                                         <center style={{ float: 'right' }}>

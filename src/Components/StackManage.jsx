@@ -278,7 +278,7 @@ function StackManage() {
                                                                         <td>{item?.userId}</td>
                                                                         <td>{item?.userName}</td>
                                                                         <td>{item?.detail}</td>
-                                                                        <td>{item?.amount.toFixed(0, 2)}</td>
+                                                                        <td>{item?.amount}</td>
                                                                         <td>{formattedDate}</td>
                                                                         <td>{formattedTime}</td>
                                                                     </tr>

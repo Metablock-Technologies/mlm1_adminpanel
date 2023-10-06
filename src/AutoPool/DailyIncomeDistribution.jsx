@@ -248,8 +248,8 @@ function DailyIncomeDistribution() {
                                                             {/* <th>Month</th> */}
                                                             {/* <th>User Name</th> */}
 
-                                                            <th>User Name</th>
-                                                            <th>User ID </th>
+                                                            <th>Status</th>
+                                                            {/* <th>User ID </th> */}
                                                             <th>Amount</th>
                                                             <th>Date</th>
                                                             <th>Time</th>
@@ -269,7 +269,7 @@ function DailyIncomeDistribution() {
                                                                     <td>{item?.status}</td>
                                                                     <td>{item?.amount}</td>
                                                                     <td>{formattedDate}</td>
-                                                                    <td>{formattedTime}</td>
+                                                                    {/* <td>{formattedTime}</td> */}
                                                                     <td>{formattedTime}</td>
 
                                                                 </tr>
